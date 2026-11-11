@@ -848,7 +848,7 @@ fun LockAffordance(
         onClick = onToggle,
         modifier = modifier,
         iconSize = iconSize,
-        glassHalo = true,
+        glassHalo = false,
     )
 }
 
