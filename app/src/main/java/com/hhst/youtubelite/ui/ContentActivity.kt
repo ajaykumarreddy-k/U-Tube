@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,9 +17,15 @@ import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.findViewTreeSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.hhst.youtubelite.data.media.ContentRepositories
+import com.hhst.youtubelite.extension.ExtensionManager
+import com.hhst.youtubelite.extension.PreferenceKeys
+import com.hhst.youtubelite.player.MediaKind
 import com.hhst.youtubelite.player.PlaybackSession
 import com.hhst.youtubelite.player.surface.MiniPlayerStore
 import com.hhst.youtubelite.player.surface.MiniPlayerWindow
+import com.hhst.youtubelite.player.surface.PlayerUi
+import com.hhst.youtubelite.ui.glass.LiquidGlassAudioMiniPlayer
+import com.hhst.youtubelite.watch.WatchActivity
 import com.hhst.youtubelite.watch.presentation.WatchPlayer
 import org.koin.compose.koinInject
 
@@ -153,23 +160,77 @@ abstract class ContentActivity : NativeActivity() {
                 val player by PlaybackSession.player.collectAsStateWithLifecycle()
                 val pip by PlaybackSession.inPip.collectAsStateWithLifecycle()
                 if (started) player?.let { vm ->
+                    val prefs: ExtensionManager = koinInject()
+                    var pipEnabled by remember { mutableStateOf(prefs.isEnabled(PreferenceKeys.ENABLE_PIP)) }
+                    var inAppMiniEnabled by remember { mutableStateOf(prefs.isEnabled(PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)) }
+                    DisposableEffect(prefs) {
+                        val listener: (String) -> Unit = { key ->
+                            if (key == PreferenceKeys.ENABLE_PIP || key == PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER || key == "*") {
+                                pipEnabled = prefs.isEnabled(PreferenceKeys.ENABLE_PIP)
+                                inAppMiniEnabled = prefs.isEnabled(PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)
+                            }
+                        }
+                        prefs.addOnChangedListener(listener)
+                        onDispose { prefs.removeOnChangedListener(listener) }
+                    }
                     val state by vm.uiState.collectAsStateWithLifecycle()
+                    val useAudioMiniPill = !pipEnabled || !inAppMiniEnabled
+                    val showAudioMiniPill = !pip && useAudioMiniPill &&
+                        vm.currentMediaKind == MediaKind.WATCH && state.videoId != null &&
+                        ((state.visible && state.mini) || (!inAppMiniEnabled && (state.isPlaying || state.userWantsPlay)))
+                    val showVideoMiniWindow = !pip && !useAudioMiniPill && state.visible && state.mini
                     val cover = com.hhst.youtubelite.navigation.WatchTransition.miniRestoreFrame(this@ContentActivity)
                     val previousCover = remember {
                         arrayOf<com.hhst.youtubelite.navigation.WatchTransition.MiniRestoreFrame?>(null)
                     }
                     SideEffect {
-                        if (cover != null && (!state.visible || state.videoId != cover.frame.videoId || pip))
+                        if (cover != null && (!state.visible || state.videoId != cover.frame.videoId || pip || useAudioMiniPill))
                             com.hhst.youtubelite.navigation.WatchTransition.clearMiniRestore(this@ContentActivity)
-                        // This picture is on the native overlay's display list;
-                        // Compose invalidation alone cannot redraw it.
                         if (cover != null || previousCover[0] != null)
                             (miniComposition?.parent as? android.view.View)?.invalidate()
                         previousCover[0] = cover
                     }
-                    if (state.visible && state.mini && !pip) {
+                    LaunchedEffect(showAudioMiniPill, state.videoId) {
+                        if (showAudioMiniPill) {
+                            miniWindowReady = true
+                            com.hhst.youtubelite.navigation.WatchTransition.clearMiniRestore(this@ContentActivity)
+                        }
+                    }
+                    if (showAudioMiniPill) {
+                        val videoId = state.videoId
+                        val playPauseAction = PlayerUi.playPauseAction(state)
+                        val artworkUrl = videoId?.let { "https://i.ytimg.com/vi/$it/hqdefault.jpg" }
+                        com.hhst.youtubelite.ui.design.AppTheme {
+                            Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
+                                LiquidGlassAudioMiniPlayer(
+                                    title = state.title,
+                                    author = state.author,
+                                    artworkUrl = artworkUrl,
+                                    isPlaying = state.isPlaying,
+                                    isLoading = playPauseAction == PlayerUi.PlayPauseAction.Loading,
+                                    isEnded = state.ended,
+                                    hasNext = state.hasNext,
+                                    onPlayPause = vm::onPlayPause,
+                                    onNext = vm::onNext,
+                                    onRestore = {
+                                        if (state.mini) vm.onMiniRestore()
+                                        else if (videoId != null) {
+                                            startActivity(
+                                                WatchActivity.intent(this@ContentActivity, videoId)
+                                                    .addFlags(android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
+                                            )
+                                        }
+                                    },
+                                    onDismiss = vm::onMiniClose,
+                                    modifier = Modifier
+                                        .align(androidx.compose.ui.Alignment.BottomCenter)
+                                        .padding(start = 20.dp, end = 20.dp, bottom = 78.dp),
+                                )
+                            }
+                        }
+                    } else if (showVideoMiniWindow) {
                         val store: MiniPlayerStore = koinInject()
-                        com.hhst.youtubelite.ui.theme.AppTheme {
+                        com.hhst.youtubelite.ui.design.AppTheme {
                             BoxWithConstraints(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
                                 MiniPlayerWindow(maxWidth.value.toInt(), 76, store, state.controlsVisible,
                                     vm::onToggleControls, onDismiss = vm::onMiniClose,

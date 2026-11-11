@@ -1,6 +1,7 @@
 package com.hhst.youtubelite.ui.glass
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
@@ -9,8 +10,11 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -21,6 +25,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,6 +58,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -82,7 +88,7 @@ data class LiquidGlassNavItem(
     val icon: @Composable () -> Unit,
 )
 
-private val NAV_BAR_HEIGHT = 62.dp
+private val NAV_BAR_HEIGHT = 60.dp
 
 /**
  * Floating Liquid Glass navigation dock matching Wavelet's iOS 26 layout:
@@ -121,8 +127,8 @@ fun LiquidGlassNavigationBar(
     val tabRow = if (opticalLensSupported) rememberLayerBackdrop() else null
 
     val pillShape = remember { RoundedCornerShape(percent = 50) }
-    val horizontalPad = 5.dp
-    val verticalPad = 5.dp
+    val horizontalPad = 6.dp
+    val verticalPad = 4.dp
     val padLeftPx = with(density) { horizontalPad.toPx() }
     val padTopPx = with(density) { verticalPad.toPx() }
     val padVerticalPx = with(density) { (verticalPad * 2).toPx() }
@@ -148,7 +154,7 @@ fun LiquidGlassNavigationBar(
         modifier = modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Max),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         // Outer unclipped container lets the lifted lens grow beyond the pill's top/bottom edges.
@@ -301,7 +307,7 @@ fun LiquidGlassNavigationBar(
                                     size = 11,
                                     line = 14,
                                     weight = if (item.selected) FontWeight.SemiBold else FontWeight.Medium,
-                                    color = if (item.selected) palette.contentPrimary else palette.contentSecondary,
+                                    color = if (item.selected) palette.contentPrimary else palette.contentPrimary.copy(alpha = 0.82f),
                                     maxLines = 1,
                                 )
                             }
@@ -440,6 +446,179 @@ fun LiquidGlassPlayerControls(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 content = content,
             )
+        }
+    }
+}
+
+/**
+ * Floating Liquid Glass mini-player pill matching the Wavelet dock: renders artwork,
+ * video title, channel name, play/pause, and next controls centered right above
+ * [LiquidGlassNavigationBar] with matching left/right symmetry.
+ */
+@Composable
+fun LiquidGlassAudioMiniPlayer(
+    title: String,
+    author: String?,
+    artworkUrl: String?,
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    isEnded: Boolean,
+    hasNext: Boolean,
+    onPlayPause: () -> Unit,
+    onNext: () -> Unit,
+    onRestore: () -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val palette = LocalLiquidGlassPalette.current
+    val haptic = rememberHapticAction()
+    val scope = rememberCoroutineScope()
+    val dragOffsetX = remember { Animatable(0f) }
+    val dismissThresholdPx = with(LocalDensity.current) { 96.dp.toPx() }
+    val pillShape = remember { RoundedCornerShape(percent = 50) }
+
+    LiquidGlassSurface(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(NAV_BAR_HEIGHT)
+            .graphicsLayer {
+                translationX = dragOffsetX.value
+                alpha = (1f - (abs(dragOffsetX.value) / (dismissThresholdPx * 1.4f))).coerceIn(0.25f, 1f)
+            }
+            .pointerInput(onDismiss) {
+                detectHorizontalDragGestures(
+                    onHorizontalDrag = { _, delta ->
+                        scope.launch { dragOffsetX.snapTo(dragOffsetX.value + delta) }
+                    },
+                    onDragEnd = {
+                        if (abs(dragOffsetX.value) >= dismissThresholdPx) {
+                            haptic()
+                            onDismiss()
+                        } else {
+                            scope.launch {
+                                dragOffsetX.animateTo(0f, AppMotion.appleSpring())
+                            }
+                        }
+                    },
+                    onDragCancel = {
+                        scope.launch { dragOffsetX.animateTo(0f) }
+                    },
+                )
+            }
+            .testTag("liquid-glass-mini-player"),
+        shape = pillShape,
+        cornerRadius = NAV_BAR_HEIGHT / 2,
+        tier = LiquidGlassTier.Optical,
+        contentPadding = PaddingValues(start = 10.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
+        onClick = {
+            haptic()
+            onRestore()
+        },
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            com.hhst.youtubelite.ui.YoutubeThumb(
+                url = artworkUrl,
+                fallbackUrl = artworkUrl,
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(RoundedCornerShape(10.dp)),
+            ) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(palette.recessedFill),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    AppIcon(AppIcon.Play, color = palette.contentSecondary)
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 12.dp),
+                verticalArrangement = Arrangement.Center,
+            ) {
+                AppText(
+                    text = title.ifBlank { stringResource(R.string.app_name) },
+                    size = 14,
+                    line = 18,
+                    weight = FontWeight.SemiBold,
+                    color = palette.contentPrimary,
+                    maxLines = 1,
+                )
+                if (!author.isNullOrBlank()) {
+                    AppText(
+                        text = author,
+                        size = 12,
+                        line = 16,
+                        weight = FontWeight.Normal,
+                        color = palette.contentSecondary,
+                        maxLines = 1,
+                    )
+                }
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            haptic()
+                            onPlayPause()
+                        }
+                        .semantics {
+                            contentDescription =
+                                if (isPlaying) "Pause" else "Play"
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    if (isLoading) {
+                        androidx.compose.material3.CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            color = palette.contentPrimary,
+                            strokeWidth = 2.dp,
+                        )
+                    } else {
+                        val playIcon = when {
+                            isEnded -> R.drawable.ic_replay
+                            isPlaying -> R.drawable.ic_player_pause
+                            else -> R.drawable.ic_player_play
+                        }
+                        androidx.compose.material3.Icon(
+                            painter = androidx.compose.ui.res.painterResource(playIcon),
+                            contentDescription = null,
+                            tint = palette.contentPrimary,
+                            modifier = Modifier.size(24.dp),
+                        )
+                    }
+                }
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .clickable(enabled = hasNext) {
+                            haptic()
+                            onNext()
+                        }
+                        .semantics {
+                            contentDescription = "Next"
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    androidx.compose.material3.Icon(
+                        painter = androidx.compose.ui.res.painterResource(R.drawable.ic_player_next),
+                        contentDescription = null,
+                        tint = palette.contentPrimary.copy(alpha = if (hasNext) 1f else 0.38f),
+                        modifier = Modifier.size(24.dp),
+                    )
+                }
+            }
         }
     }
 }

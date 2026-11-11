@@ -27,7 +27,7 @@ fun BrowseNavigationBar(
     Box(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 14.dp, vertical = 10.dp)
+            .padding(horizontal = 20.dp, vertical = 10.dp)
             .testTag("$tag-navigation"),
     ) {
         LiquidGlassNavigationBar(
@@ -45,7 +45,7 @@ fun BrowseNavigationBar(
                             BrowseDestination.Subscriptions -> AppIcon.Subscriptions
                             BrowseDestination.You -> AppIcon.You
                         },
-                        color = glassPalette.contentSecondary,
+                        color = glassPalette.contentPrimary.copy(alpha = 0.82f),
                     )
                 }
             },

@@ -213,9 +213,9 @@ fun LiquidGlassSurface(
         val lensHeightPx = with(density) { WAVELET_LENS_HEIGHT_DP.dp.toPx() } * WAVELET_BACKDROP_SCALE
         val lensAmountPx = with(density) { WAVELET_LENS_AMOUNT_DP.dp.toPx() } * WAVELET_BACKDROP_SCALE
         val waveletTint = fillColor ?: if (palette.dark) {
-            Color(0xFF12141A).copy(alpha = 0.44f)
+            Color(0xFF101218).copy(alpha = 0.62f)
         } else {
-            Color(0xFFFAFAFA).copy(alpha = 0.48f)
+            Color(0xFFFAFAFA).copy(alpha = 0.56f)
         }
         Modifier
             .drawBackdrop(

@@ -345,7 +345,7 @@ private fun SearchNavigationBar(signedIn: Boolean, onAction: (SearchAction) -> U
     )).filterNot { LocalHideShorts.current && it == SearchDestination.Shorts }
     val glassPalette = DesignTokens.Glass
     Box(
-        Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp).testTag("search-navigation"),
+        Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp).testTag("search-navigation"),
     ) {
         com.hhst.youtubelite.ui.glass.LiquidGlassNavigationBar(
             items = destinations.map { destination ->
@@ -365,7 +365,7 @@ private fun SearchNavigationBar(signedIn: Boolean, onAction: (SearchAction) -> U
                             SearchDestination.Subscriptions -> AppIcon.Subscriptions
                             SearchDestination.You -> AppIcon.You
                         },
-                        color = glassPalette.contentSecondary,
+                        color = glassPalette.contentPrimary.copy(alpha = 0.82f),
                     )
                 }
             },

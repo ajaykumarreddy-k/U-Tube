@@ -77,7 +77,7 @@ fun MainNavigationBar(
     Box(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 14.dp, vertical = 10.dp)
+            .padding(horizontal = 20.dp, vertical = 10.dp)
             .testTag("$tag-navigation"),
     ) {
         com.hhst.youtubelite.ui.glass.LiquidGlassNavigationBar(
@@ -99,7 +99,7 @@ fun MainNavigationBar(
                                 MainTab.Subscriptions -> AppIcon.Subscriptions
                                 MainTab.You -> AppIcon.You
                             },
-                            color = if (active) glassPalette.contentPrimary else glassPalette.contentSecondary,
+                            color = if (active) glassPalette.contentPrimary else glassPalette.contentPrimary.copy(alpha = 0.82f),
                         )
                     }
                 }
