@@ -435,9 +435,21 @@ fun BottomBar(
         val placeable = measurable.measure(constraints)
         layout(placeable.width, placeable.height / 2) { placeable.place(0, 0) }
     }
+    val fullscreenTimeBarModifier = Modifier
+        .padding(horizontal = 12.dp)
+        .onGloballyPositioned { coords ->
+            trackMeasurements[1] = coords.positionInParent().y.roundToInt() + coords.size.height
+            reportTrackAnchor()
+        }.layout { measurable, constraints ->
+            val placeable = measurable.measure(constraints)
+            val compactHeight = placeable.height / 2
+            layout(placeable.width, compactHeight) {
+                placeable.place(0, -((placeable.height - compactHeight) / 2))
+            }
+        }
     Column(modifier = modifier.fillMaxWidth().onSizeChanged { trackMeasurements[0] = it.height; reportTrackAnchor() }) {
         if (state.fullscreen) {
-            BoxWithConstraints(Modifier.fillMaxWidth().padding(horizontal = 10.dp)) {
+            BoxWithConstraints(Modifier.fillMaxWidth().padding(start = 12.dp, end = 3.dp, bottom = 2.dp)) {
                 val chipMaxWidth = maxWidth * 0.45f
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -477,8 +489,9 @@ fun BottomBar(
                         icon = R.drawable.ic_fullscreen_exit,
                         contentDescription = stringResource(R.string.action_fullscreen),
                         onClick = onFullscreen,
-                        iconSize = 20,
-                        glassHalo = true,
+                        modifier = Modifier.size(40.dp),
+                        iconSize = 22,
+                        glassHalo = false,
                     )
                 }
             }
@@ -491,22 +504,23 @@ fun BottomBar(
                 onSeek = onSeek,
                 onPreview = { target -> callbacks?.onTimeBarPreview(target) },
                 onCommit = { callbacks?.onTimeBarCommit() },
-                modifier = timeBarModifier,
+                modifier = fullscreenTimeBarModifier,
             )
             if (fullscreenActions != null) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 8.dp),
+                        .padding(start = 12.dp, end = 12.dp, top = 2.dp, bottom = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Row(
                         modifier = Modifier
+                            .height(40.dp)
                             .clip(RoundedCornerShape(50))
                             .background(PlayerUi.GlassBg)
                             .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(50))
-                            .padding(horizontal = 8.dp, vertical = 2.dp),
+                            .padding(horizontal = 6.dp),
                         horizontalArrangement = Arrangement.spacedBy(2.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -543,10 +557,10 @@ fun BottomBar(
                     }
                     Box(
                         modifier = Modifier
-                            .size(width = 62.dp, height = 38.dp)
-                            .clip(RoundedCornerShape(14.dp))
+                            .size(width = 64.dp, height = 40.dp)
+                            .clip(RoundedCornerShape(12.dp))
                             .background(PlayerUi.GlassBg)
-                            .border(1.dp, Color.White.copy(alpha = 0.45f), RoundedCornerShape(14.dp))
+                            .border(1.dp, Color.White.copy(alpha = 0.45f), RoundedCornerShape(12.dp))
                             .clickable(role = Role.Button, onClick = fullscreenActions.onOpenQueue),
                         contentAlignment = Alignment.Center,
                     ) {
@@ -606,7 +620,7 @@ fun BottomBar(
                             contentDescription = stringResource(R.string.action_fullscreen),
                             onClick = onFullscreen,
                             iconSize = sizing.iconDp,
-                            glassHalo = true,
+                            glassHalo = false,
                         )
                     }
                 }
@@ -625,7 +639,7 @@ private fun FullscreenGlassAction(
     val haptic = com.hhst.youtubelite.ui.design.rememberHapticAction()
     Box(
         modifier = Modifier
-            .size(38.dp)
+            .size(36.dp)
             .clip(CircleShape)
             .clickable(role = Role.Button, onClick = { haptic(); onClick() })
             .semantics { contentDescription = description },
