@@ -17,7 +17,7 @@ class ContentRepositories(val client: MediaClient,
         }
     }
     val localLibrary by lazy { LocalLibraryStore(authKv, writer = LocalLibraryStore.backgroundWriter()) }
-    val home by lazy { MediaHomeRepository(client) }
+    val home by lazy { MediaHomeRepository(client, avatars = avatars) }
     val search by lazy { MediaSearchRepository(client) }
     val watch by lazy { CachedWatchRepository(MediaWatchRepository(client, sharedWatchReads), identity = { MediaSession.snapshot().generation }) }
     val playlist by lazy { MediaPlaylistRepository(client, localLibrary) }

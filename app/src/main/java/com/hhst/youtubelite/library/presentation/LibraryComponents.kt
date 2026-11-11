@@ -3,6 +3,7 @@ package com.hhst.youtubelite.library.presentation
 import com.hhst.youtubelite.ui.design.labelResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
@@ -94,12 +96,18 @@ internal fun LibraryError(tag: String, onRetry: () -> Unit) {
 
 @Composable
 internal fun LibraryRowItem(row: LibraryRow, icon: AppIcon, onOpen: () -> Unit) {
-    Row(Modifier.fillMaxWidth().height(48.dp).clickable(role = Role.Button, onClick = onOpen)
-        .testTag("library-row-${row.name}").padding(start = 16.dp, end = 16.dp),
+    val glass = DesignTokens.Glass
+    Row(Modifier.fillMaxWidth().heightIn(min = 52.dp).clickable(role = Role.Button, onClick = onOpen)
+        .testTag("library-row-${row.name}").padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically) {
-        AppIcon(icon)
-        Spacer(Modifier.width(24.dp))
-        AppText(stringResource(row.labelResource), size = 14, line = 22)
+        AppIcon(icon, color = glass.contentPrimary)
+        Spacer(Modifier.width(14.dp))
+        AppText(stringResource(row.labelResource), Modifier.weight(1f), size = 15, line = 20, weight = FontWeight.Medium, color = glass.contentPrimary)
+        AppIcon(
+            AppIcon.ChevronDown,
+            modifier = Modifier.size(16.dp).rotate(-90f),
+            color = glass.contentSecondary.copy(alpha = 0.72f),
+        )
     }
 }
 
@@ -160,12 +168,16 @@ internal fun PlaylistShelf(playlists: List<PlaylistSummary>, onOpen: (String) ->
 
 @Composable
 internal fun HistoryShelf(entries: List<HistoryEntry>, onOpen: (String) -> Unit) {
+    val glass = DesignTokens.Glass
+    val thumbShape = RoundedCornerShape(12.dp)
     LazyRow(Modifier.fillMaxWidth().testTag("library-history-shelf"),
-        horizontalArrangement = Arrangement.spacedBy(8.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
+        horizontalArrangement = Arrangement.spacedBy(10.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
         items(entries, key = { it.id }) { entry ->
             Column(Modifier.width(175.dp).testTag("library-history-${entry.id}")
                 .clickable(role = Role.Button) { onOpen(entry.videoId) }) {
-                Box(Modifier.fillMaxWidth().aspectRatio(16f / 9).clip(RoundedCornerShape(8.dp))) {
+                Box(Modifier.fillMaxWidth().aspectRatio(16f / 9).clip(thumbShape)
+                    .background(glass.recessedFill)
+                    .border(0.5.dp, glass.hairlineBorder.copy(alpha = 0.28f), thumbShape)) {
                     VideoArtwork(entry.videoId, entry.artwork, Modifier.fillMaxSize())
                     entry.progress?.let { progress ->
                         Box(Modifier.align(Alignment.BottomStart).fillMaxWidth().height(3.dp).background(Color.Black.copy(alpha = 0.5f))) {
@@ -173,7 +185,7 @@ internal fun HistoryShelf(entries: List<HistoryEntry>, onOpen: (String) -> Unit)
                         }
                     }
                 }
-                AppText(rememberDeArrowTitle(entry.videoId, entry.title), Modifier.padding(top = 6.dp), size = 14, line = 20, maxLines = 2)
+                AppText(rememberDeArrowTitle(entry.videoId, entry.title), Modifier.padding(top = 6.dp), size = 14, line = 20, weight = FontWeight.Medium, maxLines = 2)
             }
         }
     }

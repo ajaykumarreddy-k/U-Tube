@@ -5,6 +5,7 @@ import com.hhst.youtubelite.diagnostics.AppLog
 import com.hhst.youtubelite.core.JsonCache
 import com.liskovsoft.youtubeapi.videoinfo.V2.MenuEndpoint
 import com.liskovsoft.youtubeapi.videoinfo.V2.loadMenuChannelId
+import com.liskovsoft.youtubeapi.videoinfo.V2.loadPlayerDetails
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.CoroutineScope
@@ -39,6 +40,9 @@ class MediaAvatarDirectory(
     private val videoChannels = object : LinkedHashMap<String, Entry>(16, .75f, true) {
         override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Entry>) = size > MAX_ENTRIES
     }
+    private val videoMenus = object : LinkedHashMap<String, MenuEndpoint>(16, .75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, MenuEndpoint>) = size > MAX_ENTRIES * 2
+    }
     private val hydrate by lazy { scope.async {
         val saved = withContext(Dispatchers.IO) { runCatching { disk?.get(DISK_KEY, String::class.java) }.getOrNull() }
         synchronized(cache) {
@@ -68,6 +72,31 @@ class MediaAvatarDirectory(
         } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
         catch (_: Exception) { null }
     }
+    private data class VideoChannelKey(val videoId: String, val generation: Long)
+    private val videoChannelRequests = ArtworkRequests<VideoChannelKey, String?>(scope, LANES, MAX_IN_FLIGHT) { key ->
+        try {
+            client.readBackgroundIdempotent { context, http ->
+                loadPlayerDetails(key.videoId, context.anonymous(), http).value?.channelId
+            }?.takeIf { it.startsWith(CHANNEL_PREFIX) }?.also { id ->
+                synchronized(cache) {
+                    if (generation == key.generation) {
+                        videoChannels[key.videoId] = Entry(id, clock() + SUCCESS_TTL)
+                        persist()
+                    }
+                }
+            }
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+        catch (_: Exception) { null }
+    }
+
+    fun hintVideoMenu(videoId: String, endpoint: MenuEndpoint?) {
+        if (endpoint == null || videoId.isBlank()) return
+        synchronized(cache) { videoMenus[videoId] = endpoint }
+    }
+
+    fun cachedVideoChannel(videoId: String): String? = synchronized(cache) {
+        videoChannels[videoId]?.avatar?.takeIf { it.startsWith(CHANNEL_PREFIX) }
+    }
 
     suspend fun channel(videoId: String, endpoint: MenuEndpoint): String? {
         if (disk != null) hydrate.await()
@@ -76,6 +105,20 @@ class MediaAvatarDirectory(
             ChannelKey(videoId, generation, endpoint)
         }
         return channelRequests.get(key).takeIf { synchronized(cache) { generation == key.generation } }
+    }
+
+    suspend fun channelForVideo(videoId: String): String? {
+        if (videoId.isBlank()) return null
+        if (disk != null) hydrate.await()
+        val key = synchronized(cache) {
+            videoChannels[videoId]?.avatar?.takeIf { it.startsWith(CHANNEL_PREFIX) }?.let { return it }
+            VideoChannelKey(videoId, generation)
+        }
+        val hinted = synchronized(cache) { videoMenus[videoId] }
+        if (hinted != null) {
+            channel(videoId, hinted)?.takeIf { it.startsWith(CHANNEL_PREFIX) }?.let { return it }
+        }
+        return videoChannelRequests.get(key).takeIf { synchronized(cache) { generation == key.generation } }
     }
 
     suspend fun avatar(channelId: String): String? {
@@ -167,9 +210,17 @@ class MediaAvatarDirectory(
     }
 
     fun clear(clearDisk: Boolean = true) {
-        synchronized(cache) { generation++; cache.clear(); misses.clear(); videoChannels.clear(); if (clearDisk) disk?.invalidate(DISK_KEY) }
+        synchronized(cache) {
+            generation++
+            cache.clear()
+            misses.clear()
+            videoChannels.clear()
+            videoMenus.clear()
+            if (clearDisk) disk?.invalidate(DISK_KEY)
+        }
         requests.clear()
         channelRequests.clear()
+        videoChannelRequests.clear()
     }
 
     fun dispose() {

@@ -25,7 +25,6 @@ import com.hhst.youtubelite.player.surface.MiniPlayerStore
 import com.hhst.youtubelite.player.surface.MiniPlayerWindow
 import com.hhst.youtubelite.player.surface.PlayerUi
 import com.hhst.youtubelite.ui.glass.LiquidGlassAudioMiniPlayer
-import com.hhst.youtubelite.watch.WatchActivity
 import com.hhst.youtubelite.watch.presentation.WatchPlayer
 import org.koin.compose.koinInject
 
@@ -41,14 +40,21 @@ abstract class ContentActivity : NativeActivity() {
 
     override fun onStart() {
         val installMini = !ContentRepositories.fixtures(intent) || playbackTest()
+        val prefs = org.koin.java.KoinJavaComponent.getKoin().get<ExtensionManager>()
+        val useAudioMiniPill = !prefs.isEnabled(PreferenceKeys.ENABLE_PIP) ||
+            !prefs.isEnabled(PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)
         // Publish the handoff before retained lifecycle collectors can create the mini.
-        if (installMini) {
+        if (installMini && !useAudioMiniPill) {
             miniWindowReady = false
             miniEntryBounds = com.hhst.youtubelite.navigation.WatchTransition.takeMiniEntryBounds()
             if (miniEntryBounds != null) miniEntryVersion++
+        } else if (installMini) {
+            miniWindowReady = true
+            miniEntryBounds = null
+            com.hhst.youtubelite.navigation.WatchTransition.takeMiniEntryBounds()
         }
         super.onStart()
-        if (!installMini) return
+        if (!installMini || useAudioMiniPill) return
         awaitMiniWindow()
     }
 
@@ -129,6 +135,9 @@ abstract class ContentActivity : NativeActivity() {
                 // hiding a SurfaceView destroys its video output.
                 if (com.hhst.youtubelite.navigation.WatchTransition.capturingBackdrop) return
                 super.dispatchDraw(canvas)
+                val prefs = org.koin.java.KoinJavaComponent.getKoin().get<ExtensionManager>()
+                if (!prefs.isEnabled(PreferenceKeys.ENABLE_PIP) ||
+                    !prefs.isEnabled(PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)) return
                 val cover = com.hhst.youtubelite.navigation.WatchTransition.miniRestoreFrame(this@ContentActivity) ?: return
                 val state = PlaybackSession.player.value?.uiState?.value
                 if (state?.visible != true || state.videoId != cover.frame.videoId || PlaybackSession.inPip.value) return
@@ -196,36 +205,49 @@ abstract class ContentActivity : NativeActivity() {
                             com.hhst.youtubelite.navigation.WatchTransition.clearMiniRestore(this@ContentActivity)
                         }
                     }
-                    if (showAudioMiniPill) {
+                    if (useAudioMiniPill) {
                         val videoId = state.videoId
                         val playPauseAction = PlayerUi.playPauseAction(state)
                         val artworkUrl = videoId?.let { "https://i.ytimg.com/vi/$it/hqdefault.jpg" }
                         com.hhst.youtubelite.ui.design.AppTheme {
                             Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
-                                LiquidGlassAudioMiniPlayer(
-                                    title = state.title,
-                                    author = state.author,
-                                    artworkUrl = artworkUrl,
-                                    isPlaying = state.isPlaying,
-                                    isLoading = playPauseAction == PlayerUi.PlayPauseAction.Loading,
-                                    isEnded = state.ended,
-                                    hasNext = state.hasNext,
-                                    onPlayPause = vm::onPlayPause,
-                                    onNext = vm::onNext,
-                                    onRestore = {
-                                        if (state.mini) vm.onMiniRestore()
-                                        else if (videoId != null) {
-                                            startActivity(
-                                                WatchActivity.intent(this@ContentActivity, videoId)
-                                                    .addFlags(android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
-                                            )
-                                        }
-                                    },
-                                    onDismiss = vm::onMiniClose,
+                                androidx.compose.animation.AnimatedVisibility(
+                                    visible = showAudioMiniPill,
                                     modifier = Modifier
                                         .align(androidx.compose.ui.Alignment.BottomCenter)
                                         .padding(start = 20.dp, end = 20.dp, bottom = 78.dp),
-                                )
+                                    enter = androidx.compose.animation.fadeIn(
+                                        androidx.compose.animation.core.tween(com.hhst.youtubelite.ui.design.AppMotion.ChromeInMs),
+                                    ) + androidx.compose.animation.slideInVertically(
+                                        animationSpec = com.hhst.youtubelite.ui.design.AppMotion.appleSpring(),
+                                    ) { it / 3 },
+                                    exit = androidx.compose.animation.fadeOut(
+                                        androidx.compose.animation.core.tween(com.hhst.youtubelite.ui.design.AppMotion.ChromeOutMs),
+                                    ) + androidx.compose.animation.slideOutVertically(
+                                        animationSpec = androidx.compose.animation.core.tween(com.hhst.youtubelite.ui.design.AppMotion.ChromeOutMs),
+                                    ) { it / 3 },
+                                ) {
+                                    LiquidGlassAudioMiniPlayer(
+                                        title = state.title,
+                                        author = state.author,
+                                        artworkUrl = artworkUrl,
+                                        isPlaying = state.isPlaying,
+                                        isLoading = playPauseAction == PlayerUi.PlayPauseAction.Loading,
+                                        isEnded = state.ended,
+                                        hasNext = state.hasNext,
+                                        onPlayPause = vm::onPlayPause,
+                                        onNext = vm::onNext,
+                                        onRestore = {
+                                            if (videoId != null) {
+                                                com.hhst.youtubelite.navigation.WatchTransition.restoreDirect(
+                                                    this@ContentActivity,
+                                                    videoId,
+                                                )
+                                            }
+                                        },
+                                        onDismiss = vm::onMiniClose,
+                                    )
+                                }
                             }
                         }
                     } else if (showVideoMiniWindow) {
@@ -267,26 +289,36 @@ abstract class ContentActivity : NativeActivity() {
     override fun onResume() {
         // A quick Back can resume browse before it ever stops, so there is no onStart for this handoff.
         if (!ContentRepositories.fixtures(intent) || playbackTest()) {
-            // A cancelled entrance can return before this source stops; keep the
-            // static picture until the returning mini is laid out.
-            com.hhst.youtubelite.navigation.WatchTransition.miniRestoreFrame(this)?.let { cover ->
-                val player = PlaybackSession.player.value
-                val originalSurface = cover.frame.source.get()
-                if (player?.uiState?.value?.mini == true && originalSurface != null && player.hasRenderedFrame(originalSurface)) {
-                    // Target cancelled before taking playback; the original mini
-                    // already has its live picture underneath.
-                    com.hhst.youtubelite.navigation.WatchTransition.clearMiniRestore(this)
-                } else {
-                    resumedDuringMiniRestore = true
+            val prefs = org.koin.java.KoinJavaComponent.getKoin().get<ExtensionManager>()
+            val useAudioMiniPill = !prefs.isEnabled(PreferenceKeys.ENABLE_PIP) ||
+                !prefs.isEnabled(PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)
+            if (useAudioMiniPill) {
+                com.hhst.youtubelite.navigation.WatchTransition.clearMiniRestore(this)
+                com.hhst.youtubelite.navigation.WatchTransition.takeMiniEntryBounds()
+                miniEntryBounds = null
+                miniWindowReady = true
+            } else {
+                // A cancelled entrance can return before this source stops; keep the
+                // static picture until the returning mini is laid out.
+                com.hhst.youtubelite.navigation.WatchTransition.miniRestoreFrame(this)?.let { cover ->
+                    val player = PlaybackSession.player.value
+                    val originalSurface = cover.frame.source.get()
+                    if (player?.uiState?.value?.mini == true && originalSurface != null && player.hasRenderedFrame(originalSurface)) {
+                        // Target cancelled before taking playback; the original mini
+                        // already has its live picture underneath.
+                        com.hhst.youtubelite.navigation.WatchTransition.clearMiniRestore(this)
+                    } else {
+                        resumedDuringMiniRestore = true
+                        miniWindowReady = false
+                        awaitMiniWindow()
+                    }
+                }
+                com.hhst.youtubelite.navigation.WatchTransition.takeMiniEntryBounds()?.let {
                     miniWindowReady = false
+                    miniEntryBounds = it
+                    miniEntryVersion++
                     awaitMiniWindow()
                 }
-            }
-            com.hhst.youtubelite.navigation.WatchTransition.takeMiniEntryBounds()?.let {
-                miniWindowReady = false
-                miniEntryBounds = it
-                miniEntryVersion++
-                awaitMiniWindow()
             }
         }
         super.onResume()

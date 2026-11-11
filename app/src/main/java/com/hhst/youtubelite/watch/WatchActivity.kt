@@ -560,6 +560,26 @@ class WatchActivity : com.hhst.youtubelite.player.PlaybackActivity(), com.hhst.y
                     )
                 }
                 val miniStore: com.hhst.youtubelite.player.surface.MiniPlayerStore = koinInject()
+                val prefs: com.hhst.youtubelite.extension.ExtensionManager = koinInject()
+                var pipEnabled by remember {
+                    mutableStateOf(prefs.isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_PIP))
+                }
+                var inAppMiniEnabled by remember {
+                    mutableStateOf(prefs.isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER))
+                }
+                androidx.compose.runtime.DisposableEffect(prefs) {
+                    val listener: (String) -> Unit = { key ->
+                        if (key == com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_PIP ||
+                            key == com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER ||
+                            key == "*") {
+                            pipEnabled = prefs.isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_PIP)
+                            inAppMiniEnabled = prefs.isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)
+                        }
+                    }
+                    prefs.addOnChangedListener(listener)
+                    onDispose { prefs.removeOnChangedListener(listener) }
+                }
+                val useAudioMiniPill = !pipEnabled || !inAppMiniEnabled
                 val hostDensity = androidx.compose.ui.platform.LocalDensity.current
                 // The browse host docks inside safeDrawing above its 56 dp
                 // navigation area. Match both safe edges before handing over,
@@ -578,7 +598,7 @@ class WatchActivity : com.hhst.youtubelite.player.PlaybackActivity(), com.hhst.y
                     store = miniStore,
                     showStroke = playerState.controlsVisible,
                     onBackgroundTap = playerViewModel::onToggleControls,
-                    mini = playerState.mini && !pip && (!miniHandoffPending || localMiniCollapse),
+                    mini = playerState.mini && !pip && !useAudioMiniPill && (!miniHandoffPending || localMiniCollapse),
                     fillsWindow = fullscreen,
                     fullscreenSwipeEnabled = !pip,
                     fullscreenSwipeHandle = contentFullscreenSwipe,
@@ -593,7 +613,19 @@ class WatchActivity : com.hhst.youtubelite.player.PlaybackActivity(), com.hhst.y
                     },
                     onContentFullscreenPull = playerViewModel::setFullscreenManual,
                     onFullscreenSwipeRestore = playerViewModel::onFullscreenSwipeRestore,
-                    onMiniSwipe = playerViewModel::onMiniSwipeRequested,
+                    onMiniSwipe = {
+                        if (useAudioMiniPill) {
+                            if (!isFinishing && inAppMiniEnabled) {
+                                com.hhst.youtubelite.navigation.WatchTransition.miniBounds = null
+                                playerViewModel.onMiniSwipeRequested()
+                                finish()
+                                @Suppress("DEPRECATION")
+                                overridePendingTransition(0, android.R.anim.fade_out)
+                            }
+                        } else {
+                            playerViewModel.onMiniSwipeRequested()
+                        }
+                    },
                     onBoundsChanged = {
                         playerWindowBounds = it
                         sheetPlayerBottomPx = if (fullscreen || playerState.mini || pip) 0 else it.bottom.toInt()
@@ -791,10 +823,24 @@ class WatchActivity : com.hhst.youtubelite.player.PlaybackActivity(), com.hhst.y
         if (miniHandoffPending) return
         val state = playerViewModel.uiState.value
         val preferences = org.koin.java.KoinJavaComponent.getKoin().get<com.hhst.youtubelite.extension.ExtensionManager>()
+        val pipEnabled = preferences.isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_PIP)
+        val inAppMiniEnabled = preferences.isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)
+        val useAudioMiniPill = !pipEnabled || !inAppMiniEnabled
         val bounds = playerWindowBounds
         if (!state.visible || state.mini || playerViewModel.currentMediaKind != com.hhst.youtubelite.player.MediaKind.WATCH ||
-            inPip.value || bounds == null ||
-            !preferences.isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)) {
+            inPip.value) {
+            navigate(false)
+            return
+        }
+        if (useAudioMiniPill) {
+            // Transition straight to the browse activity + audio mini-player pill without
+            // shrinking into a floating video PiP window or capturing a PixelCopy bitmap.
+            com.hhst.youtubelite.navigation.WatchTransition.miniBounds = null
+            if (inAppMiniEnabled) playerViewModel.enterMiniPlayer()
+            navigate(false)
+            return
+        }
+        if (bounds == null) {
             navigate(false)
             return
         }

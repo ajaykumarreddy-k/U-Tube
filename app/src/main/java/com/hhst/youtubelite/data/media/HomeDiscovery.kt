@@ -6,6 +6,7 @@ import com.hhst.youtubelite.home.domain.HomeCatalog
 import com.liskovsoft.youtubeapi.videoinfo.V2.BrowsePage
 import com.liskovsoft.youtubeapi.videoinfo.V2.HomeSection
 import com.liskovsoft.youtubeapi.videoinfo.V2.MediaGroup
+import com.liskovsoft.youtubeapi.videoinfo.V2.MenuEndpoint
 import com.liskovsoft.youtubeapi.videoinfo.V2.RequestError
 import com.liskovsoft.youtubeapi.videoinfo.V2.RequestFailure
 import kotlinx.coroutines.CancellationException
@@ -15,6 +16,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 internal class HomeDiscovery(
+    private val avatars: MediaAvatarDirectory? = null,
     private val read: suspend (HomeSection, String?, Long) -> BrowsePage,
 ) {
     @Serializable
@@ -42,8 +44,19 @@ internal class HomeDiscovery(
                 when {
                     source.pending.kind == HomeCatalog.MusicCharts && item.kind == "playlist" && !item.title.isNullOrBlank() ->
                         FeedItem.Playlist(item.playlistSummary())
-                    source.pending.kind != HomeCatalog.MusicCharts && item.kind == "video" ->
-                        item.feedVideo().copy(notInterestedToken = null, dontRecommendToken = null, menuEndpoint = null)
+                    source.pending.kind != HomeCatalog.MusicCharts && item.kind == "video" -> {
+                        val video = item.feedVideo()
+                        video.menuEndpoint?.let { avatars?.hintVideoMenu(video.id, MenuEndpoint(it.panelId, it.params)) }
+                        val resolvedChannel = video.channelId.ifBlank { avatars?.cachedVideoChannel(video.id).orEmpty() }
+                        val resolvedAvatar = video.avatar ?: resolvedChannel.takeIf(String::isNotBlank)?.let { avatars?.cached(it) }
+                        video.copy(
+                            channelId = resolvedChannel,
+                            avatar = resolvedAvatar,
+                            notInterestedToken = null,
+                            dontRecommendToken = null,
+                            menuEndpoint = null,
+                        )
+                    }
                     else -> null
                 }
             }

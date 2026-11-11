@@ -55,15 +55,16 @@ internal class DeferredMenuCache(private val now: () -> Long = System::currentTi
 }
 
 class MediaHomeRepository(private val client: MediaClient,
+    private val avatars: MediaAvatarDirectory? = null,
     private val now: () -> Long = System::currentTimeMillis) : HomeRepository {
     private val menus = DeferredMenuCache(now)
-    private val discovery = HomeDiscovery { section, key, generation ->
+    private val discovery = HomeDiscovery(read = { section, key, generation ->
         client.readIdempotent { context, http ->
             if (context.generation != generation)
                 throw kotlinx.coroutines.CancellationException("Session changed")
             loadHome(section, context.anonymous().copy(language = "en"), key, http).requireValue()
         }
-    }
+    }, avatars = avatars)
     override val filters = listOf("All", "Music", "Gaming", "Live", "News", "Sports")
     override suspend fun loadHome(filter: String, continuation: String?): HomePage {
         val catalog = HomeCatalog.forFilter(filter)
@@ -98,8 +99,13 @@ class MediaHomeRepository(private val client: MediaClient,
                 if (item is FeedItem.Video && context.signedIn) item.copy(
                     dontRecommendToken = page.items.firstOrNull { it.id == item.id }?.dontRecommendToken(),
                     feedbackGeneration = context.generation,
-                ) else if (item is FeedItem.Video) item.copy(notInterestedToken = null, dontRecommendToken = null,
-                    menuEndpoint = null) else item
+                ) else if (item is FeedItem.Video) {
+                    item.menuEndpoint?.let { avatars?.hintVideoMenu(item.id, MenuEndpoint(it.panelId, it.params)) }
+                    val resolvedChannel = item.channelId.ifBlank { avatars?.cachedVideoChannel(item.id).orEmpty() }
+                    val resolvedAvatar = item.avatar ?: resolvedChannel.takeIf(String::isNotBlank)?.let { avatars?.cached(it) }
+                    item.copy(channelId = resolvedChannel, avatar = resolvedAvatar,
+                        notInterestedToken = null, dontRecommendToken = null, menuEndpoint = null)
+                } else item
             }
             context to HomePage(feed, page.messages, page.nextKey)
         }

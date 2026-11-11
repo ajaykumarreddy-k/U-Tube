@@ -1240,9 +1240,17 @@ class PlayerViewModel(
         stopAndHide(pausePlayback = !casting)
     }
 
+    private val usesAudioMiniPill: Boolean
+        get() = !prefs.isEnabled(PreferenceKeys.ENABLE_PIP) ||
+            !prefs.isEnabled(PreferenceKeys.ENABLE_IN_APP_MINI_PLAYER)
+
     override fun onMiniRestore() {
         val id = _uiState.value.videoId ?: return
         appContext?.let { context ->
+            if (usesAudioMiniPill) {
+                com.hhst.youtubelite.navigation.WatchTransition.restoreDirect(context, id)
+                return
+            }
             prepareWindowHandoff {
                 if (_uiState.value.visible && _uiState.value.mini && _uiState.value.videoId == id)
                     com.hhst.youtubelite.navigation.WatchTransition.restore(context, id)

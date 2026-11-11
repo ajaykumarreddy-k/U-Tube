@@ -180,10 +180,16 @@ fun HomeScreen(state: HomeUiState, onAction: (HomeAction) -> Unit, modifier: Mod
                             HomeContent.Loading -> Box(Modifier.fillMaxSize()) {
                                 HomeSkeleton(width, feedTopInset, navBottomClearance)
                                 // Keep navigation and card anchors in place while the first page loads.
-                                Box(Modifier.offset(y = DesignTokens.TopBarHeight).background(DesignTokens.Background.copy(alpha = 0.88f))) {
+                                Box(Modifier.offset(y = DesignTokens.TopBarHeight).background(
+                                    androidx.compose.ui.graphics.Brush.verticalGradient(
+                                        0f to DesignTokens.Background.copy(alpha = 0.94f),
+                                        0.82f to DesignTokens.Background.copy(alpha = 0.86f),
+                                        1f to DesignTokens.Background.copy(alpha = 0f),
+                                    ),
+                                )) {
                                     ChipStrip(state.selectedChip, state.chips, catalogMode, onAction)
                                 }
-                                Box(Modifier.background(DesignTokens.Background.copy(alpha = 0.9f))) { HomeTopBar(onAction) }
+                                Box(Modifier.background(DesignTokens.Background.copy(alpha = 0.96f))) { HomeTopBar(onAction) }
                             }
                             is HomeContent.Feed -> Box(Modifier.fillMaxSize()) {
                                 // Pull moves the feed rows only; the chrome stack keeps its place.
@@ -211,8 +217,14 @@ fun HomeScreen(state: HomeUiState, onAction: (HomeAction) -> Unit, modifier: Mod
                                     }
                                 }
                                 }
-                                Box(Modifier.graphicsLayer { translationY = (48f - chromeTravel * chromeOffset) * density }.background(DesignTokens.Background.copy(alpha = 0.86f))) { ChipStrip(state.selectedChip, state.chips, content.page.catalog != null, onAction) }
-                                Box(Modifier.graphicsLayer { translationY = -48f * chromeOffset * density }.background(DesignTokens.Background.copy(alpha = 0.9f))) { HomeTopBar(onAction) }
+                                Box(Modifier.graphicsLayer { translationY = (48f - chromeTravel * chromeOffset) * density }.background(
+                                    androidx.compose.ui.graphics.Brush.verticalGradient(
+                                        0f to DesignTokens.Background.copy(alpha = 0.94f),
+                                        0.80f to DesignTokens.Background.copy(alpha = 0.84f),
+                                        1f to DesignTokens.Background.copy(alpha = 0f),
+                                    ),
+                                )) { ChipStrip(state.selectedChip, state.chips, content.page.catalog != null, onAction) }
+                                Box(Modifier.graphicsLayer { translationY = -48f * chromeOffset * density }.background(DesignTokens.Background.copy(alpha = 0.96f))) { HomeTopBar(onAction) }
                             }
                         }
                         val refreshAnchor = if (state.content is HomeContent.Feed)

@@ -19,6 +19,7 @@ import java.util.WeakHashMap
 internal object WatchTransition {
     const val ORIGIN = "watch_origin"
     const val INSTANT = "navigation_instant"
+    const val DIRECT_AUDIO_RESTORE = "watch_direct_audio_restore"
     private const val MINI_RESTORE = "watch_mini_restore"
     private const val BACKDROP = "watch_backdrop"
     private var backdropVersion = 0L
@@ -70,6 +71,20 @@ internal object WatchTransition {
 
     fun browseResumed(activity: Activity) {
         browseActivity = WeakReference(activity)
+    }
+
+    /** Direct fast restore from the audio mini-player pill without video-box capture or PiP bounds. */
+    fun restoreDirect(context: android.content.Context, id: String) {
+        restoringMini?.source?.get()?.let(::clearMiniRestore)
+        miniBounds = null
+        miniEntryBounds = null
+        videoFrame = null
+        val activity = browseActivity.get()?.takeUnless { it.isFinishing || it.isDestroyed }
+        val intent = com.hhst.youtubelite.watch.WatchActivity.intent(activity ?: context, id)
+            .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            .putExtra(DIRECT_AUDIO_RESTORE, true)
+        if (activity == null) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        (activity ?: context).startActivity(intent)
     }
 
     /** Restore through the current browse page, preserving its place in the stack. */

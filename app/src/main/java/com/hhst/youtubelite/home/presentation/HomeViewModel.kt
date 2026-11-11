@@ -609,7 +609,7 @@ class HomeViewModel(
     private fun fillMissingAvatars(items: List<FeedItem>) {
         val directory = avatars ?: return
         val missing = items.filterIsInstance<FeedItem.Video>()
-            .filter { it.avatar.isNullOrBlank() && (it.channelId.isNotBlank() || it.menuEndpoint != null) }
+            .filter { it.avatar.isNullOrBlank() && it.id.isNotBlank() }
             .distinctBy { it.channelId.ifBlank { it.id } }.takeIf { it.isNotEmpty() } ?: return
         avatarJob?.cancel()
         val requestAccount = accountKey()
@@ -635,7 +635,7 @@ class HomeViewModel(
                             val item = missing.getOrNull(next.getAndIncrement()) ?: break
                             val channelId = item.channelId.takeIf(String::isNotBlank) ?: item.menuEndpoint?.let {
                                 directory.channel(item.id, com.liskovsoft.youtubeapi.videoinfo.V2.MenuEndpoint(it.panelId, it.params))
-                            } ?: continue
+                            } ?: directory.channelForVideo(item.id) ?: continue
                             requestedIds += channelId
                             if (item.channelId.isBlank()) _state.update { state ->
                                 if (requestAccount != accountKey() || requestFilter != state.selectedChip || requestSession != state.sessionGeneration) return@update state

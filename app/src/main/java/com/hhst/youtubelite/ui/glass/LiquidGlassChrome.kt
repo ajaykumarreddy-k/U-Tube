@@ -501,7 +501,7 @@ fun LiquidGlassAudioMiniPlayer(
                         }
                     },
                     onDragCancel = {
-                        scope.launch { dragOffsetX.animateTo(0f) }
+                        scope.launch { dragOffsetX.animateTo(0f, AppMotion.appleSpring()) }
                     },
                 )
             }

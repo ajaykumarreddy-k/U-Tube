@@ -103,11 +103,12 @@ abstract class NativeActivity : ComponentActivity() {
         val internal = intent.component?.packageName == packageName
         val watch = intent.component?.className == com.hhst.youtubelite.watch.WatchActivity::class.java.name
         val sheet = intent.component?.className == com.hhst.youtubelite.downloader.ui.DownloadSheetActivity::class.java.name
+        val directAudioRestore = intent.getBooleanExtra(com.hhst.youtubelite.navigation.WatchTransition.DIRECT_AUDIO_RESTORE, false)
         if (watch && this is com.hhst.youtubelite.watch.WatchActivity) {
             // Selecting another recommendation keeps the same watch host and
             // its browse destination; the watch page is never its own backdrop.
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        } else if (watch && !intent.hasExtra(com.hhst.youtubelite.navigation.WatchTransition.ORIGIN)) {
+        } else if (watch && !directAudioRestore && !intent.hasExtra(com.hhst.youtubelite.navigation.WatchTransition.ORIGIN)) {
             val id = intent.getStringExtra(com.hhst.youtubelite.watch.WatchActivity.EXTRA_VIDEO_ID)
             if (id != null) com.hhst.youtubelite.navigation.WatchTransition.prepare(window.decorView, id, intent)
         }
@@ -115,7 +116,7 @@ abstract class NativeActivity : ComponentActivity() {
             val mode = animationFor(intent)
             val resources = when {
                 // The translucent download host already animates its sheet.
-                watch || sheet || mode == NavigationAnimation.Instant || !motionEnabled() -> 0 to 0
+                (watch && !directAudioRestore) || sheet || mode == NavigationAnimation.Instant || !motionEnabled() -> 0 to 0
                 mode == NavigationAnimation.Tab -> tabAnimations(intent.getBooleanExtra(EXTRA_TAB_BACKWARD, false))
                 else -> R.anim.navigation_detail_enter to R.anim.navigation_detail_exit
             }

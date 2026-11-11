@@ -69,10 +69,26 @@ private fun Artwork(asset: String, modifier: Modifier = Modifier) {
 
 @Composable
 private fun Avatar(asset: String, author: String, channelId: String, onAction: (HomeAction) -> Unit, size: Dp = 36.dp, modifier: Modifier = Modifier) {
-    Box(modifier.size(size).clip(CircleShape).clickable(role = Role.Button) {
-        onAction(HomeAction.Navigate(HomeNavigationRequest.Channel(channelId)))
-    }.testTag("channel-$channelId").semanticsLabel(stringResource(R.string.a11y_go_to_channel , author))) {
-        Artwork(asset, Modifier.fillMaxSize())
+    val glass = DesignTokens.Glass
+    Box(
+        modifier
+            .size(size)
+            .clip(CircleShape)
+            .background(glass.recessedFill)
+            .border(0.5.dp, glass.hairlineBorder.copy(alpha = 0.45f), CircleShape)
+            .clickable(role = Role.Button) {
+                onAction(HomeAction.Navigate(HomeNavigationRequest.Channel(channelId)))
+            }.testTag("channel-$channelId").semanticsLabel(stringResource(R.string.a11y_go_to_channel , author)),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (asset.isBlank()) {
+            val initial = author.trim().firstOrNull()?.uppercaseChar()?.toString().orEmpty()
+            if (initial.isNotEmpty()) {
+                AppText(initial, size = 14, line = 18, weight = FontWeight.SemiBold, color = glass.contentSecondary)
+            }
+        } else {
+            Artwork(asset, Modifier.fillMaxSize())
+        }
     }
 }
 
@@ -85,25 +101,31 @@ private fun VideoCard(item: FeedItem.Video, compact: Boolean, onAction: (HomeAct
         onAction(HomeAction.Navigate(HomeNavigationRequest.Watch(item.id)))
     }
     Column(Modifier.testTag("feed-item-${item.id}")) {
+        val thumbShape = RoundedCornerShape(16.dp)
+        val glass = DesignTokens.Glass
         Box(
             Modifier
                 .fillMaxWidth()
                 .padding(horizontal = if (compact) 12.dp else 0.dp)
                 .aspectRatio(16f / 9)
-                .clip(RoundedCornerShape(14.dp))
+                .clip(thumbShape)
+                .background(glass.recessedFill)
+                .border(0.5.dp, glass.hairlineBorder.copy(alpha = 0.28f), thumbShape)
                 .clickable(role = Role.Button) { openWatch() }
                 .semanticsLabel("${item.title}, ${item.duration}"),
         ) {
             VideoArtwork(item.id, item.artwork, Modifier.fillMaxSize())
+            val badgeShape = RoundedCornerShape(7.dp)
             Box(
                 Modifier
                     .align(Alignment.BottomEnd)
                     .padding(8.dp)
                     .background(
                         if (item.live) DesignTokens.Red else Color.Black.copy(alpha = 0.72f),
-                        RoundedCornerShape(6.dp),
+                        badgeShape,
                     )
-                    .padding(horizontal = 6.dp, vertical = 2.dp),
+                    .border(0.5.dp, Color.White.copy(alpha = 0.18f), badgeShape)
+                    .padding(horizontal = 7.dp, vertical = 2.dp),
             ) {
                 AppText(item.duration, size = 12, line = 16, weight = FontWeight.Medium, color = Color.White)
             }

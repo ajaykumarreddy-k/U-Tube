@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
@@ -165,13 +164,34 @@ private fun LibraryList(listState: LazyListState, content: LibraryContent.Ready,
             }
         }
         item(key = "rows") {
-            Column(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-                LibraryRowItem(LibraryRow.History, AppIcon.Clock) { onAction(LibraryAction.OpenHistory) }
-                LibraryRowItem(LibraryRow.Playlists, AppIcon.Playlist) { onAction(LibraryAction.OpenPlaylists) }
-                LibraryRowItem(LibraryRow.WatchLater, AppIcon.Bookmark) { onAction(LibraryAction.OpenWatchLater) }
-                if (signedIn) LibraryRowItem(LibraryRow.LikedVideos, AppIcon.Like) { onAction(LibraryAction.OpenLiked) }
-                LibraryRowItem(LibraryRow.Queue, AppIcon.Queue) { onAction(LibraryAction.OpenQueue) }
-                LibraryRowItem(LibraryRow.Downloads, AppIcon.Download) { onAction(LibraryAction.OpenDownloads) }
+            val menuEntries = buildList {
+                add(Triple(LibraryRow.History, AppIcon.Clock) { onAction(LibraryAction.OpenHistory) })
+                add(Triple(LibraryRow.Playlists, AppIcon.Playlist) { onAction(LibraryAction.OpenPlaylists) })
+                add(Triple(LibraryRow.WatchLater, AppIcon.Bookmark) { onAction(LibraryAction.OpenWatchLater) })
+                if (signedIn) add(Triple(LibraryRow.LikedVideos, AppIcon.Like) { onAction(LibraryAction.OpenLiked) })
+                add(Triple(LibraryRow.Queue, AppIcon.Queue) { onAction(LibraryAction.OpenQueue) })
+                add(Triple(LibraryRow.Downloads, AppIcon.Download) { onAction(LibraryAction.OpenDownloads) })
+            }
+            com.hhst.youtubelite.ui.glass.LiquidGlassCard(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                cornerRadius = 20.dp,
+                tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+                contentPadding = PaddingValues(vertical = 4.dp),
+            ) {
+                Column(Modifier.fillMaxWidth()) {
+                    menuEntries.forEachIndexed { index, (row, icon, onOpen) ->
+                        LibraryRowItem(row, icon, onOpen)
+                        if (index < menuEntries.lastIndex) {
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 52.dp, end = 16.dp)
+                                    .height(0.5.dp)
+                                    .background(glassPalette.hairlineBorder.copy(alpha = 0.55f)),
+                            )
+                        }
+                    }
+                }
             }
         }
         when {
@@ -213,25 +233,31 @@ private fun ShelfRetry(message: String, loading: Boolean, onRetry: () -> Unit) {
 @Composable
 fun HistoryUndoBanner(removed: RemovedHistoryEntry, modifier: Modifier = Modifier,
                       onUndo: () -> Unit, onDismiss: () -> Unit) {
-    Surface(modifier.testTag("history-undo"), shape = RoundedCornerShape(8.dp),
-        color = DesignTokens.Ink, shadowElevation = 4.dp) {
-        Row(Modifier.padding(start = 16.dp, end = 8.dp, top = 6.dp, bottom = 6.dp),
-            verticalAlignment = Alignment.CenterVertically) {
+    val glass = DesignTokens.Glass
+    com.hhst.youtubelite.ui.glass.LiquidGlassSurface(
+        modifier = modifier.testTag("history-undo"),
+        shape = RoundedCornerShape(20.dp),
+        cornerRadius = 20.dp,
+        tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+        contentPadding = PaddingValues(start = 16.dp, end = 8.dp, top = 6.dp, bottom = 6.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             AppText(stringResource(R.string.history_entry_removed), Modifier.weight(1f),
-                size = 14, line = 20, color = DesignTokens.Background)
+                size = 14, line = 20, color = glass.contentPrimary)
             PillButton(stringResource(R.string.undo), onUndo)
             AppIconButton(AppIcon.Close, stringResource(R.string.a11y_close_undo),
-                modifier = Modifier.testTag("history-undo-dismiss"), color = DesignTokens.Background) { onDismiss() }
+                modifier = Modifier.testTag("history-undo-dismiss"), color = glass.contentSecondary) { onDismiss() }
         }
     }
 }
 
 @Composable
 private fun ShelfHeader(label: String, onSeeAll: () -> Unit) {
+    val glass = DesignTokens.Glass
     Row(Modifier.fillMaxWidth().heightIn(min = 48.dp).padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-        AppText(label, Modifier.weight(1f), size = 16, line = 22, weight = FontWeight.Medium)
-        Box(Modifier.clip(RoundedCornerShape(8.dp)).clickable(role = Role.Button, onClick = onSeeAll).padding(horizontal = 12.dp, vertical = 6.dp)) {
-            AppText(stringResource(R.string.ui_view_all), size = 14, line = 20, weight = FontWeight.Medium)
+        AppText(label, Modifier.weight(1f), size = 17, line = 22, weight = FontWeight.SemiBold)
+        Box(Modifier.clip(RoundedCornerShape(10.dp)).clickable(role = Role.Button, onClick = onSeeAll).padding(horizontal = 12.dp, vertical = 6.dp)) {
+            AppText(stringResource(R.string.ui_view_all), size = 14, line = 20, weight = FontWeight.Medium, color = glass.accent)
         }
     }
 }
