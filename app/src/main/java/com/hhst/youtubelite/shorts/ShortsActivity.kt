@@ -15,6 +15,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.displayCutout
@@ -158,6 +159,18 @@ class ShortsActivity : ComponentActivity() {
 
     val shareGateway: ShareGateway by lazy { ShareGateway(this) }
 
+    private val voiceSearch = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult(),
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val spoken = result.data?.getStringArrayListExtra(android.speech.RecognizerIntent.EXTRA_RESULTS)
+                ?.firstOrNull()?.trim().orEmpty()
+            if (spoken.isNotEmpty()) {
+                launchNavigation(com.hhst.youtubelite.search.SearchResultsActivity.intent(this, spoken))
+            }
+        }
+    }
+
     private fun launchNavigation(intent: android.content.Intent) {
         if (com.hhst.youtubelite.data.media.ContentRepositories.fixtures(this.intent))
             intent.putExtra(com.hhst.youtubelite.data.media.ContentRepositories.EXTRA_FIXTURE_SCENE, true)
@@ -266,6 +279,9 @@ class ShortsActivity : ComponentActivity() {
             var shortsPlayerDialog by remember { mutableStateOf<PlayerDialog?>(null) }
             var descriptionItem by remember { mutableStateOf<String?>(null) }
             var playbackOrderOpen by remember { mutableStateOf(false) }
+            var showSearch by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(false) }
+            var searchQuery by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
+            BackHandler(enabled = showSearch) { showSearch = false }
             val shortsCallbacks = remember(playerViewModel) {
                 object : PlayerSurfaceCallbacks, PlayerPlaybackActions by playerViewModel {
                     override fun onGestureEnd() = playerViewModel.onGestureEnd()
@@ -466,7 +482,55 @@ class ShortsActivity : ComponentActivity() {
                 // Surface resets and same-video recovery must not cover a real retained frame.
                 isVideoReady = { playerState.videoId == it && playerState.hasRenderedVideoFrame },
                 onSwipeStart = if (fixtures) null else playerViewModel::holdShortsForSwipe,
-                onSwipeCancel = if (fixtures) null else playerViewModel::resumeShortsAfterSwipe)
+                onSwipeCancel = if (fixtures) null else playerViewModel::resumeShortsAfterSwipe,
+                navigationBar = if (fixtures || showSearch) null else {
+                    {
+                        val signedIn = com.hhst.youtubelite.data.media.MediaSession.snapshot().signedIn
+                        com.hhst.youtubelite.ui.components.MainNavigationBar(
+                            tag = "shorts",
+                            signedIn = signedIn,
+                            avatarAsset = null,
+                            selected = com.hhst.youtubelite.ui.components.MainTab.Shorts,
+                            onSearch = { showSearch = true },
+                        ) { tab ->
+                            if (tab != com.hhst.youtubelite.ui.components.MainTab.Shorts) {
+                                com.hhst.youtubelite.ui.components.MainTabs.intent(this@ShortsActivity, tab, signedIn)?.let {
+                                    launchNavigation(it)
+                                }
+                            }
+                        }
+                    }
+                })
+            if (showSearch) {
+                val query = searchQuery.trim()
+                val rows = com.hhst.youtubelite.ui.components.rememberSearchRows(if (fixtures) null else sources.suggestions, query)
+                Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding()) {
+                    com.hhst.youtubelite.ui.design.SearchPanel(
+                        query = searchQuery,
+                        suggestions = rows?.suggestions ?: if (query.isBlank()) emptyList() else listOf(query, "$query documentary", "$query music", "$query live").distinct(),
+                        history = rows?.history.orEmpty(),
+                        onRemoveHistory = rows?.onRemove,
+                        onQueryChanged = { searchQuery = it },
+                        onSubmit = { submitted ->
+                            showSearch = false
+                            rows?.onSubmit?.invoke(submitted)
+                            val target = submitted.trim()
+                            if (target.isNotEmpty()) {
+                                launchNavigation(com.hhst.youtubelite.search.SearchResultsActivity.intent(this@ShortsActivity, target))
+                            }
+                        },
+                        onClose = { showSearch = false },
+                        onVoiceSearch = {
+                            runCatching {
+                                voiceSearch.launch(
+                                    Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                                        .putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM),
+                                )
+                            }
+                        },
+                    )
+                }
+            }
             if (state.overlay is ShortsOverlay.Comments && activeComments != null) {
                 Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.systemBars.union(WindowInsets.displayCutout)).testTag("comments-panel-host")) {
                     CommentsPanel(

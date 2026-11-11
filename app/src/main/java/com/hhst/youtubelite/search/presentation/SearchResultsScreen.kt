@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,6 +57,9 @@ import com.hhst.youtubelite.R
 import com.hhst.youtubelite.search.domain.*
 import com.hhst.youtubelite.watch.domain.toProvisional
 import com.hhst.youtubelite.ui.design.*
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import com.hhst.youtubelite.ui.design.appDescription
 import com.hhst.youtubelite.home.presentation.LoadingSpinner
 import androidx.compose.ui.res.stringResource
@@ -128,8 +132,10 @@ fun SearchResultsScreen(
                 }
             } else null
             val backgroundHidden = state.searchOpen || state.overlay is SearchOverlay.ItemMenu || state.overlay is SearchOverlay.PlaylistMenu
+            val opticalBackdrop = rememberUTubeBackdrop(DesignTokens.Background)
+            CompositionLocalProvider(LocalLiquidGlassBackdrop provides opticalBackdrop) {
             Box(Modifier.fillMaxSize().then(if (backgroundHidden) Modifier.clearAndSetSemantics {} else Modifier)) {
-                Column(Modifier.fillMaxSize()) {
+                Column(Modifier.fillMaxSize().utubeBackdropSource(opticalBackdrop)) {
                     CollapsingAppBar(appBar) {
                         SearchTopBar(state.query, onAction, onBack)
                     }
@@ -227,6 +233,7 @@ fun SearchResultsScreen(
             }
             if (state.overlay is SearchOverlay.PlaylistMenu) com.hhst.youtubelite.playlist.presentation.PlaylistShareSheet(
                 { onAction(SearchAction.CloseItemMenu) }, { onAction(SearchAction.SharePlaylist) })
+            }
         }
     }
 }

@@ -35,6 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.Dp
 import com.hhst.youtubelite.ui.design.*
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import com.hhst.youtubelite.R
 import com.hhst.youtubelite.home.domain.*
 import com.hhst.youtubelite.playlist.data.FixturePlaylistRepository
@@ -151,8 +154,10 @@ fun HomeScreen(state: HomeUiState, onAction: (HomeAction) -> Unit, modifier: Mod
             val searchOpen = state.overlay == HomeOverlay.Search
             val glassPalette = DesignTokens.Glass
             val navBottomClearance = DesignTokens.BottomBarHeight + 28.dp
+            val opticalBackdrop = rememberUTubeBackdrop(DesignTokens.Background)
+            CompositionLocalProvider(LocalLiquidGlassBackdrop provides opticalBackdrop) {
             Box(Modifier.fillMaxSize().then(if (state.overlay != HomeOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
-                Column(Modifier.fillMaxSize()) {
+                Column(Modifier.fillMaxSize().utubeBackdropSource(opticalBackdrop)) {
                     if (feed == null && state.content != HomeContent.Loading) {
                         HomeTopBar(onAction)
                         if (catalogMode) ChipStrip(state.selectedChip, state.chips, true, onAction)
@@ -271,6 +276,7 @@ fun HomeScreen(state: HomeUiState, onAction: (HomeAction) -> Unit, modifier: Mod
                         .testTag("home-verification-banner"),
                 )
             }
+            }
         }
     }
 }
@@ -316,7 +322,7 @@ private fun HomeTopBar(onAction: (HomeAction) -> Unit) {
 
 @Composable
 private fun HomeBottomBar(signedIn: Boolean, onAction: (HomeAction) -> Unit, avatar: String? = null) {
-    val destinations = (if (signedIn) HomeDestination.entries else listOf(HomeDestination.Home, HomeDestination.Shorts, HomeDestination.You))
+    val destinations = listOf(HomeDestination.Home, HomeDestination.Shorts, HomeDestination.You)
         .filterNot { LocalHideShorts.current && it == HomeDestination.Shorts }
     val glassPalette = DesignTokens.Glass
     Box(
@@ -354,6 +360,8 @@ private fun HomeBottomBar(signedIn: Boolean, onAction: (HomeAction) -> Unit, ava
                 }
             },
             onSelect = { index -> onAction(HomeAction.Navigate(HomeNavigationRequest.Destination(destinations[index]))) },
+            onSearch = { onAction(HomeAction.OpenSearch) },
+            searchTag = "home-nav-search",
         )
     }
 }

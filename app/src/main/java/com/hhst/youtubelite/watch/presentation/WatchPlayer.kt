@@ -37,7 +37,8 @@ import org.koin.compose.koinInject
 internal fun WatchPlayer(modifier: Modifier, onBack: () -> Unit, pip: Boolean = false,
     presentationState: com.hhst.youtubelite.player.PlayerUiState? = null,
     chromeAlpha: () -> Float = { 1f },
-    showPipLoadingIndicator: Boolean = true) {
+    showPipLoadingIndicator: Boolean = true,
+    fullscreenActions: com.hhst.youtubelite.player.surface.FullscreenWatchActions? = null) {
     val playerViewModel: PlayerViewModel = koinInject()
     val livePlayerState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playerState = livePlayerState.withWatchPresentation(presentationState)
@@ -135,6 +136,7 @@ internal fun WatchPlayer(modifier: Modifier, onBack: () -> Unit, pip: Boolean = 
                 modifier = Modifier.fillMaxSize(),
                 managedByHost = true,
                 chromeAlpha = chromeAlpha,
+                fullscreenActions = fullscreenActions,
                 // Only a captured frame of this video can cover its replacement surface.
                 transitionFrame = rememberWatchTransitionFrame(playerState.videoId, handoff?.image, frameReady),
             )

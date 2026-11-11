@@ -14,7 +14,12 @@ import com.hhst.youtubelite.ui.glass.LiquidGlassNavigationBar
 enum class BrowseDestination(val label: String) { Home("Home"), Shorts("Shorts"), Subscriptions("Subscriptions"), You("You") }
 
 @Composable
-fun BrowseNavigationBar(tag: String, signedIn: Boolean = false, onSelect: (BrowseDestination) -> Unit) {
+fun BrowseNavigationBar(
+    tag: String,
+    signedIn: Boolean = false,
+    onSearch: (() -> Unit)? = null,
+    onSelect: (BrowseDestination) -> Unit,
+) {
     val destinations = com.hhst.youtubelite.ui.components.MainTabs
         .tabs(signedIn, LocalHideShorts.current)
         .map { BrowseDestination.valueOf(it.name) }
@@ -45,6 +50,8 @@ fun BrowseNavigationBar(tag: String, signedIn: Boolean = false, onSelect: (Brows
                 }
             },
             onSelect = { index -> onSelect(destinations[index]) },
+            onSearch = onSearch,
+            searchTag = "$tag-nav-search",
         )
     }
 }

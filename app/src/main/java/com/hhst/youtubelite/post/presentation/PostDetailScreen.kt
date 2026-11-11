@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +39,9 @@ import com.hhst.youtubelite.ui.design.AppText
 import com.hhst.youtubelite.ui.design.AppTheme
 import com.hhst.youtubelite.ui.design.Artwork
 import com.hhst.youtubelite.ui.design.DesignTokens
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import com.hhst.youtubelite.ui.design.MenuBottomSheet
 import com.hhst.youtubelite.ui.design.MenuSheetItem
 import com.hhst.youtubelite.ui.design.BrowseNavigationBar
@@ -57,10 +61,12 @@ fun PostDetailScreen(
     val commentsListState = rememberLazyListState()
     AppTheme {
         Box(modifier.fillMaxSize().background(DesignTokens.Background).testTag("post-detail-page")) {
+            val opticalBackdrop = rememberUTubeBackdrop(DesignTokens.Background)
+            CompositionLocalProvider(LocalLiquidGlassBackdrop provides opticalBackdrop) {
             Box(Modifier.fillMaxSize().then(
                 if (state.overlay != PostDetailOverlay.None || state.commentsOpen) Modifier.clearAndSetSemantics {} else Modifier,
             )) {
-                Column(Modifier.fillMaxSize()) {
+                Column(Modifier.fillMaxSize().utubeBackdropSource(opticalBackdrop)) {
                     PostDetailTopBar(state, onAction, onBack)
                     when (val content = state.content) {
                         PostDetailContent.Loading -> Box(
@@ -111,6 +117,7 @@ fun PostDetailScreen(
                     listState = commentsListState,
                     sheetTopOverride = PostLayout.DetailToolbar,
                 )
+            }
             }
         }
     }

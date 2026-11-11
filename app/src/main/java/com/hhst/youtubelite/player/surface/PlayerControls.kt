@@ -3,7 +3,11 @@ package com.hhst.youtubelite.player.surface
 import androidx.compose.ui.platform.testTag
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import com.hhst.youtubelite.ui.design.AppMotion
+import com.hhst.youtubelite.ui.design.AppIcon
+import com.hhst.youtubelite.ui.design.Artwork
 import com.hhst.youtubelite.ui.design.LocalMotionScale
 import com.hhst.youtubelite.ui.design.motionDuration
 import androidx.compose.animation.core.tween
@@ -164,6 +168,18 @@ internal fun PlaybackLoadingIndicator(modifier: Modifier = Modifier, color: Colo
     )
 }
 
+data class FullscreenWatchActions(
+    val liked: Boolean = false,
+    val disliked: Boolean = false,
+    val upNextThumbnail: String? = null,
+    val onLike: () -> Unit = {},
+    val onDislike: () -> Unit = {},
+    val onComments: () -> Unit = {},
+    val onSave: () -> Unit = {},
+    val onMore: () -> Unit = {},
+    val onOpenQueue: () -> Unit = {},
+)
+
 @Composable
 fun TopBar(
     state: PlayerUiState,
@@ -178,18 +194,21 @@ fun TopBar(
     onSubtitleStyle: () -> Unit = {},
     showAuthor: Boolean = true,
     sizing: PlayerUi.ChromeSizing = PlayerUi.CompactChromeSizing,
+    onCast: (() -> Unit)? = null,
+    onToggleAutoplay: (() -> Unit)? = null,
 ) {
+    val fullscreenHud = state.fullscreen && (onCast != null || onToggleAutoplay != null)
     Row(
         modifier = modifier.fillMaxWidth().testTag("player-topbar")
-            .padding(start = 2.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
+            .padding(start = if (fullscreenHud) 8.dp else 2.dp, end = if (fullscreenHud) 8.dp else 4.dp, top = 4.dp, bottom = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         PlayerIconButton(
             icon = R.drawable.ic_arrow_back,
             contentDescription = stringResource(R.string.navigate_back),
             onClick = onBack,
-            iconSize = sizing.iconDp,
-            glassHalo = true,
+            iconSize = if (fullscreenHud) 22 else sizing.iconDp,
+            glassHalo = !fullscreenHud,
         )
         Column(
             modifier = Modifier
@@ -199,8 +218,11 @@ fun TopBar(
         ) {
             Text(
                 text = state.title,
-                style = PlayerUi.TitleStyle.copy(fontSize = (sizing.textSp + 2).sp,
-                    lineHeight = (sizing.textSp + 8).sp),
+                style = PlayerUi.TitleStyle.copy(
+                    fontSize = if (fullscreenHud) 16.sp else (sizing.textSp + 2).sp,
+                    lineHeight = if (fullscreenHud) 21.sp else (sizing.textSp + 8).sp,
+                    fontWeight = if (fullscreenHud) FontWeight.SemiBold else FontWeight.Normal,
+                ),
                 maxLines = 1,
                 overflow = TextOverflow.Clip,
                 modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
@@ -208,8 +230,10 @@ fun TopBar(
             state.author?.takeIf { showAuthor }?.let { author ->
                 Text(
                     text = author,
-                    style = PlayerUi.AuthorStyle.copy(fontSize = (sizing.textSp - 2).sp,
-                        lineHeight = (sizing.textSp + 4).sp),
+                    style = PlayerUi.AuthorStyle.copy(
+                        fontSize = if (fullscreenHud) 12.sp else (sizing.textSp - 2).sp,
+                        lineHeight = if (fullscreenHud) 16.sp else (sizing.textSp + 4).sp,
+                    ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -217,8 +241,54 @@ fun TopBar(
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(0.dp),
+            horizontalArrangement = Arrangement.spacedBy(if (fullscreenHud) 4.dp else 0.dp),
         ) {
+            if (fullscreenHud && onToggleAutoplay != null) {
+                val autoplayOn = state.loopMode == com.hhst.youtubelite.player.engine.LoopMode.QUEUE_NEXT
+                val knobOffset by animateDpAsState(
+                    targetValue = if (autoplayOn) 20.dp else 2.dp,
+                    animationSpec = spring(dampingRatio = 0.78f, stiffness = 420f),
+                    label = "autoplay-knob",
+                )
+                Box(
+                    modifier = Modifier
+                        .padding(horizontal = 4.dp)
+                        .width(42.dp)
+                        .height(24.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(if (autoplayOn) Color(0x66FFFFFF) else PlayerUi.GlassBg)
+                        .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(50))
+                        .clickable(role = Role.Switch, onClick = onToggleAutoplay)
+                        .semantics { contentDescription = "Autoplay" },
+                    contentAlignment = Alignment.CenterStart,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .offset(x = knobOffset)
+                            .size(18.dp)
+                            .background(Color.White, CircleShape),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            painter = painterResource(if (autoplayOn) R.drawable.ic_player_play else R.drawable.ic_player_pause),
+                            contentDescription = null,
+                            tint = Color(0xFF121418),
+                            modifier = Modifier.size(10.dp),
+                        )
+                    }
+                }
+            }
+            if (fullscreenHud && onCast != null) {
+                PlayerIconButton(
+                    icon = R.drawable.ic_cast,
+                    contentDescription = stringResource(R.string.cast),
+                    onClick = onCast,
+                    modifier = Modifier.width(42.dp),
+                    iconSize = 22,
+                    tint = if (state.casting || state.castLinkConnected) PlayerUi.YtRed else PlayerUi.Icon,
+                    glassHalo = false,
+                )
+            }
             Box {
                 PlayerIconButton(
                     icon = if (state.subtitleEnabled) {
@@ -229,10 +299,10 @@ fun TopBar(
                     contentDescription = stringResource(R.string.subtitles),
                     onClick = onSubtitle,
                     modifier = Modifier.width(40.dp),
-                    iconSize = sizing.iconDp,
+                    iconSize = if (fullscreenHud) 22 else sizing.iconDp,
                     onLongClick = onSubtitleStyle,
                     tint = if (state.subtitleEnabled) PlayerUi.YtRed else PlayerUi.Icon,
-                    glassHalo = true,
+                    glassHalo = !fullscreenHud,
                 )
                 if (menu == PlayerAnchorMenu.Subtitles && callbacks != null) {
                     PlayerAnchorDropdown(
@@ -254,8 +324,8 @@ fun TopBar(
                     contentDescription = stringResource(R.string.more_options),
                     onClick = onMore,
                     modifier = Modifier.width(40.dp),
-                    iconSize = (sizing.iconDp * 5 / 6).coerceAtLeast(20),
-                    glassHalo = true,
+                    iconSize = if (fullscreenHud) 22 else (sizing.iconDp * 5 / 6).coerceAtLeast(20),
+                    glassHalo = !fullscreenHud,
                 )
             }
         }
@@ -354,73 +424,214 @@ fun BottomBar(
     compact: Boolean = false,
     sizing: PlayerUi.ChromeSizing = PlayerUi.CompactChromeSizing,
     onTrackAnchor: (Int) -> Unit = {},
+    fullscreenActions: FullscreenWatchActions? = null,
 ) {
     val trackMeasurements = remember { IntArray(2) }
     fun reportTrackAnchor() = onTrackAnchor((trackMeasurements[0] - trackMeasurements[1]).coerceAtLeast(0))
+    val timeBarModifier = Modifier.onGloballyPositioned { coords ->
+        trackMeasurements[1] = coords.positionInParent().y.roundToInt() + coords.size.height
+        reportTrackAnchor()
+    }.layout { measurable, constraints ->
+        val placeable = measurable.measure(constraints)
+        layout(placeable.width, placeable.height / 2) { placeable.place(0, 0) }
+    }
     Column(modifier = modifier.fillMaxWidth().onSizeChanged { trackMeasurements[0] = it.height; reportTrackAnchor() }) {
-        PlayerTimeBar(
-            positionState = positionState,
-            bufferedPositionState = bufferedPositionState,
-            durationMs = state.durationMs,
-            segments = state.sponsorSegments,
-            chapterStarts = state.chapters.map { it.startSeconds.toLong() * 1000 },
-            onSeek = onSeek,
-            onPreview = { target -> callbacks?.onTimeBarPreview(target) },
-            onCommit = { callbacks?.onTimeBarCommit() },
-            // Shares the 48 dp slot's lower half with the controls row; the visible
-            // track sits at the halved slot's bottom edge. onGloballyPositioned must
-            // precede the layout modifier — after it, size.height would be the full
-            // 48 dp canvas.
-            modifier = Modifier.onGloballyPositioned { coords ->
-                trackMeasurements[1] = coords.positionInParent().y.roundToInt() + coords.size.height
-                reportTrackAnchor()
-            }.layout { measurable, constraints ->
-                val placeable = measurable.measure(constraints)
-                layout(placeable.width, placeable.height / 2) { placeable.place(0, 0) }
-            },
-        )
-        BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val chipMaxWidth = maxWidth * 0.4f
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Row(Modifier.heightIn(min = PlayerUi.BOTTOM_ROW_DP.dp).align(Alignment.CenterVertically),
-                    verticalAlignment = Alignment.CenterVertically) {
-                    PositionText(
-                        positionState = positionState,
-                        durationMs = state.durationMs,
-                        isLive = state.isLive,
-                        textSizeSp = sizing.textSp,
-                    )
-                    // Part of the always-shown bottom readout; compact mode drops only
-                    // the secondary action buttons, never this chip.
-                    ChapterEntryChip(
-                        chapters = chapters,
-                        hasSegments = hasSegments,
-                        positionState = positionState,
-                        onOpen = onOpenChapters,
-                        textSizeSp = sizing.textSp,
-                        modifier = Modifier.padding(start = 6.dp).widthIn(max = chipMaxWidth),
-                    )
-                }
+        if (state.fullscreen) {
+            BoxWithConstraints(Modifier.fillMaxWidth().padding(horizontal = 10.dp)) {
+                val chipMaxWidth = maxWidth * 0.45f
                 Row(
-                    modifier = Modifier.heightIn(min = PlayerUi.BOTTOM_ROW_DP.dp),
-                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    Row(
+                        modifier = Modifier.weight(1f, fill = false),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(50))
+                                .background(PlayerUi.GlassBg)
+                                .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(50))
+                                .padding(horizontal = 11.dp, vertical = 5.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            PositionText(
+                                positionState = positionState,
+                                durationMs = state.durationMs,
+                                isLive = state.isLive,
+                                textSizeSp = sizing.textSp.coerceAtMost(14),
+                            )
+                        }
+                        ChapterEntryChip(
+                            chapters = chapters,
+                            hasSegments = hasSegments,
+                            positionState = positionState,
+                            onOpen = onOpenChapters,
+                            textSizeSp = sizing.textSp.coerceAtMost(13),
+                            modifier = Modifier.widthIn(max = chipMaxWidth),
+                        )
+                    }
                     PlayerIconButton(
-                        icon = if (state.fullscreen) R.drawable.ic_fullscreen_exit else R.drawable.ic_fullscreen,
+                        icon = R.drawable.ic_fullscreen_exit,
                         contentDescription = stringResource(R.string.action_fullscreen),
                         onClick = onFullscreen,
-                        iconSize = sizing.iconDp,
+                        iconSize = 20,
                         glassHalo = true,
                     )
                 }
             }
+            PlayerTimeBar(
+                positionState = positionState,
+                bufferedPositionState = bufferedPositionState,
+                durationMs = state.durationMs,
+                segments = state.sponsorSegments,
+                chapterStarts = state.chapters.map { it.startSeconds.toLong() * 1000 },
+                onSeek = onSeek,
+                onPreview = { target -> callbacks?.onTimeBarPreview(target) },
+                onCommit = { callbacks?.onTimeBarCommit() },
+                modifier = timeBarModifier,
+            )
+            if (fullscreenActions != null) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(50))
+                            .background(PlayerUi.GlassBg)
+                            .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(50))
+                            .padding(horizontal = 8.dp, vertical = 2.dp),
+                        horizontalArrangement = Arrangement.spacedBy(2.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        FullscreenGlassAction(
+                            icon = AppIcon.Like,
+                            description = stringResource(R.string.ui_like_this_video),
+                            tint = if (fullscreenActions.liked) PlayerUi.YtRed else Color.White,
+                            onClick = fullscreenActions.onLike,
+                        )
+                        FullscreenGlassAction(
+                            icon = AppIcon.Dislike,
+                            description = stringResource(R.string.ui_dislike_this_video),
+                            tint = if (fullscreenActions.disliked) PlayerUi.YtRed else Color.White,
+                            onClick = fullscreenActions.onDislike,
+                        )
+                        FullscreenGlassAction(
+                            icon = AppIcon.Comment,
+                            description = stringResource(R.string.comments_title),
+                            tint = Color.White,
+                            onClick = fullscreenActions.onComments,
+                        )
+                        FullscreenGlassAction(
+                            icon = AppIcon.Bookmark,
+                            description = stringResource(R.string.save_to_playlist),
+                            tint = Color.White,
+                            onClick = fullscreenActions.onSave,
+                        )
+                        FullscreenGlassAction(
+                            icon = AppIcon.More,
+                            description = stringResource(R.string.more_options),
+                            tint = Color.White,
+                            onClick = fullscreenActions.onMore,
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .size(width = 62.dp, height = 38.dp)
+                            .clip(RoundedCornerShape(14.dp))
+                            .background(PlayerUi.GlassBg)
+                            .border(1.dp, Color.White.copy(alpha = 0.45f), RoundedCornerShape(14.dp))
+                            .clickable(role = Role.Button, onClick = fullscreenActions.onOpenQueue),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        val thumb = fullscreenActions.upNextThumbnail
+                        if (!thumb.isNullOrBlank()) {
+                            Artwork(thumb, modifier = Modifier.fillMaxSize())
+                        } else {
+                            AppIcon(AppIcon.Queue, Modifier.size(20.dp), color = Color.White)
+                        }
+                    }
+                }
+            }
+        } else {
+            PlayerTimeBar(
+                positionState = positionState,
+                bufferedPositionState = bufferedPositionState,
+                durationMs = state.durationMs,
+                segments = state.sponsorSegments,
+                chapterStarts = state.chapters.map { it.startSeconds.toLong() * 1000 },
+                onSeek = onSeek,
+                onPreview = { target -> callbacks?.onTimeBarPreview(target) },
+                onCommit = { callbacks?.onTimeBarCommit() },
+                modifier = timeBarModifier,
+            )
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val chipMaxWidth = maxWidth * 0.4f
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Row(Modifier.heightIn(min = PlayerUi.BOTTOM_ROW_DP.dp).align(Alignment.CenterVertically),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        PositionText(
+                            positionState = positionState,
+                            durationMs = state.durationMs,
+                            isLive = state.isLive,
+                            textSizeSp = sizing.textSp,
+                        )
+                        ChapterEntryChip(
+                            chapters = chapters,
+                            hasSegments = hasSegments,
+                            positionState = positionState,
+                            onOpen = onOpenChapters,
+                            textSizeSp = sizing.textSp,
+                            modifier = Modifier.padding(start = 6.dp).widthIn(max = chipMaxWidth),
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.heightIn(min = PlayerUi.BOTTOM_ROW_DP.dp),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        PlayerIconButton(
+                            icon = if (state.fullscreen) R.drawable.ic_fullscreen_exit else R.drawable.ic_fullscreen,
+                            contentDescription = stringResource(R.string.action_fullscreen),
+                            onClick = onFullscreen,
+                            iconSize = sizing.iconDp,
+                            glassHalo = true,
+                        )
+                    }
+                }
+            }
         }
+    }
+}
+
+@Composable
+private fun FullscreenGlassAction(
+    icon: AppIcon,
+    description: String,
+    tint: Color,
+    onClick: () -> Unit,
+) {
+    val haptic = com.hhst.youtubelite.ui.design.rememberHapticAction()
+    Box(
+        modifier = Modifier
+            .size(38.dp)
+            .clip(CircleShape)
+            .clickable(role = Role.Button, onClick = { haptic(); onClick() })
+            .semantics { contentDescription = description },
+        contentAlignment = Alignment.Center,
+    ) {
+        AppIcon(icon = icon, modifier = Modifier.size(20.dp), color = tint)
     }
 }
 

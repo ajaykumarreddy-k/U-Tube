@@ -101,6 +101,7 @@ fun PlayerSurface(
     transitionFrame: android.graphics.Bitmap? = null,
     chromeAlpha: () -> Float = { 1f },
     showPipLoadingIndicator: Boolean = true,
+    fullscreenActions: FullscreenWatchActions? = null,
 ) {
     var sheet by remember { mutableStateOf<PlayerSheet?>(null) }
     var dialog by remember { mutableStateOf<PlayerDialog?>(null) }
@@ -422,6 +423,15 @@ fun PlayerSurface(
                                 callbacks = callbacks,
                                 showAuthor = showChromeAuthor,
                                 sizing = chromeSizing,
+                                onCast = if (state.fullscreen && fullscreenActions != null) ({ dialog = PlayerDialog.Cast }) else null,
+                                onToggleAutoplay = if (state.fullscreen && fullscreenActions != null) ({
+                                    val next = if (state.loopMode == com.hhst.youtubelite.player.engine.LoopMode.PAUSE_AT_END) {
+                                        com.hhst.youtubelite.player.engine.LoopMode.QUEUE_NEXT
+                                    } else {
+                                        com.hhst.youtubelite.player.engine.LoopMode.PAUSE_AT_END
+                                    }
+                                    callbacks.onLoopMode(next)
+                                }) else null,
                                 modifier = Modifier.align(Alignment.TopCenter).onSizeChanged { topBarHeightPx = it.height },
                             )
                             BottomBar(
@@ -437,6 +447,10 @@ fun PlayerSurface(
                                 compact = compactChrome,
                                 sizing = chromeSizing,
                                 onTrackAnchor = { trackClearancePx = it },
+                                fullscreenActions = if (state.fullscreen) fullscreenActions?.copy(
+                                    onMore = { sheet = PlayerSheet.More },
+                                    onOpenQueue = { sheet = PlayerSheet.Queue },
+                                ) else null,
                                 modifier = Modifier.align(Alignment.BottomCenter).onSizeChanged { bottomBarHeightPx = it.height },
                             )
                         }

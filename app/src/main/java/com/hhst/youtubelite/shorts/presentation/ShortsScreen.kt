@@ -10,6 +10,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
@@ -30,18 +31,23 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hhst.youtubelite.R
 import com.hhst.youtubelite.library.presentation.LibraryError
 import com.hhst.youtubelite.shorts.domain.ShortItem
 import com.hhst.youtubelite.shorts.domain.ShortsAction
 import com.hhst.youtubelite.shorts.domain.ShortsContent
+import com.hhst.youtubelite.shorts.domain.ShortsOverlay
 import com.hhst.youtubelite.shorts.domain.ShortsUiState
 import com.hhst.youtubelite.ui.design.AppIconButton
 import com.hhst.youtubelite.ui.design.AppIcon
 import com.hhst.youtubelite.ui.design.AppText
 import com.hhst.youtubelite.ui.design.DesignTokens
 import com.hhst.youtubelite.ui.design.SubscribeButton
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import androidx.compose.ui.res.stringResource
 import com.hhst.youtubelite.ui.design.appDescription
 import com.hhst.youtubelite.dearrow.rememberDeArrowTitle
@@ -51,21 +57,46 @@ fun ShortsScreen(state: ShortsUiState, onAction: (ShortsAction) -> Unit, modifie
     videoContent: (@Composable (String) -> Unit)? = null,
     isVideoReady: (String) -> Boolean = { false },
     playbackControls: (@Composable (String, Boolean) -> Unit)? = null,
-    onSwipeStart: (() -> Unit)? = null, onSwipeCancel: ((String) -> Unit)? = null) {
-    Box(modifier.fillMaxSize().background(Color.Black).testTag("shorts-screen")) {
-        when (val content = state.content) {
-            ShortsContent.Loading -> ShortsSkeleton()
-            ShortsContent.Failed -> androidx.compose.runtime.CompositionLocalProvider(
-                com.hhst.youtubelite.ui.design.LocalAppColors provides com.hhst.youtubelite.ui.design.DarkAppPalette,
-            ) {
-                com.hhst.youtubelite.ui.theme.AppTheme(darkTheme = true) {
-                    LibraryError("shorts-error") { onAction(ShortsAction.Retry) }
+    onSwipeStart: (() -> Unit)? = null, onSwipeCancel: ((String) -> Unit)? = null,
+    navigationBar: (@Composable () -> Unit)? = null) {
+    val opticalBackdrop = if (navigationBar != null) rememberUTubeBackdrop() else null
+    val bottomInset = if (navigationBar != null) 78.dp else 0.dp
+    CompositionLocalProvider(
+        LocalLiquidGlassBackdrop provides (opticalBackdrop ?: LocalLiquidGlassBackdrop.current),
+    ) {
+        Box(modifier.fillMaxSize().background(Color.Black).testTag("shorts-screen")) {
+            Box(Modifier.fillMaxSize().let { if (opticalBackdrop != null) it.utubeBackdropSource(opticalBackdrop) else it }) {
+                when (val content = state.content) {
+                    ShortsContent.Loading -> ShortsSkeleton()
+                    ShortsContent.Failed -> CompositionLocalProvider(
+                        com.hhst.youtubelite.ui.design.LocalAppColors provides com.hhst.youtubelite.ui.design.DarkAppPalette,
+                    ) {
+                        com.hhst.youtubelite.ui.theme.AppTheme(darkTheme = true) {
+                            LibraryError("shorts-error") { onAction(ShortsAction.Retry) }
+                        }
+                    }
+                    ShortsContent.Empty -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        AppText(stringResource(R.string.ui_no_shorts_available), color = Color.White, size = 16, line = 22)
+                    }
+                    is ShortsContent.Ready -> ShortsPager(
+                        content.page.items,
+                        state.currentItemId,
+                        onAction,
+                        videoContent,
+                        isVideoReady,
+                        playbackControls,
+                        state,
+                        onSwipeStart,
+                        onSwipeCancel,
+                        bottomInset = bottomInset,
+                    )
                 }
             }
-            ShortsContent.Empty -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                AppText(stringResource(R.string.ui_no_shorts_available), color = Color.White, size = 16, line = 22)
+            if (navigationBar != null && state.overlay == ShortsOverlay.None) {
+                Box(Modifier.align(Alignment.BottomCenter).windowInsetsPadding(WindowInsets.navigationBars)) {
+                    navigationBar()
+                }
             }
-            is ShortsContent.Ready -> ShortsPager(content.page.items, state.currentItemId, onAction, videoContent, isVideoReady, playbackControls, state, onSwipeStart, onSwipeCancel)
         }
     }
 }
@@ -95,7 +126,8 @@ private fun ShortsSkeleton() {
 private fun ShortsPager(items: List<ShortItem>, startItemId: String?, onAction: (ShortsAction) -> Unit, videoContent: (@Composable (String) -> Unit)?,
     isVideoReady: (String) -> Boolean,
     playbackControls: (@Composable (String, Boolean) -> Unit)?,
-    state: ShortsUiState, onSwipeStart: (() -> Unit)?, onSwipeCancel: ((String) -> Unit)?) {
+    state: ShortsUiState, onSwipeStart: (() -> Unit)?, onSwipeCancel: ((String) -> Unit)?,
+    bottomInset: Dp = 0.dp) {
     val pagerState = rememberPagerState(initialPage = items.indexOfFirst { it.id == startItemId }.coerceAtLeast(0)) { items.size }
     val currentAction by rememberUpdatedState(onAction)
     val currentItems by rememberUpdatedState(items)
@@ -145,11 +177,12 @@ private fun ShortsPager(items: List<ShortItem>, startItemId: String?, onAction: 
             rating = state.ratings[items[page].id] ?: com.hhst.youtubelite.watch.domain.VideoRating.None,
             subscribed = state.subscriptions[items[page].channelId] == true,
             subscribePending = items[page].channelId in state.subscriptionsPending,
-            ratingPending = items[page].id in state.ratingsPending)
+            ratingPending = items[page].id in state.ratingsPending,
+            bottomInset = bottomInset)
     }
     if (state.appendFailed) AppText(androidx.compose.ui.res.stringResource(R.string.retry),
         Modifier.align(Alignment.BottomCenter).windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(bottom = 16.dp).clip(RoundedCornerShape(24.dp)).background(Color(0xFF272727))
+            .padding(bottom = 16.dp + bottomInset).clip(RoundedCornerShape(24.dp)).background(Color(0xFF272727))
             .clickable(role = Role.Button) { onAction(ShortsAction.RetryMore) }
             .heightIn(min = 48.dp).padding(horizontal = 20.dp, vertical = 12.dp)
             .testTag("shorts-append-retry"), color = Color.White)
@@ -162,7 +195,8 @@ private fun ShortPage(item: ShortItem, onAction: (ShortsAction) -> Unit, videoCo
     videoReady: Boolean = false,
     playbackControls: (@Composable (String) -> Unit)? = null,
     rating: com.hhst.youtubelite.watch.domain.VideoRating = com.hhst.youtubelite.watch.domain.VideoRating.None,
-    subscribed: Boolean = false, subscribePending: Boolean = false, ratingPending: Boolean = false, menuVisible: Boolean = true) {
+    subscribed: Boolean = false, subscribePending: Boolean = false, ratingPending: Boolean = false, menuVisible: Boolean = true,
+    bottomInset: Dp = 0.dp) {
     Box(Modifier.fillMaxSize().testTag("short-page-${item.id}")) {
         videoContent?.invoke(item.id)
         if (!videoReady) {
@@ -182,7 +216,7 @@ private fun ShortPage(item: ShortItem, onAction: (ShortsAction) -> Unit, videoCo
         }
         val railWidth = if (LocalDensity.current.fontScale > 1.5f) 80.dp else 56.dp
         Column(Modifier.align(Alignment.BottomEnd).width(railWidth)
-            .padding(end = 8.dp, bottom = minOf(76.dp, maxHeight / 5))
+            .padding(end = 8.dp, bottom = minOf(76.dp, maxHeight / 5) + bottomInset)
             .heightIn(max = (maxHeight - 48.dp).coerceAtLeast(0.dp)).verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
             RailAction(AppIcon.Like, stringResource(R.string.ui_like_1_s , item.title), item.likes,
                 tinted = rating == com.hhst.youtubelite.watch.domain.VideoRating.Like, pending = ratingPending,
@@ -194,7 +228,7 @@ private fun ShortPage(item: ShortItem, onAction: (ShortsAction) -> Unit, videoCo
             Spacer(Modifier.height(12.dp))
             RailAction(AppIcon.Share, stringResource(R.string.ui_share_1_s , item.title), stringResource(R.string.share), onClick = { onAction(ShortsAction.Share(item.id)) })
         }
-        Column(Modifier.align(Alignment.BottomStart).padding(start = 16.dp, end = railWidth + 8.dp, bottom = 16.dp)
+        Column(Modifier.align(Alignment.BottomStart).padding(start = 16.dp, end = railWidth + 8.dp, bottom = 16.dp + bottomInset)
             .heightIn(max = (maxHeight - 48.dp).coerceAtLeast(0.dp)).verticalScroll(rememberScrollState())) {
             Row(Modifier.heightIn(min = 40.dp).testTag("short-channel-${item.id}"),
                 verticalAlignment = Alignment.CenterVertically) {

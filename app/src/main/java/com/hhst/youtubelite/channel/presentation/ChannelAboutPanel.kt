@@ -110,8 +110,6 @@ fun ChannelAboutPanel(profile: ChannelProfile, width: Float, height: Float, onAc
 
 @Composable
 private fun AboutHeading(text: String, size: Int, line: Int, modifier: Modifier = Modifier) {
-    // Barlow Semi Condensed SemiBold (SIL OFL 1.1): static cut, no variation axes.
-    val family = remember(size) { FontFamily(Font(R.font.barlow_semicondensed, FontWeight.SemiBold)) }
-    BasicText(text, modifier, style = DesignTokens.text(size, line, FontWeight.SemiBold).copy(fontFamily = family),
+    BasicText(text, modifier, style = DesignTokens.text(size, line, FontWeight.SemiBold),
         maxLines = 2, overflow = TextOverflow.Ellipsis)
 }

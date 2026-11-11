@@ -3,6 +3,9 @@ import androidx.compose.ui.res.pluralStringResource
 import com.hhst.youtubelite.ui.design.labelResource
 import com.hhst.youtubelite.ui.design.CollapsingAppBar
 import com.hhst.youtubelite.ui.design.rememberAppBarCollapseState
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 import androidx.compose.foundation.Image
@@ -155,8 +158,10 @@ fun ChannelScreen(
                     }
                 }
             }
+            val opticalBackdrop = rememberUTubeBackdrop(DesignTokens.Background)
+            CompositionLocalProvider(LocalLiquidGlassBackdrop provides opticalBackdrop) {
             Box(Modifier.fillMaxSize().then(if (state.overlay != ChannelOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
-                Column(Modifier.fillMaxSize()) {
+                Column(Modifier.fillMaxSize().utubeBackdropSource(opticalBackdrop)) {
                     CollapsingAppBar(appBar) {
                         ChannelTopBar(state, onBack, onAction)
                     }
@@ -230,6 +235,7 @@ fun ChannelScreen(
             if (state.overlay is ChannelOverlay.PlaylistMenu) com.hhst.youtubelite.playlist.presentation.PlaylistShareSheet(
                 { onAction(ChannelAction.CloseOverlay) }, { onAction(ChannelAction.SharePlaylist) })
             ChannelCommunityMenuSheets(state.overlay, onAction)
+            }
         }
     }
 }
@@ -317,7 +323,7 @@ private fun ChannelTabStatus(tab: ChannelTab, section: ChannelSection<*>, onActi
 
 @Composable
 private fun ChannelNavigationBar(signedIn: Boolean, onAction: (ChannelAction) -> Unit) {
-    BrowseNavigationBar("channel", signedIn) { destination ->
+    BrowseNavigationBar("channel", signedIn, onSearch = { onAction(ChannelAction.ChannelSearch) }) { destination ->
         onAction(ChannelAction.SelectDestination(ChannelDestination.valueOf(destination.name)))
     }
 }
@@ -725,11 +731,8 @@ private fun ChannelIdentity(page: ChannelPage, width: Float) {
 @Composable
 private fun ChannelName(name: String, width: Float) {
     val size = ChannelLayout.nameFontSize(width)
-    // Barlow Semi Condensed SemiBold (SIL OFL 1.1) ships as a static cut: no
-    // variation settings, no width-axis squeeze from the old font.
-    val family = remember(size) { FontFamily(Font(R.font.barlow_semicondensed, FontWeight.SemiBold)) }
     BasicText(name, Modifier.fillMaxWidth().testTag("channel-name"),
-        style = DesignTokens.text(size.toInt(), ChannelLayout.nameLineHeight(width).toInt(), FontWeight.SemiBold).copy(fontFamily = family),
+        style = DesignTokens.text(size.toInt(), ChannelLayout.nameLineHeight(width).toInt(), FontWeight.Bold),
         maxLines = 2, overflow = TextOverflow.Ellipsis)
 }
 

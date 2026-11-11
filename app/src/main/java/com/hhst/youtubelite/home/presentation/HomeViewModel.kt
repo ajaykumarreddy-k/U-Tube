@@ -714,7 +714,7 @@ class HomeViewModel(
                 ) else HomeContent.Feed(combined, append = if (combined.partialFailure) AppendState.Failed else AppendState.Idle,
                     emptyAutoLoads = if (append && combined.items.size <= loadedItems.size) (currentFeed?.emptyAutoLoads ?: 0) + 1 else 0)) }
                 val store = snapshots
-                if (store != null) kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                if (store != null) kotlinx.coroutines.withContext(seedDispatcher) {
                     store.write("home", requestAccount, filter,
                         if (combined.catalog == null) combined.items.filterIsInstance<FeedItem.Video>() else emptyList(),
                         FeedItem.Video::class.java)

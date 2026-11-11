@@ -29,7 +29,7 @@ enum class MainTab(val label: String) { Home("Home"), Shorts("Shorts"), Subscrip
 
 object MainTabs {
     fun tabs(signedIn: Boolean, hideShorts: Boolean = false) =
-        (if (signedIn) MainTab.entries else listOf(MainTab.Home, MainTab.Shorts, MainTab.You))
+        listOf(MainTab.Home, MainTab.Shorts, MainTab.You)
             .filterNot { hideShorts && it == MainTab.Shorts }
 
     /**
@@ -64,7 +64,14 @@ object MainTabs {
 }
 
 @Composable
-fun MainNavigationBar(tag: String, signedIn: Boolean, avatarAsset: String?, selected: MainTab = MainTab.You, onSelect: (MainTab) -> Unit) {
+fun MainNavigationBar(
+    tag: String,
+    signedIn: Boolean,
+    avatarAsset: String?,
+    selected: MainTab = MainTab.You,
+    onSearch: (() -> Unit)? = null,
+    onSelect: (MainTab) -> Unit,
+) {
     val tabs = MainTabs.tabs(signedIn, com.hhst.youtubelite.ui.design.LocalHideShorts.current)
     val glassPalette = DesignTokens.Glass
     Box(
@@ -98,6 +105,8 @@ fun MainNavigationBar(tag: String, signedIn: Boolean, avatarAsset: String?, sele
                 }
             },
             onSelect = { index -> onSelect(tabs[index]) },
+            onSearch = onSearch,
+            searchTag = "$tag-nav-search",
         )
     }
 }

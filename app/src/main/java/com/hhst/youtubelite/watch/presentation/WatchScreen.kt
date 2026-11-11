@@ -57,6 +57,9 @@ import com.hhst.youtubelite.saves.presentation.NewPlaylistSheet
 import com.hhst.youtubelite.saves.presentation.SaveSheetLive
 import com.hhst.youtubelite.saves.presentation.SaveToPlaylistSheet
 import com.hhst.youtubelite.ui.design.*
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import com.hhst.youtubelite.watch.domain.*
 import com.hhst.youtubelite.ui.design.appDescription
 import androidx.compose.ui.res.stringResource
@@ -76,20 +79,28 @@ fun WatchScreen(
     drawBackground: Boolean = true,
     /** An overlay host still needs the embedded destination measured after rotation. */
     keepPlayerSlotInFullscreen: Boolean = false,
+    navigationBar: (@Composable () -> Unit)? = null,
 ) {
     val showPlayer = !fullscreen || keepPlayerSlotInFullscreen
+    val hasNavigationBar = !fullscreen && navigationBar != null
+    val opticalBackdrop = if (hasNavigationBar) rememberUTubeBackdrop() else null
     val mainScroll = rememberSaveable(state.videoId, saver = LazyListState.Saver) { LazyListState() }
     val sidebarMainScroll = rememberSaveable(state.videoId, saver = LazyListState.Saver) { LazyListState() }
     val compactRelatedScroll = rememberSaveable(state.videoId, saver = LazyListState.Saver) { LazyListState() }
     val wideRelatedScroll = rememberSaveable(state.videoId, saver = LazyListState.Saver) { LazyListState() }
     AppTheme {
-        Box(modifier.fillMaxSize().then(if (drawBackground) Modifier.background(DesignTokens.Background) else Modifier).testTag("watch-screen")) {
-            BoxWithConstraints(
-                Modifier.fillMaxSize().then(
-                    if (state.overlay is WatchOverlay.ItemMenu || state.overlay is WatchOverlay.Save ||
-                        state.overlay is WatchOverlay.Feedback) Modifier.clearAndSetSemantics {} else Modifier,
-                ),
-            ) {
+        CompositionLocalProvider(
+            LocalLiquidGlassBackdrop provides (opticalBackdrop ?: LocalLiquidGlassBackdrop.current),
+        ) {
+            Box(modifier.fillMaxSize().then(if (drawBackground) Modifier.background(DesignTokens.Background) else Modifier).testTag("watch-screen")) {
+                BoxWithConstraints(
+                    Modifier.fillMaxSize()
+                        .then(if (opticalBackdrop != null) Modifier.utubeBackdropSource(opticalBackdrop) else Modifier)
+                        .then(
+                            if (state.overlay is WatchOverlay.ItemMenu || state.overlay is WatchOverlay.Save ||
+                                state.overlay is WatchOverlay.Feedback) Modifier.clearAndSetSemantics {} else Modifier,
+                        ),
+                ) {
                 val width = maxWidth.value
                 val height = maxHeight.value
                 val sidebarMode = WatchLayout.sidebar(width, height)
@@ -111,6 +122,7 @@ fun WatchScreen(
                                 showPlayer = showPlayer,
                                 playerSlot = playerSlot,
                                 onAction = onAction,
+                                bottomNavClearance = if (hasNavigationBar) 88.dp else 0.dp,
                             )
                             if (pinned && showPlayer) {
                                 // The player is fixed over the main column only.
@@ -140,6 +152,7 @@ fun WatchScreen(
                         showPlayer = showPlayer,
                         playerSlot = playerSlot,
                         onAction = onAction,
+                        bottomNavClearance = if (hasNavigationBar) 88.dp else 0.dp,
                     )
                     if (pinned && showPlayer) {
                         Box(
@@ -153,7 +166,13 @@ fun WatchScreen(
                     }
                 }
             }
+            if (hasNavigationBar) {
+                Box(Modifier.align(Alignment.BottomCenter)) {
+                    navigationBar?.invoke()
+                }
+            }
             menuContent()
+        }
         }
     }
 }
@@ -242,6 +261,7 @@ private fun WatchMainBody(
     playerSlot: @Composable (Modifier) -> Unit,
     onAction: (WatchAction) -> Unit,
     modifier: Modifier = Modifier,
+    bottomNavClearance: Dp = 0.dp,
 ) {
     if (includeRelated) RelatedPaging(state, scroll, onAction)
     val columns = if (WatchLayout.relatedVariant(viewportWidth, viewportHeight) == WatchRelatedVariant.Grid)
@@ -275,6 +295,9 @@ private fun WatchMainBody(
                     item("pagination") { RelatedFooter(state, onAction) }
                 }
             }
+        }
+        if (bottomNavClearance > 0.dp) {
+            item("bottom-nav-clearance") { Spacer(Modifier.height(bottomNavClearance)) }
         }
     }
     if (!pinned && showPlayer) {

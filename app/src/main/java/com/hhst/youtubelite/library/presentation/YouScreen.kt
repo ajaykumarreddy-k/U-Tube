@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -33,17 +34,26 @@ import com.hhst.youtubelite.library.domain.*
 import com.hhst.youtubelite.ui.components.MainNavigationBar
 import com.hhst.youtubelite.ui.components.MainTab
 import com.hhst.youtubelite.ui.design.*
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import androidx.compose.ui.res.stringResource
 import com.hhst.youtubelite.R
 
 @Composable
 fun YouScreen(state: LibraryUiState, onAction: (LibraryAction) -> Unit, modifier: Modifier = Modifier) {
     val appBar = rememberAppBarCollapseState(enabled = state.overlay == LibraryOverlay.None && state.content is LibraryContent.Ready)
+    val opticalBackdrop = rememberUTubeBackdrop(DesignTokens.Background)
+    CompositionLocalProvider(LocalLiquidGlassBackdrop provides opticalBackdrop) {
     BoxWithConstraints(modifier.fillMaxSize().background(DesignTokens.Background).testTag("you-screen").nestedScroll(appBar.connection)) {
         val width = maxWidth.value
         val listState = rememberLibraryListState()
         val navClearance = DesignTokens.BottomBarHeight + 28.dp
-        Column(Modifier.fillMaxSize().then(if (state.overlay != LibraryOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
+        Column(
+            Modifier.fillMaxSize()
+                .utubeBackdropSource(opticalBackdrop)
+                .then(if (state.overlay != LibraryOverlay.None) Modifier.clearAndSetSemantics {} else Modifier),
+        ) {
             CollapsingAppBar(appBar) {
                 YouTopBar(state.signedIn, onAction)
             }
@@ -68,7 +78,12 @@ fun YouScreen(state: LibraryUiState, onAction: (LibraryAction) -> Unit, modifier
             }
         }
         Box(Modifier.align(Alignment.BottomCenter)) {
-            MainNavigationBar("main", state.signedIn, accountAvatar(state)) { tab ->
+            MainNavigationBar(
+                "main",
+                state.signedIn,
+                accountAvatar(state),
+                onSearch = { onAction(LibraryAction.OpenSearch) },
+            ) { tab ->
                 onAction(LibraryAction.Destination(tab))
             }
         }
@@ -78,6 +93,7 @@ fun YouScreen(state: LibraryUiState, onAction: (LibraryAction) -> Unit, modifier
                 onUndo = { onAction(LibraryAction.UndoHistoryRemove) },
                 onDismiss = { onAction(LibraryAction.DismissUndo) })
         }
+    }
     }
 }
 

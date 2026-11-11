@@ -71,11 +71,12 @@ fun ChapterEntryChip(
     Row(
         modifier = modifier
             .semantics { contentDescription = "$chaptersLabel: $text" }
-            .clip(RoundedCornerShape(10.dp))
-            .background(PlayerUi.HintBg)
+            .clip(RoundedCornerShape(50))
+            .background(PlayerUi.GlassBg)
+            .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(50))
             .clickable(role = Role.Button, onClick = onOpen)
-            .padding(horizontal = 6.dp)
-            .heightIn(min = 28.dp)
+            .padding(horizontal = 10.dp)
+            .heightIn(min = 30.dp)
             .testTag("player-chapter-entry"),
         verticalAlignment = Alignment.CenterVertically,
     ) {

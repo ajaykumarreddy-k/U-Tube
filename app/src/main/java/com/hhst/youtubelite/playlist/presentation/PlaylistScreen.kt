@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.derivedStateOf
@@ -45,6 +46,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.hhst.youtubelite.playlist.domain.*
 import com.hhst.youtubelite.ui.design.*
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import androidx.compose.ui.res.stringResource
 import com.hhst.youtubelite.R
 
@@ -66,8 +70,10 @@ fun PlaylistScreen(state: PlaylistUiState, onAction: (PlaylistAction) -> Unit, o
             // Device-stored lists have no server artwork for the toolbar; an empty one
             // shows the neutral compact header instead of the accent hero.
             val neutralToolbar = page == null || (local && emptyList)
+            val opticalBackdrop = rememberUTubeBackdrop(DesignTokens.Background)
+            CompositionLocalProvider(LocalLiquidGlassBackdrop provides opticalBackdrop) {
             Box(Modifier.fillMaxSize().then(if (state.overlay != PlaylistOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
-                Column(Modifier.fillMaxSize()) {
+                Column(Modifier.fillMaxSize().utubeBackdropSource(opticalBackdrop)) {
                     CollapsingAppBar(appBar) {
                         Row(Modifier.fillMaxWidth().height(48.dp).background(if (neutralToolbar) DesignTokens.Background else page?.summary?.accent?.let(::Color) ?: DesignTokens.Background)
                             .testTag("playlist-toolbar"), verticalAlignment = Alignment.CenterVertically) {
@@ -159,6 +165,7 @@ fun PlaylistScreen(state: PlaylistUiState, onAction: (PlaylistAction) -> Unit, o
                     }, stringResource(it.labelResource), "playlist-video-action-${it.name}", if (it == PlaylistVideoAction.WatchLater) 16.dp else null) },
                     { onAction(PlaylistAction.CloseOverlay) }, { onAction(PlaylistAction.VideoMenuAction(PlaylistVideoAction.entries[it])) },
                     tag = "playlist-video-menu", paneTitle = stringResource(R.string.ui_video_actions))
+            }
             }
         }
     }
@@ -363,7 +370,7 @@ private fun PlaylistAppendRow(state: PlaylistUiState, onAction: (PlaylistAction)
 
 @Composable
 private fun PlaylistNavigation(signedIn: Boolean, onAction: (PlaylistAction) -> Unit) {
-    BrowseNavigationBar("playlist", signedIn) { destination ->
+    BrowseNavigationBar("playlist", signedIn, onSearch = { onAction(PlaylistAction.OpenSearch) }) { destination ->
         onAction(PlaylistAction.Destination(PlaylistDestination.valueOf(destination.name)))
     }
 }

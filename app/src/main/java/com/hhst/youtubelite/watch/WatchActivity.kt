@@ -541,6 +541,22 @@ class WatchActivity : com.hhst.youtubelite.player.PlaybackActivity(), com.hhst.y
                         sidebarCovered = state.commentsOpen && !fullscreen && !state.searchOpen,
                         drawBackground = false,
                         keepPlayerSlotInFullscreen = true,
+                        navigationBar = if (fullscreen || panelsCover || playerState.mini || pip) null else {
+                            {
+                                val signedIn = com.hhst.youtubelite.data.media.MediaSession.snapshot().signedIn
+                                com.hhst.youtubelite.ui.design.BrowseNavigationBar(
+                                    tag = "watch",
+                                    signedIn = signedIn,
+                                    onSearch = { watchViewModel.onAction(WatchAction.OpenSearch) },
+                                ) { destination ->
+                                    com.hhst.youtubelite.ui.components.MainTabs.intent(
+                                        this@WatchActivity,
+                                        com.hhst.youtubelite.ui.components.MainTab.valueOf(destination.name),
+                                        signedIn,
+                                    )?.let(::launchNavigation)
+                                }
+                            }
+                        },
                     )
                 }
                 val miniStore: com.hhst.youtubelite.player.surface.MiniPlayerStore = koinInject()
@@ -608,8 +624,31 @@ class WatchActivity : com.hhst.youtubelite.player.PlaybackActivity(), com.hhst.y
                     onDismiss = playerViewModel::onMiniClose,
                     modifier = Modifier.then(if (panelsCover) Modifier.clearAndSetSemantics {} else Modifier),
                 ) {
-                    WatchPlayer(Modifier.fillMaxSize(), { onBackPressedDispatcher.onBackPressed() }, pip, presentationState = miniHandoffState,
-                        chromeAlpha = { watchPageAlpha(pageProgress()) })
+                    val readyPage = (state.content as? WatchContent.Ready)?.page
+                    WatchPlayer(
+                        Modifier.fillMaxSize(),
+                        { onBackPressedDispatcher.onBackPressed() },
+                        pip,
+                        presentationState = miniHandoffState,
+                        chromeAlpha = { watchPageAlpha(pageProgress()) },
+                        fullscreenActions = if (fullscreen && !pip) {
+                            com.hhst.youtubelite.player.surface.FullscreenWatchActions(
+                                liked = readyPage?.video?.rating == com.hhst.youtubelite.watch.domain.VideoRating.Like,
+                                disliked = readyPage?.video?.rating == com.hhst.youtubelite.watch.domain.VideoRating.Dislike,
+                                upNextThumbnail = readyPage?.related?.firstOrNull()?.artwork,
+                                onLike = { watchViewModel.onAction(WatchAction.Like) },
+                                onDislike = { watchViewModel.onAction(WatchAction.Dislike) },
+                                onComments = {
+                                    playerViewModel.setFullscreenManual(false)
+                                    watchViewModel.onAction(WatchAction.OpenComments(videoId))
+                                },
+                                onSave = {
+                                    playerViewModel.setFullscreenManual(false)
+                                    watchViewModel.onAction(WatchAction.Save)
+                                },
+                            )
+                        } else null,
+                    )
                 }
                 if (state.searchOpen) Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding()) {
                     val query = state.draftQuery.trim()

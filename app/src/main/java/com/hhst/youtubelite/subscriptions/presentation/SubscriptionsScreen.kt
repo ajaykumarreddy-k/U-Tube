@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -56,6 +57,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hhst.youtubelite.R
+import com.hhst.youtubelite.ui.glass.LocalLiquidGlassBackdrop
+import com.hhst.youtubelite.ui.glass.rememberUTubeBackdrop
+import com.hhst.youtubelite.ui.glass.utubeBackdropSource
 import com.hhst.youtubelite.home.domain.AppendState
 import com.hhst.youtubelite.home.domain.FeedItem
 import com.hhst.youtubelite.watch.domain.toProvisional
@@ -130,8 +134,10 @@ fun SubscriptionsScreen(state: SubscriptionsUiState, onAction: (SubscriptionsAct
         val showingChannels = state.overlay == SubscriptionsOverlay.Channels
         val navClearance = DesignTokens.BottomBarHeight + 28.dp
         val glassPalette = DesignTokens.Glass
+        val opticalBackdrop = rememberUTubeBackdrop(DesignTokens.Background)
+        CompositionLocalProvider(LocalLiquidGlassBackdrop provides opticalBackdrop) {
         Box(Modifier.fillMaxSize().then(if (state.overlay != SubscriptionsOverlay.None && !showingChannels) Modifier.clearAndSetSemantics {} else Modifier)) {
-            Column(Modifier.fillMaxSize()) {
+            Column(Modifier.fillMaxSize().utubeBackdropSource(opticalBackdrop)) {
                 if (showingChannels) {
                     ChannelsOverlay(state.channels, channelListState, onAction, Modifier.weight(1f))
                 } else {
@@ -183,8 +189,15 @@ fun SubscriptionsScreen(state: SubscriptionsUiState, onAction: (SubscriptionsAct
                 }
             }
             Box(Modifier.align(Alignment.BottomCenter)) {
-                MainNavigationBar("main", state.signedIn, null, selected = MainTab.Subscriptions) { tab -> onAction(SubscriptionsAction.Destination(tab)) }
+                MainNavigationBar(
+                    "main",
+                    state.signedIn,
+                    null,
+                    selected = MainTab.Subscriptions,
+                    onSearch = { onAction(SubscriptionsAction.OpenSearch) },
+                ) { tab -> onAction(SubscriptionsAction.Destination(tab)) }
             }
+        }
         }
     }
 }

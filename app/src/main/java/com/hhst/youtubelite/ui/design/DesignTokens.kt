@@ -63,9 +63,12 @@ object DesignTokens {
     val Glass: com.hhst.youtubelite.ui.glass.LiquidGlassPalette
         @Composable get() = com.hhst.youtubelite.ui.glass.LocalLiquidGlassPalette.current
     val Font = FontFamily(
-        Font(R.font.roboto_regular, FontWeight.Normal), Font(R.font.roboto_medium, FontWeight.Medium),
-        Font(R.font.roboto_bold, FontWeight.Bold),
-        Font(R.font.roboto_bold, FontWeight.Black),
+        Font(R.font.sf_pro_display_regular, FontWeight.Normal),
+        Font(R.font.sf_pro_display_medium, FontWeight.Medium),
+        Font(R.font.sf_pro_display_semibold, FontWeight.SemiBold),
+        Font(R.font.sf_pro_display_bold, FontWeight.Bold),
+        Font(R.font.sf_pro_display_heavy, FontWeight.ExtraBold),
+        Font(R.font.sf_pro_display_heavy, FontWeight.Black),
     )
     val TopBarHeight = 48.dp
     val BottomBarHeight = 56.dp
@@ -73,6 +76,12 @@ object DesignTokens {
     @Composable
     fun text(size: Int = 14, line: Int = 20, weight: FontWeight = FontWeight.Normal, color: Color = Ink) = TextStyle(
         color = color, fontFamily = Font, fontWeight = weight, fontSize = size.sp, lineHeight = line.sp,
+        letterSpacing = when {
+            size >= 22 -> (-0.4).sp
+            size >= 17 -> (-0.2).sp
+            size >= 14 -> (-0.1).sp
+            else -> 0.sp
+        },
         platformStyle = PlatformTextStyle(includeFontPadding = false),
         lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
     )

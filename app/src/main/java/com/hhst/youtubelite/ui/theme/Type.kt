@@ -9,15 +9,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.hhst.youtubelite.R
 
-// Same bundled family the content surfaces use: one font source; pages keep their own sizes/line heights.
+// Apple SF Pro Display across Material typography so every surface matches U Tube's Liquid Glass typography.
 private val AppFont = FontFamily(
-    Font(R.font.roboto_regular, FontWeight.Normal), Font(R.font.roboto_medium, FontWeight.Medium),
-    Font(R.font.roboto_bold, FontWeight.Bold), Font(R.font.roboto_bold, FontWeight.Black),
+    Font(R.font.sf_pro_display_regular, FontWeight.Normal),
+    Font(R.font.sf_pro_display_medium, FontWeight.Medium),
+    Font(R.font.sf_pro_display_semibold, FontWeight.SemiBold),
+    Font(R.font.sf_pro_display_bold, FontWeight.Bold),
+    Font(R.font.sf_pro_display_heavy, FontWeight.ExtraBold),
+    Font(R.font.sf_pro_display_heavy, FontWeight.Black),
 )
 
 private fun type(size: Int, line: Int, weight: FontWeight = FontWeight.Normal) = TextStyle(
     fontFamily = AppFont, fontWeight = weight, fontSize = size.sp, lineHeight = line.sp,
-    letterSpacing = 0.sp,
+    letterSpacing = when {
+        size >= 22 -> (-0.4).sp
+        size >= 17 -> (-0.2).sp
+        size >= 14 -> (-0.1).sp
+        else -> 0.sp
+    },
     platformStyle = PlatformTextStyle(includeFontPadding = false),
 )
 
