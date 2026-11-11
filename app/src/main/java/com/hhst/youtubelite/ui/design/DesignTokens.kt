@@ -60,6 +60,8 @@ object DesignTokens {
     val StateLayer: Color @Composable get() = LocalAppColors.current.stateLayer
     val Red: Color @Composable get() = LocalAppColors.current.red
     val Link: Color @Composable get() = LocalAppColors.current.link
+    val Glass: com.hhst.youtubelite.ui.glass.LiquidGlassPalette
+        @Composable get() = com.hhst.youtubelite.ui.glass.LocalLiquidGlassPalette.current
     val Font = FontFamily(
         Font(R.font.roboto_regular, FontWeight.Normal), Font(R.font.roboto_medium, FontWeight.Medium),
         Font(R.font.roboto_bold, FontWeight.Bold),
@@ -87,8 +89,14 @@ fun AppTheme(content: @Composable () -> Unit) {
         motion.value = readMotionScale(context.contentResolver)
         onPauseOrDispose { }
     }
-    CompositionLocalProvider(LocalAppColors provides if (darkTheme) DarkAppPalette else LightAppPalette,
-        LocalMotionScale provides motion.value, LocalHideShorts provides rememberHideShorts()) {
+    CompositionLocalProvider(
+        LocalAppColors provides if (darkTheme) DarkAppPalette else LightAppPalette,
+        com.hhst.youtubelite.ui.glass.LocalLiquidGlassPalette provides
+            if (darkTheme) com.hhst.youtubelite.ui.glass.DarkLiquidGlassPalette
+            else com.hhst.youtubelite.ui.glass.LightLiquidGlassPalette,
+        LocalMotionScale provides motion.value,
+        LocalHideShorts provides rememberHideShorts(),
+    ) {
         com.hhst.youtubelite.ui.theme.AppTheme(darkTheme = darkTheme) { content() }
     }
 }
@@ -226,16 +234,16 @@ fun AppIconButton(
 
 @Composable
 fun LitubeMark(modifier: Modifier = Modifier) {
-    Image(painterResource(R.drawable.ic_litube_mark), contentDescription = stringResource(R.string.a11y_litube), modifier = modifier)
+    // Replaceable placeholder: delegates to the text-only U Tube wordmark until custom branding is supplied.
+    com.hhst.youtubelite.ui.glass.UTubeWordmark(
+        modifier = modifier.appDescription(R.string.a11y_litube),
+        compact = true,
+    )
 }
 
 @Composable
 fun LitubeBrand(modifier: Modifier = Modifier) {
     CompositionLocalProvider(LocalDensity provides androidx.compose.ui.unit.Density(LocalDensity.current.density, 1f)) {
-    Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        LitubeMark(Modifier.size(28.dp))
-        Spacer(Modifier.width(3.dp))
-        AppText(stringResource(R.string.app_name), size = 22, line = 28, weight = FontWeight.Black)
-    }
+        com.hhst.youtubelite.ui.glass.UTubeWordmark(modifier = modifier)
     }
 }

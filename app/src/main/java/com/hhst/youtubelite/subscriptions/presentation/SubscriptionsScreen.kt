@@ -185,9 +185,10 @@ private fun SubscriptionsTopBar(width: Float, selectedChannel: Boolean, onAction
     Row(Modifier.fillMaxWidth().heightIn(min = DesignTokens.TopBarHeight).testTag("subscriptions-topbar"), verticalAlignment = Alignment.CenterVertically) {
         if (selectedChannel) AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back),
             modifier = Modifier.testTag("subscriptions-back-to-all")) { onAction(SubscriptionsAction.SelectChannel(null)) }
-        else Box(Modifier.width(if (width < 600f) 53.dp else 48.dp).height(DesignTokens.TopBarHeight)
-            .clickable(role = Role.Button) { onAction(SubscriptionsAction.Destination(MainTab.Home)) }, contentAlignment = Alignment.Center) {
-            LitubeMark(Modifier.size(24.dp))
+        else Box(Modifier.widthIn(min = if (width < 600f) 58.dp else 54.dp).height(DesignTokens.TopBarHeight)
+            .clickable(role = Role.Button) { onAction(SubscriptionsAction.Destination(MainTab.Home)) }
+            .padding(horizontal = 10.dp), contentAlignment = Alignment.Center) {
+            com.hhst.youtubelite.ui.glass.UTubeWordmark(compact = true)
         }
         AppText(stringResource(R.string.subscriptions_title), Modifier.weight(1f).testTag("subscriptions-title"), size = 20, line = 28,
             weight = FontWeight.Bold, maxLines = 1)

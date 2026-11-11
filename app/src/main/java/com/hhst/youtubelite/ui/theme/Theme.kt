@@ -71,8 +71,8 @@ private val DarkColorScheme = darkColorScheme(
     surfaceDim = DarkBackground,
     surfaceBright = DarkSurfaceVariant,
     surfaceContainerLowest = DarkBackground,
-    surfaceContainerLow = Color(0xFF212121),
-    surfaceContainer = Color(0xFF212121),
+    surfaceContainerLow = Color(0xFF101319),
+    surfaceContainer = Color(0xFF141820),
     // M3 dialog/menu fallback; explicit app overlays use AppStyle.Panel.
     surfaceContainerHigh = DarkSurface,
     surfaceContainerHighest = DarkSurfaceVariant,

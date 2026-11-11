@@ -92,7 +92,7 @@ private fun rememberLibraryListState(): LazyListState {
 private fun YouTopBar(signedIn: Boolean, onAction: (LibraryAction) -> Unit) {
     Row(Modifier.fillMaxWidth().heightIn(min = DesignTokens.TopBarHeight).testTag("you-topbar"), verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.width(117.dp).height(DesignTokens.TopBarHeight), contentAlignment = Alignment.CenterStart) {
-            com.hhst.youtubelite.ui.design.LitubeBrand(Modifier.padding(start = 12.dp))
+            com.hhst.youtubelite.ui.glass.UTubeWordmark(Modifier.padding(start = 12.dp))
         }
         Spacer(Modifier.weight(1f))
         AppIconButton(AppIcon.Search, stringResource(R.string.a11y_search_youtube)) { onAction(LibraryAction.OpenSearch) }

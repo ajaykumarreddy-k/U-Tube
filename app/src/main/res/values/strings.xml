@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Listen in background</string>
     <string name="back_again_to_exit">Press Back again to exit</string>
     <string name="navigate_back">Back</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">History settings</string>
     <string name="a11y_send_message">Send message</string>
     <string name="a11y_explore">Explore</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Home</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Home</string>
     <string name="a11y_loading">Loading</string>
     <string name="a11y_add_comment">Add a comment</string>
     <string name="a11y_sort_comments">Sort comments</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">System notification access</string>
     <string name="settings_advanced">Advanced</string>
     <string name="settings_advanced_summary">Player, gestures, SponsorBlock and backup</string>
-    <string name="settings_about_title">About Litube</string>
+    <string name="settings_about_title">About U Tube</string>
     <string name="settings_about_summary">Version, updates and diagnostics</string>
     <string name="settings_group_appearance">Appearance</string>
     <string name="settings_group_feed">Feed</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">On</string>
     <string name="settings_notifications_state_off">Off</string>
     <string name="settings_open_system_settings">Open system settings</string>
-    <string name="settings_open_system_settings_summary">Android notification settings for Litube</string>
+    <string name="settings_open_system_settings_summary">Android notification settings for U Tube</string>
     <string name="settings_state_on">On</string>
     <string name="settings_state_off">Off</string>
     <string name="cast_searching">Searching…</string>
