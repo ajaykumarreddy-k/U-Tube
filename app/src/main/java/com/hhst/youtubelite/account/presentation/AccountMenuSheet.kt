@@ -79,6 +79,7 @@ fun AccountSwitchSheet(
     deviceSelected: Boolean = false,
     onUseDevice: () -> Unit = {},
 ) {
+    com.hhst.youtubelite.ui.components.TrackModalSheetPresence()
     Box(Modifier.fillMaxSize().background(DesignTokens.MenuScrim).clickable { onDismiss() }
         .appDescription(R.string.a11y_close_menu))
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {

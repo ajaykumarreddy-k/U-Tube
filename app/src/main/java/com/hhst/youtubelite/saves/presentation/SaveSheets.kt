@@ -157,6 +157,7 @@ fun NewPlaylistSheet(
             focusManager.clearFocus()
         }
     }
+    com.hhst.youtubelite.ui.components.TrackModalSheetPresence()
     Box(
         Modifier.fillMaxSize().background(DesignTokens.MenuScrim).clickable(enabled = !pending) { onDismiss() }
             .appDescription(R.string.a11y_close_new_playlist),

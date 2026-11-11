@@ -97,6 +97,7 @@ fun MenuBottomSheet(
     fillWatchHeight: Boolean = true,
 ) {
     val density = LocalDensity.current.density
+    com.hhst.youtubelite.ui.components.TrackModalSheetPresence()
     val closeMenuLabel = stringResource(R.string.a11y_close_menu)
     val scope = rememberCoroutineScope()
     val progress = remember { Animatable(0f) }

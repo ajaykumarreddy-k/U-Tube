@@ -3,6 +3,7 @@ package com.hhst.youtubelite.ui.components
 import android.content.Context
 import android.content.ContextWrapper
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.height
@@ -27,6 +28,31 @@ fun Context.watchSheetHost(): WatchSheetHost? {
 }
 
 val LocalSheetPlayerBottomFraction = staticCompositionLocalOf { 0f }
+
+/** Tracks inline modal sheets so floating overlays yield cleanly while a sheet is open. */
+interface ModalSheetHost {
+    fun onSheetOpened()
+    fun onSheetClosed()
+}
+
+fun Context.modalSheetHost(): ModalSheetHost? {
+    var current = this
+    while (true) {
+        if (current is ModalSheetHost) return current
+        val base = (current as? ContextWrapper)?.baseContext ?: return null
+        if (base === current) return null
+        current = base
+    }
+}
+
+@Composable
+fun TrackModalSheetPresence() {
+    val host = LocalContext.current.modalSheetHost()
+    DisposableEffect(host) {
+        host?.onSheetOpened()
+        onDispose { host?.onSheetClosed() }
+    }
+}
 
 /** Size the entire sheet, including its handle and system bottom inset. */
 @Composable

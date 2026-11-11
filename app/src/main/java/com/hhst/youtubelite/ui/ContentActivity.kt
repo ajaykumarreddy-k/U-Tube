@@ -28,7 +28,7 @@ import com.hhst.youtubelite.ui.glass.LiquidGlassAudioMiniPlayer
 import com.hhst.youtubelite.watch.presentation.WatchPlayer
 import org.koin.compose.koinInject
 
-abstract class ContentActivity : NativeActivity() {
+abstract class ContentActivity : NativeActivity(), com.hhst.youtubelite.ui.components.ModalSheetHost {
     private var miniWindowReady = false
     private var miniEntryBounds by mutableStateOf<androidx.compose.ui.geometry.Rect?>(null)
     private var miniEntryVersion by mutableIntStateOf(0)
@@ -37,6 +37,15 @@ abstract class ContentActivity : NativeActivity() {
     private var miniOverlay: ViewGroup? = null
     private var miniHostFocused by mutableStateOf(false)
     private var resumedDuringMiniRestore = false
+    private var openModalSheets by mutableIntStateOf(0)
+
+    override fun onSheetOpened() {
+        openModalSheets++
+    }
+
+    override fun onSheetClosed() {
+        openModalSheets = (openModalSheets - 1).coerceAtLeast(0)
+    }
 
     override fun onStart() {
         val installMini = !ContentRepositories.fixtures(intent) || playbackTest()
@@ -184,7 +193,7 @@ abstract class ContentActivity : NativeActivity() {
                     }
                     val state by vm.uiState.collectAsStateWithLifecycle()
                     val useAudioMiniPill = !pipEnabled || !inAppMiniEnabled
-                    val showAudioMiniPill = !pip && useAudioMiniPill &&
+                    val showAudioMiniPill = !pip && useAudioMiniPill && openModalSheets == 0 &&
                         vm.currentMediaKind == MediaKind.WATCH && state.videoId != null &&
                         ((state.visible && state.mini) || (!inAppMiniEnabled && (state.isPlaying || state.userWantsPlay)))
                     val showVideoMiniWindow = !pip && !useAudioMiniPill && state.visible && state.mini

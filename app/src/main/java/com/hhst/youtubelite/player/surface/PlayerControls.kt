@@ -200,7 +200,7 @@ fun TopBar(
     val fullscreenHud = state.fullscreen && (onCast != null || onToggleAutoplay != null)
     Row(
         modifier = modifier.fillMaxWidth().testTag("player-topbar")
-            .padding(start = if (fullscreenHud) 8.dp else 2.dp, end = if (fullscreenHud) 8.dp else 4.dp, top = 4.dp, bottom = 2.dp),
+            .padding(start = if (fullscreenHud) 8.dp else 4.dp, end = if (fullscreenHud) 8.dp else 4.dp, top = 4.dp, bottom = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         PlayerIconButton(
@@ -208,7 +208,7 @@ fun TopBar(
             contentDescription = stringResource(R.string.navigate_back),
             onClick = onBack,
             iconSize = if (fullscreenHud) 22 else sizing.iconDp,
-            glassHalo = !fullscreenHud,
+            glassHalo = false,
         )
         Column(
             modifier = Modifier
@@ -302,7 +302,7 @@ fun TopBar(
                     iconSize = if (fullscreenHud) 22 else sizing.iconDp,
                     onLongClick = onSubtitleStyle,
                     tint = if (state.subtitleEnabled) PlayerUi.YtRed else PlayerUi.Icon,
-                    glassHalo = !fullscreenHud,
+                    glassHalo = false,
                 )
                 if (menu == PlayerAnchorMenu.Subtitles && callbacks != null) {
                     PlayerAnchorDropdown(
@@ -325,7 +325,7 @@ fun TopBar(
                     onClick = onMore,
                     modifier = Modifier.width(40.dp),
                     iconSize = if (fullscreenHud) 22 else (sizing.iconDp * 5 / 6).coerceAtLeast(20),
-                    glassHalo = !fullscreenHud,
+                    glassHalo = false,
                 )
             }
         }
@@ -358,8 +358,9 @@ fun CenterControls(
             enabled = state.hasPrevious,
             modifier = Modifier.size(skipSizeDp.dp),
             iconSize = iconSize,
-            glassHalo = true,
+            glassHalo = false,
         )
+        val playHaptic = com.hhst.youtubelite.ui.design.rememberHapticAction()
         Box(
             modifier = Modifier
                 .padding(horizontal = gapDp.dp)
@@ -368,16 +369,10 @@ fun CenterControls(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = ripple(bounded = false, radius = (playSizeDp / 2).dp),
-                    onClick = onPlayPause,
+                    onClick = { playHaptic(); onPlayPause() },
                 ),
             contentAlignment = Alignment.Center,
         ) {
-            Box(
-                Modifier
-                    .size((playSizeDp * 0.8f).dp)
-                    .background(PlayerUi.GlassBg, CircleShape)
-                    .border(0.75.dp, PlayerUi.GlassStroke, CircleShape),
-            )
             if (action == PlayerUi.PlayPauseAction.Loading) {
                 PlaybackLoadingIndicator(Modifier.size(minOf(36, playSizeDp - 16).dp))
             } else {
@@ -396,7 +391,7 @@ fun CenterControls(
             enabled = state.hasNext,
             modifier = Modifier.size(skipSizeDp.dp),
             iconSize = iconSize,
-            glassHalo = true,
+            glassHalo = false,
         )
     }
 }
