@@ -165,4 +165,16 @@ class SponsorSkipControllerTest {
         assertTrue(controller.chipActive)
         assertTrue(controller.chipIsHighlight)
     }
+
+    @Test
+    fun `initialSkipPosition jumps over contiguous opening segments immediately`() {
+        val opening = listOf(
+            Segment(startMs = 0L, endMs = 8_000L, category = "intro"),
+            Segment(startMs = 8_000L, endMs = 22_000L, category = "sponsor"),
+        )
+        assertEquals(22_000L, controller.initialSkipPosition(0L, opening, countdownEnabled = false))
+        assertEquals(0L, controller.initialSkipPosition(0L, opening, countdownEnabled = true))
+        // Both skipped segments remain suppressed so snap-backs cannot re-trigger skips
+        assertNull(controller.tick(21_000L, opening, countdownEnabled = false))
+    }
 }

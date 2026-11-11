@@ -78,9 +78,15 @@ class YoutubeSessionProvider(context: Context, private val http: OkHttpClient,
     private fun routeChanged() = synchronized(routeLock) {
         val active = connectivity.activeNetwork
         val caps = active?.let(connectivity::getNetworkCapabilities)
-        val next = "$active:${caps?.hasTransport(NetworkCapabilities.TRANSPORT_VPN)}:${connectivity.defaultProxy}"
-        if (route != next) {
-            route = next
+        val proxy = connectivity.defaultProxy?.toString()
+        val (nextRoute, changed) = resolveRouteSignature(
+            current = route,
+            activeNetworkId = active?.toString(),
+            vpn = caps?.hasTransport(NetworkCapabilities.TRANSPORT_VPN),
+            proxy = proxy,
+        )
+        route = nextRoute
+        if (changed) {
             networkGeneration.incrementAndGet()
         }
     }
@@ -487,6 +493,27 @@ class YoutubeSessionProvider(context: Context, private val http: OkHttpClient,
                         }
                     }
                 }
+            }
+        }
+
+        /**
+         * Resolves the next route signature without invalidating active media streams
+         * when Android connectivity transiently reports `activeNetwork == null`.
+         */
+        internal fun resolveRouteSignature(
+            current: String,
+            activeNetworkId: String?,
+            vpn: Boolean?,
+            proxy: String?,
+        ): Pair<String, Boolean> {
+            if (activeNetworkId == null) {
+                return current to false
+            }
+            val next = "$activeNetworkId:$vpn:$proxy"
+            return if (current == next) {
+                current to false
+            } else {
+                next to (current.isNotEmpty())
             }
         }
     }

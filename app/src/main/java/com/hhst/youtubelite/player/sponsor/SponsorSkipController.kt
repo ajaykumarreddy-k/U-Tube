@@ -131,6 +131,22 @@ class SponsorSkipController(
         countdownSec = null
     }
 
+    /**
+     * Advances [startMs] past any contiguous skippable segments before playback starts
+     * when countdown is disabled so opening sponsors/intros never play a single frame.
+     */
+    fun initialSkipPosition(posMs: Long, segments: List<Segment>, countdownEnabled: Boolean): Long {
+        if (countdownEnabled || segments.isEmpty()) return posMs
+        val skippable = segments.filter { it.endMs > it.startMs }.sortedBy { it.startMs }
+        var target = posMs
+        while (true) {
+            val inside = skippable.firstOrNull { it !in suppressed && target >= it.startMs && target < it.endMs }
+                ?: break
+            target = skipFired(inside)
+        }
+        return target
+    }
+
     /** Manual chip target: highlight point, or segment end at [posMs]. */
     fun chipTarget(posMs: Long, segments: List<Segment>): Long? =
         if (chipIsHighlight) highlightChip?.startMs else segmentAt(posMs, segments)?.endMs

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.ViewGroup
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -15,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
+import com.hhst.youtubelite.core.AdShield
 import com.hhst.youtubelite.core.Constants
 import com.hhst.youtubelite.core.WebViewTimerHandle
 import com.hhst.youtubelite.core.WebViewTimerOccupancy
@@ -88,6 +90,8 @@ class ChatWebSignInActivity : ComponentActivity() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean = !allowed(request.url.toString())
             @Suppress("OverridingDeprecatedMember")
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean = !allowed(url)
+            override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? =
+                if (AdShield.isBlockedRequest(request.url.toString())) AdShield.emptyWebResourceResponse() else null
         }
         web = browser
         timers.attach(browser)

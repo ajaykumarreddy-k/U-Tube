@@ -12,6 +12,8 @@ import androidx.media3.exoplayer.hls.playlist.HlsMultivariantPlaylist
 import androidx.media3.exoplayer.hls.playlist.HlsPlaylist
 import androidx.media3.exoplayer.hls.playlist.HlsPlaylistParserFactory
 import androidx.media3.exoplayer.upstream.ParsingLoadable
+import com.hhst.youtubelite.core.AdShield
+import java.io.ByteArrayInputStream
 import java.io.InputStream
 
 /**
@@ -99,6 +101,8 @@ internal class AudioCodecHlsPlaylistParserFactory : HlsPlaylistParserFactory {
 
     private fun stamp(parser: ParsingLoadable.Parser<HlsPlaylist>) =
         ParsingLoadable.Parser { uri: Uri, inputStream: InputStream ->
-            declareAudioCodecs(parser.parse(uri, inputStream))
+            val raw = inputStream.bufferedReader().use { it.readText() }
+            val filtered = AdShield.stripHlsAdSegments(raw, uri.toString())
+            declareAudioCodecs(parser.parse(uri, ByteArrayInputStream(filtered.toByteArray())))
         }
 }

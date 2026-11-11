@@ -1,6 +1,8 @@
 package com.hhst.youtubelite.diagnostics
 
 import android.os.SystemClock
+import com.hhst.youtubelite.core.AdShield
+import com.hhst.youtubelite.core.ResilientDns
 import okhttp3.Call
 import okhttp3.EventListener
 import okhttp3.Handshake
@@ -25,7 +27,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 object DiagnosticNetwork {
     data class Policy(val acceptedStatuses: Set<Int> = emptySet())
     private val active = ConcurrentHashMap<Call, Trace>()
+    private val sharedDns = ResilientDns()
+    private val adShield = AdShield.AdShieldInterceptor()
     fun install(builder: OkHttpClient.Builder): OkHttpClient.Builder = builder
+        .dns(sharedDns)
+        .addInterceptor(adShield)
         .eventListenerFactory { call -> Trace(call).also { active[call] = it }.listener }
         .addInterceptor(Interceptor { chain ->
             val trace = active[chain.call()] ?: return@Interceptor chain.proceed(chain.request())

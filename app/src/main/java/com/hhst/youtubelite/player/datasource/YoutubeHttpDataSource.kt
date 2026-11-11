@@ -378,7 +378,7 @@ class YoutubeHttpDataSource private constructor(
         val spec = dataSpec
         val initialRead = spec != null && spec.position == 0L && spec.length in 1L..65_536L
         if (initialRead) {
-            call.timeout().timeout(6_000L, TimeUnit.MILLISECONDS)
+            call.timeout().timeout(openTimeoutMs.coerceAtLeast(DEFAULT_OPEN_TIMEOUT_MS), TimeUnit.MILLISECONDS)
         }
         val prefetchDeadline = customData as? PrefetchDeadline
         if (prefetchDeadline != null) {
@@ -456,7 +456,7 @@ class YoutubeHttpDataSource private constructor(
         private var readTimeoutMs = 30_000
         private var rangeParameterEnabled = false
         private var rnParameterEnabled = false
-        private var openTimeoutMs = 6_000L
+        private var openTimeoutMs = DEFAULT_OPEN_TIMEOUT_MS
         private var onSlowInitialRead: (() -> Unit)? = null
 
         fun setSlowInitialReadListener(value: (() -> Unit)?) = apply { onSlowInitialRead = value }
@@ -513,6 +513,7 @@ class YoutubeHttpDataSource private constructor(
 
     companion object {
         private const val TAG = "YoutubeHttpDataSource"
+        internal const val DEFAULT_OPEN_TIMEOUT_MS = 12_000L
         private const val MAX_REDIRECTS = 20
         private val REDIRECT_CODES = setOf(300, 301, 302, 303, 307, 308)
         private val REDIRECT_CODES_GET_FALLBACK = setOf(300, 301, 302, 303)

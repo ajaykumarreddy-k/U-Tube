@@ -138,12 +138,22 @@ class ExtensionManager(private val store: PrefStore) {
 
     private fun seedDefaults() {
         migrateGestures()
+        migrateInstantSponsorSkip()
         for ((key, value) in PreferenceKeys.DEFAULTS) {
             val pref = prefKey(key)
             if (!store.contains(pref)) {
                 store.putBool(pref, value)
             }
         }
+    }
+
+    private fun migrateInstantSponsorSkip() {
+        if (store.getBool(KEY_MIGRATION_INSTANT_SPONSOR, false)) return
+        val countdownPref = prefKey(PreferenceKeys.SPONSOR_COUNTDOWN)
+        if (store.contains(countdownPref)) {
+            store.putBool(countdownPref, false)
+        }
+        store.putBool(KEY_MIGRATION_INSTANT_SPONSOR, true)
     }
 
     private fun migrateGestures() {
@@ -169,5 +179,6 @@ class ExtensionManager(private val store: PrefStore) {
         const val TAG = "ExtensionManager"
         const val PREFIX = "preferences:"
         const val KEY_VERSION = "preferences:version"
+        const val KEY_MIGRATION_INSTANT_SPONSOR = "preferences:migration:v2_instant_sponsor"
     }
 }

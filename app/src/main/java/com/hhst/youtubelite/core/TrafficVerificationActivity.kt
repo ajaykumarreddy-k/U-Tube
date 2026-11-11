@@ -72,6 +72,9 @@ class TrafficVerificationActivity : ComponentActivity() {
                 @Suppress("OverridingDeprecatedMember")
                 override fun shouldOverrideUrlLoading(view: WebView, url: String) = !allowed(url)
 
+                override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? =
+                    if (AdShield.isBlockedRequest(request.url.toString())) AdShield.emptyWebResourceResponse() else null
+
                 override fun onPageStarted(view: WebView, url: String, favicon: android.graphics.Bitmap?) {
                     failedUrl = null
                 }

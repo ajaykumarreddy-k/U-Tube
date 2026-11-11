@@ -9,6 +9,12 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
+import androidx.savedstate.findViewTreeSavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.hhst.youtubelite.data.media.ContentRepositories
 import com.hhst.youtubelite.player.PlaybackSession
 import com.hhst.youtubelite.player.surface.MiniPlayerStore
@@ -22,6 +28,7 @@ abstract class ContentActivity : NativeActivity() {
     private var miniEntryVersion by mutableIntStateOf(0)
     private var miniPreDraw: android.view.ViewTreeObserver.OnPreDrawListener? = null
     private var miniComposition: ComposeView? = null
+    private var miniOverlay: ViewGroup? = null
     private var miniHostFocused by mutableStateOf(false)
     private var resumedDuringMiniRestore = false
 
@@ -76,9 +83,35 @@ abstract class ContentActivity : NativeActivity() {
         super.onDestroy()
     }
 
+    private fun ensureViewTreeOwners() {
+        val decor = window.decorView
+        if (decor.findViewTreeLifecycleOwner() == null) decor.setViewTreeLifecycleOwner(this)
+        if (decor.findViewTreeViewModelStoreOwner() == null) decor.setViewTreeViewModelStoreOwner(this)
+        if (decor.findViewTreeSavedStateRegistryOwner() == null) decor.setViewTreeSavedStateRegistryOwner(this)
+    }
+
+    private fun attachMiniOverlayIfNeeded() {
+        val overlay = miniOverlay ?: return
+        if (overlay.parent != null) return
+        ensureViewTreeOwners()
+        findViewById<ViewGroup>(android.R.id.content)?.addView(overlay,
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+    }
+
+    override fun setContentView(view: android.view.View?) {
+        super.setContentView(view)
+        attachMiniOverlayIfNeeded()
+    }
+
+    override fun setContentView(view: android.view.View?, params: ViewGroup.LayoutParams?) {
+        super.setContentView(view, params)
+        attachMiniOverlayIfNeeded()
+    }
+
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         if (ContentRepositories.fixtures(intent) && !playbackTest()) return
+        ensureViewTreeOwners()
         val overlay = object : android.widget.FrameLayout(this) {
             private val picturePaint = android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG)
             private val blackPaint = android.graphics.Paint().apply { color = android.graphics.Color.BLACK }
@@ -138,7 +171,7 @@ abstract class ContentActivity : NativeActivity() {
                         val store: MiniPlayerStore = koinInject()
                         com.hhst.youtubelite.ui.theme.AppTheme {
                             BoxWithConstraints(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
-                                MiniPlayerWindow(maxWidth.value.toInt(), 56, store, state.controlsVisible,
+                                MiniPlayerWindow(maxWidth.value.toInt(), 76, store, state.controlsVisible,
                                     vm::onToggleControls, onDismiss = vm::onMiniClose,
                                     initialBounds = com.hhst.youtubelite.navigation.WatchTransition.miniBounds,
                                     animateFromBounds = miniEntryBounds,
@@ -159,8 +192,8 @@ abstract class ContentActivity : NativeActivity() {
                 }
             }
         }, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-        findViewById<ViewGroup>(android.R.id.content).addView(overlay,
-            ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        miniOverlay = overlay
+        attachMiniOverlayIfNeeded()
     }
 
     private fun playbackTest() = com.hhst.youtubelite.BuildConfig.DEBUG && intent.getBooleanExtra("playback_test", false)

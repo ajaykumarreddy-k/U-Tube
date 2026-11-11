@@ -85,7 +85,7 @@ object PreferenceKeys {
         SKIP_MUSIC_OFFTOPIC to true,
         SKIP_FILLER to true,
         SKIP_POI_HIGHLIGHT to true,
-        SPONSOR_COUNTDOWN to true,
+        SPONSOR_COUNTDOWN to false,
         DEARROW_TITLES to false,
         DEARROW_THUMBNAILS to false,
         REMEMBER_LAST_POSITION to true,

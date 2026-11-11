@@ -145,4 +145,17 @@ class ExtensionManagerTest {
         // keys absent from the payload keep their stored value
         assertTrue(manager.isEnabled(PreferenceKeys.ENABLE_HIDE_SHORTS))
     }
+
+    @Test
+    fun migratesLegacySponsorCountdownDefaultOnceAndRespectsManualOverride() {
+        val legacyStore = MemoryPrefStore()
+        legacyStore.putBool("preferences:${PreferenceKeys.SPONSOR_COUNTDOWN}", true)
+
+        val upgraded = ExtensionManager(legacyStore)
+        assertFalse(upgraded.isEnabled(PreferenceKeys.SPONSOR_COUNTDOWN))
+
+        upgraded.setEnabled(PreferenceKeys.SPONSOR_COUNTDOWN, true)
+        val relaunched = ExtensionManager(legacyStore)
+        assertTrue(relaunched.isEnabled(PreferenceKeys.SPONSOR_COUNTDOWN))
+    }
 }

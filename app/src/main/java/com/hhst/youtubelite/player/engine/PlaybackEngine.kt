@@ -59,6 +59,7 @@ import com.hhst.youtubelite.extractor.Stream
 import com.hhst.youtubelite.extractor.VideoId
 import com.hhst.youtubelite.extractor.InvalidMediaResponseException
 import com.liskovsoft.youtubeapi.videoinfo.V2.PlayerTracking
+import com.liskovsoft.youtubeapi.videoinfo.V2.RequestFailure
 import com.hhst.youtubelite.player.PREF_TTL_MS
 import com.hhst.youtubelite.player.datasource.AudioTrackChoice
 import com.hhst.youtubelite.player.datasource.AudioTrackIdentity
@@ -85,6 +86,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -589,7 +591,22 @@ class PlaybackEngine(
             // Fired from the manager's IO scope; snapshot writes are main-confined.
             handler.post {
                 _snapshot.value = _snapshot.value.copy(sponsorSegments = segments)
+                evaluateSponsorSkipNow()
             }
+        }
+    }
+
+    private fun evaluateSponsorSkipNow() {
+        if (!_snapshot.value.prepared || activePlayer() !== player) return
+        val skipTo = sponsorSkip.tick(
+            player.currentPosition,
+            sponsorBlock.currentSegments,
+            prefs.isEnabled(PreferenceKeys.SPONSOR_COUNTDOWN),
+        )
+        if (skipTo != null) {
+            skipSeekInProgress = true
+            player.seekTo(skipTo)
+            updateSnapshotFromSponsor()
         }
     }
 
@@ -760,6 +777,9 @@ class PlaybackEngine(
         player.repeatMode = loop.repeatMode
         castPlayer?.repeatMode = loop.repeatMode
         try {
+            // Load SponsorBlock segments in parallel with extraction so opening ads/sponsors
+            // skip before the first frame whenever possible instead of playing 2+ seconds first.
+            sponsorBlock.load(videoId, context)
             val extraction = if (reExtract) extractor.extractFresh(videoId, diagnosticContext = context)
                 else extractor.extract(videoId, demand = playbackDemand(), diagnosticContext = context)
             val stream = withContext(Dispatchers.IO) { extraction.stream.await() }
@@ -783,7 +803,13 @@ class PlaybackEngine(
             // pin while the extraction runs and must not adapt up in the gap.
             clearVideoConstraints()
             applyPreferredQualityConstraint(source)
-            sponsorBlock.load(videoId, context)
+
+            val countdownEnabled = prefs.isEnabled(PreferenceKeys.SPONSOR_COUNTDOWN)
+            if (!countdownEnabled && !reExtract) {
+                sponsorBlock.awaitSegments(videoId, SPONSOR_PRELOAD_GRACE_MS)
+            }
+            coroutineContext.ensureActive()
+            if (!stillCurrent(generation)) return
 
             val durationMs = metadata.duration * 1000L
             // A settled account read still wins, but an in-flight one must never hold the
@@ -794,12 +820,15 @@ class PlaybackEngine(
             }
             coroutineContext.ensureActive()
             if (!stillCurrent(generation)) return
-            val startMs = PlaybackProgress.resolveStartMs(
+            val resolvedStartMs = PlaybackProgress.resolveStartMs(
                 startPositionMs,
                 rememberedPosition(videoId, metadata.duration),
                 durationMs,
                 remoteMs,
             )
+            val startMs = if (!metadata.isLive && (startPositionMs == null || startPositionMs == 0L)) {
+                sponsorSkip.initialSkipPosition(resolvedStartMs, sponsorBlock.currentSegments, countdownEnabled)
+            } else resolvedStartMs
             AppLog.detail(AppLog.Category.PLAYER, "resume.selected", mapOf("position_ms" to startMs,
                 "source" to when { startPositionMs != null -> "explicit"; remoteMs != null -> "account"; else -> "local" }), context)
             val mediaReady = CompletableDeferred<Unit>()
@@ -888,6 +917,19 @@ class PlaybackEngine(
                 throw t
             }
             if (!stillCurrent(generation)) return
+            if (!reExtract && isTransientPrepareFailure(t) && playbackAttempt?.takeIf { it.videoId == videoId }?.tryLightRefresh() == true) {
+                preparing.finish(DiagnosticOutcome.SUPERSEDED, "prepare_transient_retry")
+                delay(300L)
+                coroutineContext.ensureActive()
+                if (!stillCurrent(generation)) return
+                loadInternal(
+                    videoId = videoId,
+                    reExtract = false,
+                    requestUrl = requestUrl,
+                    startPositionMs = startPositionMs,
+                )
+                return
+            }
             if ((t as? PlaybackResolutionException)?.paymentRequired == true) {
                 preparing.finish(DiagnosticOutcome.DEFERRED, "payment_required")
                 if (diagnosticContext === context) playbackOperation?.finish(DiagnosticOutcome.DEFERRED, "payment_required")
@@ -1952,12 +1994,15 @@ class PlaybackEngine(
             reason = reason.afterLightBudget()
         }
 
-        if (reason?.rejection != null && stream != null && metadata != null && attempt?.tryBackup() == true) {
+        if ((reason?.rejection != null || reason == RecoveryReason.TRANSPORT_FAILED) &&
+            stream != null && metadata != null && attempt?.tryBackup() == true
+        ) {
             // The failed request owns its client. Selected video/audio and the current manifest
             // can belong to different clients, especially after a fresh extraction or prefetch.
+            val failureUri = failedUri ?: failedRequest?.dataSpec?.uri
             val profile = rejectedProfile ?: stream.formats.firstOrNull {
-                it.url == failedUri?.toString()
-            }?.requestPlan?.client
+                it.url == failureUri?.toString()
+            }?.requestPlan?.client ?: _snapshot.value.videoFormat?.requestPlan?.client ?: _snapshot.value.audioFormat?.requestPlan?.client
             val backup = profile?.let(stream::excluding)
             if (backup != null && runCatching { resolveSource(backup, metadata) }.isSuccess) {
                 currentStream = backup
@@ -1984,7 +2029,9 @@ class PlaybackEngine(
         }
 
         // One full session/token refresh, followed by one existing compatible backup.
-        if (reason?.rejection != null &&
+        // Transient transport/DNS failures that outlast light refresh also re-extract
+        // to obtain fresh CDN hosts and client routes rather than failing immediately.
+        if ((reason?.rejection != null || reason == RecoveryReason.TRANSPORT_FAILED) &&
             videoId != null && attempt?.tryFullRefresh() == true
         ) {
             muxedFallbackActive = false
@@ -2332,6 +2379,10 @@ class PlaybackEngine(
         })
     }
 
+    private fun isTransientPrepareFailure(t: Throwable): Boolean =
+        (t as? PlaybackResolutionException)?.error?.kind == RequestFailure.TRANSPORT ||
+            PlaybackRecovery.classify(t) == RecoveryReason.TRANSPORT_FAILED
+
     private fun failureReport(error: Throwable, phase: String): PlaybackFailureReport {
         val state = _snapshot.value
         val attempt = playbackAttempt?.takeIf { it.videoId == state.videoId }
@@ -2401,6 +2452,8 @@ class PlaybackEngine(
         private const val KEY_SUBTITLE = "player:subtitle_language"
         /** How long a still-running account resume read may delay source submission. */
         private const val REMOTE_RESUME_GRACE_MS = 600L
+        /** Bounded wait for in-flight SponsorBlock lookup to skip opening ads before first frame. */
+        private const val SPONSOR_PRELOAD_GRACE_MS = 350L
         private const val KEY_SUBTITLE_OFF = "player:subtitle_off"
     }
 }

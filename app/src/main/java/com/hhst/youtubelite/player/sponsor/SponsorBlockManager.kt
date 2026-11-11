@@ -7,10 +7,12 @@ import com.hhst.youtubelite.extractor.VideoId
 import java.io.IOException
 import java.net.URLEncoder
 import java.security.MessageDigest
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Call
 import okhttp3.Request
@@ -55,12 +57,31 @@ class SponsorBlockManager(
     /** In-flight call; a newer [load] cancels the superseded one outright. */
     private var currentCall: Call? = null
 
+    /** Signaled when the active [load] finishes (empty list on failure/no segments). */
+    private var activeLoad: CompletableDeferred<List<Segment>>? = null
+    private var activeLoadVideoId: String? = null
+
+    suspend fun awaitSegments(videoId: String, timeoutMs: Long = 350L): List<Segment>? {
+        val id = VideoId.parse(videoId) ?: return null
+        val deferred = synchronized(this) {
+            if (segmentsVideoId == id && activeLoad?.isCompleted != false) return segments
+            if (activeLoadVideoId == id) activeLoad else null
+        } ?: return null
+        return withTimeoutOrNull(timeoutMs) { deferred.await() }
+    }
+
     @Synchronized
     fun load(videoId: String, diagnosticContext: DiagnosticContext? = null) {
         val id = VideoId.parse(videoId) ?: return
         val requestId = ++requestSeq
         currentCall?.cancel()
         currentCall = null
+        if (activeLoadVideoId != id) {
+            activeLoad?.complete(emptyList())
+        }
+        val deferred = CompletableDeferred<List<Segment>>()
+        activeLoad = deferred
+        activeLoadVideoId = id
         if (segmentsVideoId != id) {
             segmentsVideoId = id
             segments = emptyList()
@@ -69,6 +90,7 @@ class SponsorBlockManager(
         val categories = enabledCategories()
         if (categories.isEmpty()) {
             segments = emptyList()
+            deferred.complete(emptyList())
             onSegmentsLoaded?.invoke(emptyList())
             return
         }
@@ -78,11 +100,13 @@ class SponsorBlockManager(
             val result = runCatching { fetch(id, categories, context, requestId) }
             synchronized(this@SponsorBlockManager) {
                 if (requestId != requestSeq) {
+                    deferred.complete(emptyList())
                     operation.finish(DiagnosticOutcome.SUPERSEDED, "video_replaced")
                     return@launch
                 }
                 val failure = result.exceptionOrNull()
                 if (failure != null) {
+                    deferred.complete(segments)
                     operation.finish(DiagnosticOutcome.FAILURE,
                         if (failure is SponsorBlockParseException) "parse_failed" else "fetch_failed", failure)
                     onSegmentsLoaded?.invoke(segments)
@@ -91,6 +115,7 @@ class SponsorBlockManager(
                 val fetched = result.getOrThrow()
                 segments = fetched
                 segmentsVideoId = id
+                deferred.complete(fetched)
                 onSegmentsLoaded?.invoke(segments)
                 operation.finish(DiagnosticOutcome.SUCCESS,
                     if (fetched.isEmpty()) "no_segments" else "segments_loaded",
