@@ -15,6 +15,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
@@ -72,8 +73,22 @@ fun LiquidGlassSurface(
         Modifier
     }
 
+    val elevationModifier = if (tier == LiquidGlassTier.Optical) {
+        val shadowAlpha = if (palette.dark) 0.28f else 0.12f
+        Modifier.shadow(
+            elevation = 10.dp,
+            shape = shape,
+            clip = false,
+            ambientColor = Color.Black.copy(alpha = shadowAlpha),
+            spotColor = Color.Black.copy(alpha = shadowAlpha),
+        )
+    } else {
+        Modifier
+    }
+
     Box(
         modifier = modifier
+            .then(elevationModifier)
             .clip(shape)
             .then(interactiveModifier),
         contentAlignment = contentAlignment,

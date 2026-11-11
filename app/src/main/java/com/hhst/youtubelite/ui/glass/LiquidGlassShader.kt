@@ -19,19 +19,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asComposeRenderEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hhst.youtubelite.ui.design.LocalMotionScale
 
 /**
- * AGSL shader adapted from SDF rounded-rectangle meniscus refraction physics:
- * concentrates subtle refractive shimmer and top-left directional specular highlights
+ * AGSL shader adapted from SDF rounded-rectangle meniscus refraction physics and Prismal Fresnel
+ * highlights: concentrates subtle sky-tinted refractive shimmer and top-left specular highlights
  * along the perimeter meniscus without distorting sharp center typography.
  */
 private const val LIQUID_GLASS_EDGE_AGSL = """
@@ -64,11 +68,12 @@ half4 main(float2 fragCoord) {
     float inward = clamp(-d / max(uEdgeWidth, 1.0), 0.0, 1.0);
     float band = 1.0 - smoothstep(0.0, 1.0, inward);
     float2 norm = p / max(halfSize, float2(1.0));
-    float lightDir = clamp((-norm.x * 0.55 - norm.y * 0.85) * 0.5 + 0.5, 0.0, 1.0);
+    float lightDir = clamp((-norm.x * 0.62 - norm.y * 0.82) * 0.5 + 0.5, 0.0, 1.0);
 
-    float specStrength = mix(0.18, 0.10, uIsDark);
+    float specStrength = mix(0.20, 0.13, uIsDark);
     float spec = band * lightDir * specStrength;
-    float3 tinted = clamp(base.rgb + float3(spec), 0.0, 1.0);
+    float3 fresnelTint = float3(0.90, 0.94, 1.00) * (band * 0.045 * uIsDark);
+    float3 tinted = clamp(base.rgb + float3(spec) + fresnelTint, 0.0, 1.0);
     return half4(tinted, base.a);
 }
 """
@@ -170,20 +175,62 @@ internal fun Modifier.liquidGlassBackdrop(
                 endY = size.height,
             )
             val rimBrush = Brush.linearGradient(
-                colors = listOf(specularTop, hairlineBorder, specularBottom),
+                colors = listOf(specularTop.copy(alpha = specularTop.alpha * 0.65f), hairlineBorder, specularBottom),
                 start = Offset.Zero,
-                end = Offset(size.width * 0.45f, size.height),
+                end = Offset(size.width * 0.5f, size.height),
+            )
+            val topHighlightBrush = Brush.horizontalGradient(
+                0f to Color.Transparent,
+                0.5f to specularTop,
+                1f to Color.Transparent,
+                startX = 0f,
+                endX = size.width.coerceAtLeast(1f),
+            )
+            val leftHighlightBrush = Brush.verticalGradient(
+                0f to specularTop,
+                0.5f to Color.Transparent,
+                1f to specularBottom,
+                startY = 0f,
+                endY = size.height.coerceAtLeast(1f),
+            )
+            val ringPath = Path.combine(
+                PathOperation.Difference,
+                Path().apply {
+                    addRoundRect(
+                        RoundRect(
+                            left = 0f,
+                            top = 0f,
+                            right = size.width,
+                            bottom = size.height,
+                            cornerRadius = CornerRadius(radiusPx, radiusPx),
+                        ),
+                    )
+                },
+                Path().apply {
+                    val innerRadius = (radiusPx - strokePx).coerceAtLeast(0f)
+                    addRoundRect(
+                        RoundRect(
+                            left = strokePx,
+                            top = strokePx,
+                            right = (size.width - strokePx).coerceAtLeast(strokePx),
+                            bottom = (size.height - strokePx).coerceAtLeast(strokePx),
+                            cornerRadius = CornerRadius(innerRadius, innerRadius),
+                        ),
+                    )
+                },
             )
             onDrawBehind {
                 drawRoundRect(
                     brush = sheenBrush,
                     cornerRadius = CornerRadius(radiusPx, radiusPx),
                 )
-                drawRoundRect(
-                    brush = rimBrush,
-                    cornerRadius = CornerRadius(radiusPx, radiusPx),
-                    style = Stroke(width = strokePx),
-                )
+                drawPath(path = ringPath, brush = rimBrush)
+                clipRect(bottom = (strokePx + radiusPx * 0.35f).coerceAtMost(size.height * 0.5f)) {
+                    drawPath(path = ringPath, brush = topHighlightBrush)
+                }
+                clipRect(right = (strokePx + radiusPx * 0.35f).coerceAtMost(size.width * 0.5f)) {
+                    drawPath(path = ringPath, brush = leftHighlightBrush)
+                }
             }
         }
 }

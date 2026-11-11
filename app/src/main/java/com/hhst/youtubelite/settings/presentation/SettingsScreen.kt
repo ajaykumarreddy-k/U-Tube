@@ -36,10 +36,11 @@ import com.hhst.youtubelite.R
 import com.hhst.youtubelite.core.AppLocale
 import com.hhst.youtubelite.extension.PreferenceKeys
 import com.hhst.youtubelite.settings.domain.SettingsPage
-import com.hhst.youtubelite.ui.design.AppIconButton
 import com.hhst.youtubelite.ui.design.AppIcon
 import com.hhst.youtubelite.ui.design.AppText
 import com.hhst.youtubelite.ui.design.DesignTokens
+import com.hhst.youtubelite.ui.glass.LiquidGlassIconButton
+import com.hhst.youtubelite.ui.glass.LiquidGlassTier
 import com.hhst.youtubelite.ui.theme.AppAppearance
 import com.hhst.youtubelite.ui.theme.ThemeMode
 
@@ -90,10 +91,12 @@ private val SettingsPage.title: String
 
 @Composable
 private fun SettingsTopBar(title: String, onBack: () -> Unit) {
-    Row(Modifier.fillMaxWidth().height(DesignTokens.TopBarHeight).testTag("settings-topbar"),
+    Row(Modifier.fillMaxWidth().height(DesignTokens.TopBarHeight + 8.dp).padding(horizontal = 12.dp).testTag("settings-topbar"),
         verticalAlignment = Alignment.CenterVertically) {
-        AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back), diameter = 48.dp, onClick = onBack)
-        AppText(title, Modifier.padding(end = 16.dp), size = 20, line = 28, weight = FontWeight.Medium)
+        LiquidGlassIconButton(AppIcon.Back, stringResource(R.string.a11y_back), onClick = onBack,
+            diameter = 38.dp, tier = LiquidGlassTier.Translucent)
+        Spacer(Modifier.width(12.dp))
+        AppText(title, Modifier.padding(end = 16.dp), size = 20, line = 28, weight = FontWeight.SemiBold)
     }
 }
 

@@ -205,7 +205,7 @@ internal fun PlayerModalSheet(
         sheetState = sheetState,
         sheetMaxWidth = androidx.compose.ui.unit.Dp.Unspecified,
         containerColor = AppStyle.Panel,
-        shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         contentColor = MaterialTheme.colorScheme.onSurface,
         tonalElevation = 0.dp,
         dragHandle = null,

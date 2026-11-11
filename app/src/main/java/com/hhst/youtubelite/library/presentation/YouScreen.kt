@@ -42,10 +42,10 @@ fun YouScreen(state: LibraryUiState, onAction: (LibraryAction) -> Unit, modifier
     BoxWithConstraints(modifier.fillMaxSize().background(DesignTokens.Background).testTag("you-screen").nestedScroll(appBar.connection)) {
         val width = maxWidth.value
         val listState = rememberLibraryListState()
+        val navClearance = DesignTokens.BottomBarHeight + 28.dp
         Column(Modifier.fillMaxSize().then(if (state.overlay != LibraryOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
             CollapsingAppBar(appBar) {
                 YouTopBar(state.signedIn, onAction)
-
             }
             RefreshableContent(value = state, refreshing = state.content == LibraryContent.Loading,
                     onRefresh = { onAction(LibraryAction.Retry) }, modifier = Modifier.weight(1f).fillMaxWidth(),
@@ -57,22 +57,24 @@ fun YouScreen(state: LibraryUiState, onAction: (LibraryAction) -> Unit, modifier
                         state.verification,
                         onVerify = { onAction(LibraryAction.OpenVerification(state.verification!!.challengeUrl)) },
                         onDismiss = { onAction(LibraryAction.DismissVerification) },
-                        modifier = Modifier.testTag("you-verification"),
+                        modifier = Modifier.padding(bottom = navClearance).testTag("you-verification"),
                     ) else LibraryError("you-error") { onAction(LibraryAction.Retry) }
                     is LibraryContent.SignedOut -> LibraryMessageCard(
                         content.prompt.title, content.prompt.message, "you-signed-out",
                     ) { PillButton(content.prompt.action) { onAction(LibraryAction.SignIn) } }
                     is LibraryContent.Ready -> LibraryList(listState, content, width, state.signedIn,
-                        state.historyRetrying, state.playlistsRetrying, onAction)
+                        state.historyRetrying, state.playlistsRetrying, navClearance, onAction)
                 }
             }
+        }
+        Box(Modifier.align(Alignment.BottomCenter)) {
             MainNavigationBar("main", state.signedIn, accountAvatar(state)) { tab ->
                 onAction(LibraryAction.Destination(tab))
             }
         }
         state.undo?.let { removed ->
             HistoryUndoBanner(removed,
-                Modifier.align(Alignment.BottomCenter).padding(horizontal = 16.dp, vertical = 12.dp),
+                Modifier.align(Alignment.BottomCenter).padding(start = 16.dp, end = 16.dp, bottom = navClearance),
                 onUndo = { onAction(LibraryAction.UndoHistoryRemove) },
                 onDismiss = { onAction(LibraryAction.DismissUndo) })
         }
@@ -90,33 +92,59 @@ private fun rememberLibraryListState(): LazyListState {
 
 @Composable
 private fun YouTopBar(signedIn: Boolean, onAction: (LibraryAction) -> Unit) {
-    Row(Modifier.fillMaxWidth().heightIn(min = DesignTokens.TopBarHeight).testTag("you-topbar"), verticalAlignment = Alignment.CenterVertically) {
-        Box(Modifier.width(117.dp).height(DesignTokens.TopBarHeight), contentAlignment = Alignment.CenterStart) {
-            com.hhst.youtubelite.ui.glass.UTubeWordmark(Modifier.padding(start = 12.dp))
+    val glassPalette = DesignTokens.Glass
+    Row(
+        Modifier.fillMaxWidth().heightIn(min = DesignTokens.TopBarHeight).padding(end = 10.dp).testTag("you-topbar"),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Box(Modifier.width(124.dp).height(DesignTokens.TopBarHeight), contentAlignment = Alignment.CenterStart) {
+            com.hhst.youtubelite.ui.glass.UTubeWordmark(Modifier.padding(start = 16.dp))
         }
         Spacer(Modifier.weight(1f))
-        AppIconButton(AppIcon.Search, stringResource(R.string.a11y_search_youtube)) { onAction(LibraryAction.OpenSearch) }
-        if (!signedIn) AppIconButton(AppIcon.More, stringResource(R.string.a11y_more)) { onAction(LibraryAction.OpenAccountMenu) }
+        com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+            icon = AppIcon.Search,
+            description = stringResource(R.string.a11y_search_youtube),
+            onClick = { onAction(LibraryAction.OpenSearch) },
+            diameter = 38.dp,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+        )
+        if (!signedIn) com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+            icon = AppIcon.More,
+            description = stringResource(R.string.a11y_more),
+            onClick = { onAction(LibraryAction.OpenAccountMenu) },
+            diameter = 38.dp,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+        )
     }
 }
 
 @Composable
 private fun LibraryList(listState: LazyListState, content: LibraryContent.Ready, width: Float, signedIn: Boolean,
                         historyRetrying: Boolean, playlistsRetrying: Boolean,
+                        bottomInset: androidx.compose.ui.unit.Dp,
     onAction: (LibraryAction) -> Unit) {
     val page = content.page
-    LazyColumn(Modifier.fillMaxSize().testTag("you-library"), state = listState, contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp)) {
+    val glassPalette = DesignTokens.Glass
+    LazyColumn(Modifier.fillMaxSize().testTag("you-library"), state = listState, contentPadding = PaddingValues(top = 8.dp, bottom = bottomInset)) {
         item(key = "account") {
-            Row(Modifier.fillMaxWidth().clickable(role = Role.Button) { onAction(LibraryAction.OpenAccountMenu) }
-                .testTag("you-account").padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier.size(40.dp).clip(CircleShape), contentAlignment = Alignment.Center) {
-                    if (page.account.avatar.isBlank()) AppIcon(AppIcon.You, Modifier.size(36.dp))
-                    else LibraryArtwork(page.account.avatar, Modifier.fillMaxSize())
-                }
-                Spacer(Modifier.width(12.dp))
-                Column {
-                    AppText(page.account.name, size = 16, line = 22, weight = FontWeight.Medium)
-                    AppText(page.account.handle, size = 14, line = 20, color = DesignTokens.Secondary)
+            com.hhst.youtubelite.ui.glass.LiquidGlassCard(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp).testTag("you-account"),
+                cornerRadius = 20.dp,
+                tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 12.dp),
+                onClick = { onAction(LibraryAction.OpenAccountMenu) },
+            ) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Box(Modifier.size(44.dp).clip(CircleShape), contentAlignment = Alignment.Center) {
+                        if (page.account.avatar.isBlank()) AppIcon(AppIcon.You, Modifier.size(36.dp), color = glassPalette.contentPrimary)
+                        else LibraryArtwork(page.account.avatar, Modifier.fillMaxSize())
+                    }
+                    Spacer(Modifier.width(12.dp))
+                    Column {
+                        AppText(page.account.name, size = 16, line = 22, weight = FontWeight.Medium)
+                        AppText(page.account.handle, size = 14, line = 20, color = glassPalette.contentSecondary)
+                    }
                 }
             }
         }

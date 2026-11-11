@@ -57,23 +57,27 @@ fun PostDetailScreen(
     val commentsListState = rememberLazyListState()
     AppTheme {
         Box(modifier.fillMaxSize().background(DesignTokens.Background).testTag("post-detail-page")) {
-            Column(Modifier.fillMaxSize().then(
+            Box(Modifier.fillMaxSize().then(
                 if (state.overlay != PostDetailOverlay.None || state.commentsOpen) Modifier.clearAndSetSemantics {} else Modifier,
             )) {
-                PostDetailTopBar(state, onAction, onBack)
-                when (val content = state.content) {
-                    PostDetailContent.Loading -> Box(
-                        Modifier.weight(1f).fillMaxWidth().testTag("post-detail-loading"),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        CircularProgressIndicator(Modifier.size(32.dp), strokeWidth = 2.5.dp, color = DesignTokens.Secondary)
-                    }
-                    PostDetailContent.Failed -> Box(Modifier.weight(1f)) { PostDetailFailed(onAction) }
-                    is PostDetailContent.Ready -> Box(Modifier.weight(1f)) {
-                        PostDetailContentColumn(state, onAction)
+                Column(Modifier.fillMaxSize()) {
+                    PostDetailTopBar(state, onAction, onBack)
+                    when (val content = state.content) {
+                        PostDetailContent.Loading -> Box(
+                            Modifier.weight(1f).fillMaxWidth().testTag("post-detail-loading"),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator(Modifier.size(32.dp), strokeWidth = 2.5.dp, color = DesignTokens.Secondary)
+                        }
+                        PostDetailContent.Failed -> Box(Modifier.weight(1f)) { PostDetailFailed(onAction) }
+                        is PostDetailContent.Ready -> Box(Modifier.weight(1f)) {
+                            PostDetailContentColumn(state, onAction)
+                        }
                     }
                 }
-                BrowseNavigationBar("post-detail", state.signedIn) { onAction(PostDetailAction.SelectDestination(PostDestination.valueOf(it.name))) }
+                Box(Modifier.align(Alignment.BottomCenter)) {
+                    BrowseNavigationBar("post-detail", state.signedIn) { onAction(PostDetailAction.SelectDestination(PostDestination.valueOf(it.name))) }
+                }
             }
             when (val overlay = state.overlay) {
                 PostDetailOverlay.None -> Unit

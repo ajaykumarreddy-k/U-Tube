@@ -128,85 +128,107 @@ fun SubscriptionsScreen(state: SubscriptionsUiState, onAction: (SubscriptionsAct
             displayedChip = state.selectedChip
         }
         val showingChannels = state.overlay == SubscriptionsOverlay.Channels
-        Column(Modifier.fillMaxSize().then(if (state.overlay != SubscriptionsOverlay.None && !showingChannels) Modifier.clearAndSetSemantics {} else Modifier)) {
-            if (showingChannels) {
-                ChannelsOverlay(state.channels, channelListState, onAction, Modifier.weight(1f))
-            } else {
-                // Measure the full stack (including large text), then release its space as it slides away.
-                Column(Modifier.fillMaxWidth().clipToBounds().layout { measurable, constraints ->
-                    val header = measurable.measure(constraints.copy(minHeight = 0))
-                    val height = (header.height * headerFraction).roundToInt()
-                    layout(header.width, height) { header.placeRelative(0, height - header.height) }
-                }) {
-                    SubscriptionsTopBar(width, state.selectedChannel != null, onAction)
-                    if (state.signedIn) {
-                        ChannelAvatarStrip(state.channels, state.selectedChannel?.channelId, channelStripState, onAction)
-                        val selectedChannel = state.selectedChannel
-                        if (selectedChannel == null) SubscriptionsChipStrip(state.selectedChip, state.chips, onAction)
-                        else Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
-                            horizontalArrangement = Arrangement.End) {
-                            Row(Modifier.clip(RoundedCornerShape(24.dp)).background(DesignTokens.Surface)
-                                .clickable(role = Role.Button) { onAction(SubscriptionsAction.OpenChannel(selectedChannel.channelId)) }
-                                .testTag("subscriptions-visit-channel").padding(horizontal = 16.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                AppIcon(AppIcon.You, Modifier.size(24.dp))
-                                AppText(stringResource(R.string.subscription_visit_channel), weight = FontWeight.Medium)
+        val navClearance = DesignTokens.BottomBarHeight + 28.dp
+        val glassPalette = DesignTokens.Glass
+        Box(Modifier.fillMaxSize().then(if (state.overlay != SubscriptionsOverlay.None && !showingChannels) Modifier.clearAndSetSemantics {} else Modifier)) {
+            Column(Modifier.fillMaxSize()) {
+                if (showingChannels) {
+                    ChannelsOverlay(state.channels, channelListState, onAction, Modifier.weight(1f))
+                } else {
+                    // Measure the full stack (including large text), then release its space as it slides away.
+                    Column(Modifier.fillMaxWidth().clipToBounds().layout { measurable, constraints ->
+                        val header = measurable.measure(constraints.copy(minHeight = 0))
+                        val height = (header.height * headerFraction).roundToInt()
+                        layout(header.width, height) { header.placeRelative(0, height - header.height) }
+                    }) {
+                        SubscriptionsTopBar(width, state.selectedChannel != null, onAction)
+                        if (state.signedIn) {
+                            ChannelAvatarStrip(state.channels, state.selectedChannel?.channelId, channelStripState, onAction)
+                            val selectedChannel = state.selectedChannel
+                            if (selectedChannel == null) SubscriptionsChipStrip(state.selectedChip, state.chips, onAction)
+                            else Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+                                horizontalArrangement = Arrangement.End) {
+                                com.hhst.youtubelite.ui.glass.LiquidGlassButton(
+                                    onClick = { onAction(SubscriptionsAction.OpenChannel(selectedChannel.channelId)) },
+                                    modifier = Modifier.testTag("subscriptions-visit-channel"),
+                                    style = com.hhst.youtubelite.ui.glass.LiquidGlassButtonStyle.Standard,
+                                    tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+                                ) {
+                                    AppIcon(AppIcon.You, Modifier.size(20.dp), color = glassPalette.contentPrimary)
+                                    Spacer(Modifier.width(8.dp))
+                                    AppText(stringResource(R.string.subscription_visit_channel), weight = FontWeight.Medium)
+                                }
                             }
                         }
                     }
-                }
-                RefreshableContent(value = state, refreshing = state.content == SubscriptionsContent.Loading,
-                    onRefresh = { onAction(SubscriptionsAction.Retry) }, modifier = Modifier.weight(1f).fillMaxWidth().nestedScroll(headerScroll),
-                    enabled = state.signedIn && state.overlay == SubscriptionsOverlay.None, contentKey = Triple(state.signedIn, state.selectedChannel?.channelId, state.selectedChip), tag = "subscriptions-refresh",
-                    canPull = { !gridState.canScrollBackward }) { state ->
-                    val verification = state.verification
-                    when (val content = state.content) {
-                    SubscriptionsContent.Loading -> LibrarySkeleton("subscriptions-skeleton")
-                    SubscriptionsContent.Failed -> if (verification != null) VerificationCard(
-                        verification,
-                        onVerify = { onAction(SubscriptionsAction.OpenVerification(verification.challengeUrl)) },
-                        onDismiss = { onAction(SubscriptionsAction.DismissVerification) },
-                        modifier = Modifier.testTag("subscriptions-verification"),
-                    ) else SubscriptionsError { onAction(SubscriptionsAction.Retry) }
-                    is SubscriptionsContent.SignedOut -> LibraryMessageCard(
-                        content.prompt.title, content.prompt.message, "subscriptions-signed-out",
-                    ) { PillButton(content.prompt.action) { onAction(SubscriptionsAction.SignIn) } }
-                    is SubscriptionsContent.Feed -> SubscriptionsFeed(content, width, gridState, state.verification, onAction)
+                    RefreshableContent(value = state, refreshing = state.content == SubscriptionsContent.Loading,
+                        onRefresh = { onAction(SubscriptionsAction.Retry) }, modifier = Modifier.weight(1f).fillMaxWidth().nestedScroll(headerScroll),
+                        enabled = state.signedIn && state.overlay == SubscriptionsOverlay.None, contentKey = Triple(state.signedIn, state.selectedChannel?.channelId, state.selectedChip), tag = "subscriptions-refresh",
+                        canPull = { !gridState.canScrollBackward }) { state ->
+                        val verification = state.verification
+                        when (val content = state.content) {
+                        SubscriptionsContent.Loading -> LibrarySkeleton("subscriptions-skeleton")
+                        SubscriptionsContent.Failed -> if (verification != null) VerificationCard(
+                            verification,
+                            onVerify = { onAction(SubscriptionsAction.OpenVerification(verification.challengeUrl)) },
+                            onDismiss = { onAction(SubscriptionsAction.DismissVerification) },
+                            modifier = Modifier.padding(bottom = navClearance).testTag("subscriptions-verification"),
+                        ) else SubscriptionsError { onAction(SubscriptionsAction.Retry) }
+                        is SubscriptionsContent.SignedOut -> LibraryMessageCard(
+                            content.prompt.title, content.prompt.message, "subscriptions-signed-out",
+                        ) { PillButton(content.prompt.action) { onAction(SubscriptionsAction.SignIn) } }
+                        is SubscriptionsContent.Feed -> SubscriptionsFeed(content, width, gridState, state.verification, onAction)
+                        }
                     }
                 }
             }
-            MainNavigationBar("main", state.signedIn, null, selected = MainTab.Subscriptions) { tab -> onAction(SubscriptionsAction.Destination(tab)) }
+            Box(Modifier.align(Alignment.BottomCenter)) {
+                MainNavigationBar("main", state.signedIn, null, selected = MainTab.Subscriptions) { tab -> onAction(SubscriptionsAction.Destination(tab)) }
+            }
         }
     }
 }
 
 @Composable
 private fun SubscriptionsTopBar(width: Float, selectedChannel: Boolean, onAction: (SubscriptionsAction) -> Unit) {
-    Row(Modifier.fillMaxWidth().heightIn(min = DesignTokens.TopBarHeight).testTag("subscriptions-topbar"), verticalAlignment = Alignment.CenterVertically) {
+    val glassPalette = DesignTokens.Glass
+    Row(
+        Modifier.fillMaxWidth().heightIn(min = DesignTokens.TopBarHeight).padding(end = 10.dp).testTag("subscriptions-topbar"),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         if (selectedChannel) AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back),
             modifier = Modifier.testTag("subscriptions-back-to-all")) { onAction(SubscriptionsAction.SelectChannel(null)) }
         else Box(Modifier.widthIn(min = if (width < 600f) 58.dp else 54.dp).height(DesignTokens.TopBarHeight)
             .clickable(role = Role.Button) { onAction(SubscriptionsAction.Destination(MainTab.Home)) }
-            .padding(horizontal = 10.dp), contentAlignment = Alignment.Center) {
+            .padding(horizontal = 12.dp), contentAlignment = Alignment.Center) {
             com.hhst.youtubelite.ui.glass.UTubeWordmark(compact = true)
         }
         AppText(stringResource(R.string.subscriptions_title), Modifier.weight(1f).testTag("subscriptions-title"), size = 20, line = 28,
             weight = FontWeight.Bold, maxLines = 1)
-        AppIconButton(AppIcon.Search, stringResource(R.string.a11y_search_youtube)) { onAction(SubscriptionsAction.OpenSearch) }
+        com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+            icon = AppIcon.Search,
+            description = stringResource(R.string.a11y_search_youtube),
+            onClick = { onAction(SubscriptionsAction.OpenSearch) },
+            diameter = 38.dp,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+        )
     }
 }
 
 @Composable
 private fun SubscriptionsChipStrip(selected: SubscriptionsChip, chips: List<SubscriptionsChip>, onAction: (SubscriptionsAction) -> Unit) {
+    val glassPalette = DesignTokens.Glass
     LazyRow(Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("subscriptions-chips"), verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
+        horizontalArrangement = Arrangement.spacedBy(10.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
         listItems(chips) { chip ->
-            Box(Modifier.widthIn(min = 48.dp).clip(RoundedCornerShape(8.dp))
-                .background(if (chip == selected) DesignTokens.Ink else DesignTokens.Surface)
+            val active = chip == selected
+            Box(Modifier.widthIn(min = 48.dp).clip(CircleShape)
+                .background(if (active) DesignTokens.Ink else glassPalette.frostFill)
+                .then(if (active) Modifier else Modifier.border(0.75.dp, glassPalette.hairlineBorder, CircleShape))
                 .clickable(role = Role.Tab) { onAction(SubscriptionsAction.SelectChip(chip)) }
-                .padding(horizontal = 12.dp, vertical = 6.dp), contentAlignment = Alignment.Center) {
+                .padding(horizontal = 14.dp, vertical = 6.dp), contentAlignment = Alignment.Center) {
                 AppText(stringResource(chip.labelResource), size = 14, line = 20, weight = FontWeight.Medium,
-                    color = if (chip == selected) DesignTokens.Background else DesignTokens.Ink)
+                    color = if (active) DesignTokens.Background else glassPalette.contentPrimary)
             }
         }
     }
@@ -291,7 +313,7 @@ private fun SubscriptionsFeed(content: SubscriptionsContent.Feed, width: Float, 
         LazyVerticalGrid(
             columns = GridCells.Fixed(if (compact) 1 else SubscriptionsLayout.columns(width)), state = gridState,
             modifier = Modifier.fillMaxSize().testTag("subscriptions-feed"),
-            contentPadding = PaddingValues(start = SubscriptionsLayout.outerPadding(width).dp, end = SubscriptionsLayout.outerPadding(width).dp, bottom = 24.dp),
+            contentPadding = PaddingValues(start = SubscriptionsLayout.outerPadding(width).dp, end = SubscriptionsLayout.outerPadding(width).dp, bottom = DesignTokens.BottomBarHeight + 28.dp),
             horizontalArrangement = Arrangement.spacedBy(DesignTokens.GridGap),
         ) {
             items(visibleItems, key = { it.id }, contentType = { "video" }) { item ->
@@ -450,7 +472,7 @@ private fun ChannelsOverlay(channels: SubscriptionsChannels, listState: LazyList
                     PillButton(stringResource(R.string.retry), retryable@{ onAction(SubscriptionsAction.RetryChannels) })
                 }
                 is SubscriptionsChannels.Ready -> LazyColumn(Modifier.fillMaxSize().testTag("channels-list"), state = listState,
-                    contentPadding = PaddingValues(top = 13.dp, bottom = 24.dp)) {
+                    contentPadding = PaddingValues(top = 13.dp, bottom = DesignTokens.BottomBarHeight + 28.dp)) {
                     if (channels.channels.isEmpty()) {
                         item {
                             Box(Modifier.fillMaxWidth().padding(top = 96.dp), contentAlignment = Alignment.Center) {

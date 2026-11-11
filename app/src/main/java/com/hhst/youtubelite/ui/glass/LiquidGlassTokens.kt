@@ -74,13 +74,13 @@ val LightLiquidGlassPalette = LiquidGlassPalette(
 
 val DarkLiquidGlassPalette = LiquidGlassPalette(
     dark = true,
-    frostFill = Color(0xCC12151C),
-    elevatedFill = Color(0xDE181C25),
+    frostFill = Color(0xC213161E),
+    elevatedFill = Color(0xD8181C26),
     recessedFill = Color(0x9E0B0D12),
-    specularTop = Color.White.copy(alpha = 0.28f),
-    specularBottom = Color.White.copy(alpha = 0.07f),
-    hairlineBorder = Color.White.copy(alpha = 0.14f),
-    sheenStart = Color.White.copy(alpha = 0.11f),
+    specularTop = Color.White.copy(alpha = 0.78f),
+    specularBottom = Color.White.copy(alpha = 0.22f),
+    hairlineBorder = Color.White.copy(alpha = 0.24f),
+    sheenStart = Color.White.copy(alpha = 0.12f),
     sheenEnd = Color.White.copy(alpha = 0.02f),
     accent = Color(0xFF7FB2FF),
     onAccent = Color(0xFF061020),
@@ -98,7 +98,7 @@ val LocalLiquidGlassPalette = staticCompositionLocalOf { LightLiquidGlassPalette
 /** Shared dimensional defaults so glass components share consistent geometry and optics. */
 object LiquidGlassDefaults {
     val CornerSmall = 12.dp
-    val CornerMedium = 18.dp
+    val CornerMedium = 20.dp
     val CornerLarge = 24.dp
     val PillHeight = 56.dp
     val SearchBarHeight = 46.dp

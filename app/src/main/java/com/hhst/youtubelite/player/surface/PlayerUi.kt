@@ -47,7 +47,7 @@ object PlayerUi {
     val Icon = Color.White.copy(alpha = 0.92f)
     val Unplayed = Color(0x99FFFFFF)
     val Buffered = Color.White
-    val HintBg = Color(0xCC000000)
+    val HintBg = Color(0x9E0E1015)
     private val Author = Color.White.copy(alpha = 0.7f)
     /** Top/bottom chrome scrim. */
     val Scrim = Color(0x80000000)
@@ -56,8 +56,8 @@ object PlayerUi {
      * the video stays visible through the feedback, and the hairline keeps the
      * pill legible on bright frames.
      */
-    val GlassBg = Color(0x66000000)
-    val GlassStroke = Color(0x24FFFFFF)
+    val GlassBg = Color(0x78101318)
+    val GlassStroke = Color(0x33FFFFFF)
 
     /** Time bar: 2 dp track, 48 dp minimum accessibility hit area, 100 dp edge gradients. */
     const val TIME_BAR_HIT_DP = 48

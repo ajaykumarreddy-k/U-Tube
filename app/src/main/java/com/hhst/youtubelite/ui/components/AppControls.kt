@@ -104,17 +104,23 @@ fun AppAlertDialog(
     icon: (@Composable () -> Unit)? = null,
     title: (@Composable () -> Unit)? = null,
     text: (@Composable () -> Unit)? = null,
-    shape: Shape = AppStyle.MenuShape,
-    containerColor: Color = AppStyle.Panel,
+    shape: Shape = RoundedCornerShape(24.dp),
+    containerColor: Color = Color.Unspecified,
     tonalElevation: Dp = 0.dp,
     titleContentColor: Color = MaterialTheme.colorScheme.onSurface,
     textContentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     properties: DialogProperties = DialogProperties(),
 ) {
+    val fill = if (containerColor == Color.Unspecified || containerColor == AppStyle.Panel) null else containerColor
     Dialog(onDismissRequest, properties = properties) {
         BoxWithConstraints {
-            Surface(modifier.widthIn(min = 280.dp, max = 560.dp).fillMaxWidth().heightIn(max = maxHeight),
-                shape = shape, color = containerColor, tonalElevation = tonalElevation) {
+            com.hhst.youtubelite.ui.glass.LiquidGlassSurface(
+                modifier = modifier.widthIn(min = 280.dp, max = 560.dp).fillMaxWidth().heightIn(max = maxHeight),
+                shape = shape,
+                cornerRadius = 24.dp,
+                tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+                fillColor = fill,
+            ) {
                 Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 8.dp)) {
                     CompositionLocalProvider(LocalContentColor provides titleContentColor) {
                         icon?.let { Box(Modifier.padding(bottom = 8.dp).align(Alignment.CenterHorizontally)) { it() } }

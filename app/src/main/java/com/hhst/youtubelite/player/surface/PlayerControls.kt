@@ -11,6 +11,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -106,6 +107,7 @@ fun PlayerIconButton(
     iconSize: Int = PlayerUi.CHROME_ICON_DP,
     onLongClick: (() -> Unit)? = null,
     loading: Boolean = false,
+    glassHalo: Boolean = false,
 ) {
     val haptic = com.hhst.youtubelite.ui.design.rememberHapticAction()
     val interaction = remember { MutableInteractionSource() }
@@ -133,12 +135,20 @@ fun PlayerIconButton(
             ),
         contentAlignment = Alignment.Center,
     ) {
+        if (glassHalo && enabled) {
+            Box(
+                Modifier
+                    .size((iconSize + 14).dp)
+                    .background(PlayerUi.GlassBg, CircleShape)
+                    .border(0.75.dp, PlayerUi.GlassStroke, CircleShape),
+            )
+        }
         if (loading) {
             PlaybackLoadingIndicator(Modifier.size(iconSize.dp), tint)
         } else Icon(
             painter = painterResource(icon),
             contentDescription = contentDescription,
-            tint = tint.copy(alpha = if (enabled) 0.92f else 0.35f),
+            tint = tint.copy(alpha = if (enabled) 0.94f else 0.35f),
             modifier = Modifier.size(iconSize.dp),
         )
     }
@@ -179,6 +189,7 @@ fun TopBar(
             contentDescription = stringResource(R.string.navigate_back),
             onClick = onBack,
             iconSize = sizing.iconDp,
+            glassHalo = true,
         )
         Column(
             modifier = Modifier
@@ -221,6 +232,7 @@ fun TopBar(
                     iconSize = sizing.iconDp,
                     onLongClick = onSubtitleStyle,
                     tint = if (state.subtitleEnabled) PlayerUi.YtRed else PlayerUi.Icon,
+                    glassHalo = true,
                 )
                 if (menu == PlayerAnchorMenu.Subtitles && callbacks != null) {
                     PlayerAnchorDropdown(
@@ -243,6 +255,7 @@ fun TopBar(
                     onClick = onMore,
                     modifier = Modifier.width(40.dp),
                     iconSize = (sizing.iconDp * 5 / 6).coerceAtLeast(20),
+                    glassHalo = true,
                 )
             }
         }
@@ -275,6 +288,7 @@ fun CenterControls(
             enabled = state.hasPrevious,
             modifier = Modifier.size(skipSizeDp.dp),
             iconSize = iconSize,
+            glassHalo = true,
         )
         Box(
             modifier = Modifier
@@ -288,6 +302,12 @@ fun CenterControls(
                 ),
             contentAlignment = Alignment.Center,
         ) {
+            Box(
+                Modifier
+                    .size((playSizeDp * 0.8f).dp)
+                    .background(PlayerUi.GlassBg, CircleShape)
+                    .border(0.75.dp, PlayerUi.GlassStroke, CircleShape),
+            )
             if (action == PlayerUi.PlayPauseAction.Loading) {
                 PlaybackLoadingIndicator(Modifier.size(minOf(36, playSizeDp - 16).dp))
             } else {
@@ -306,6 +326,7 @@ fun CenterControls(
             enabled = state.hasNext,
             modifier = Modifier.size(skipSizeDp.dp),
             iconSize = iconSize,
+            glassHalo = true,
         )
     }
 }
@@ -395,6 +416,7 @@ fun BottomBar(
                         contentDescription = stringResource(R.string.action_fullscreen),
                         onClick = onFullscreen,
                         iconSize = sizing.iconDp,
+                        glassHalo = true,
                     )
                 }
             }
@@ -473,8 +495,9 @@ fun HintOverlay(hintState: State<String?>, enabled: Boolean, modifier: Modifier 
             color = Color.White,
             fontSize = PlayerUi.HINT_TEXT_SP.sp,
             modifier = Modifier
-                .background(PlayerUi.HintBg, RoundedCornerShape(12.dp))
-                .padding(horizontal = 10.dp, vertical = 6.dp),
+                .background(PlayerUi.GlassBg, RoundedCornerShape(16.dp))
+                .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(16.dp))
+                .padding(horizontal = 12.dp, vertical = 6.dp),
         )
     }
 }
@@ -497,7 +520,8 @@ fun CastStatusBanners(
         if (casting) {
             Row(
                 modifier = Modifier
-                    .background(PlayerUi.HintBg, RoundedCornerShape(12.dp))
+                    .background(PlayerUi.GlassBg, RoundedCornerShape(16.dp))
+                    .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(16.dp))
                     .clickable(onClick = onCast)
                     .padding(horizontal = 12.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -523,7 +547,8 @@ fun CastStatusBanners(
         if (linkUrl != null && linkConnected && !casting) {
             Row(
                 modifier = Modifier
-                    .background(PlayerUi.HintBg, RoundedCornerShape(12.dp))
+                    .background(PlayerUi.GlassBg, RoundedCornerShape(16.dp))
+                    .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(16.dp))
                     .padding(start = 12.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -563,7 +588,10 @@ fun ErrorOverlay(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 24.dp)
+            .background(PlayerUi.GlassBg, RoundedCornerShape(20.dp))
+            .border(0.75.dp, PlayerUi.GlassStroke, RoundedCornerShape(20.dp))
+            .padding(horizontal = 18.dp, vertical = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -609,6 +637,7 @@ fun LockAffordance(
         onClick = onToggle,
         modifier = modifier,
         iconSize = iconSize,
+        glassHalo = true,
     )
 }
 
@@ -640,7 +669,8 @@ fun MiniPlayerChrome(
         if (collapsedSide != null) {
             Box(Modifier.align(if (collapsedSide == MiniPlayerLayout.CollapsedSide.LEFT) AbsoluteAlignment.CenterRight else AbsoluteAlignment.CenterLeft)
                 .width(MiniPlayerLayout.COLLAPSED_PEEK_DP.dp).fillMaxHeight()
-                .background(Color(0xE6303030))
+                .background(PlayerUi.GlassBg)
+                .border(0.75.dp, PlayerUi.GlassStroke)
                 .clickable(role = Role.Button, onClickLabel = stringResource(R.string.action_expand_miniplayer),
                     onClick = { handle?.tap?.invoke() })
                 .testTag("mini-expand"), contentAlignment = Alignment.Center) {
@@ -671,6 +701,7 @@ fun MiniPlayerChrome(
                         .align(Alignment.TopStart)
                         .size(48.dp),
                     iconSize = 24,
+                    glassHalo = true,
                 )
                 PlayerIconButton(
                     icon = R.drawable.ic_close,
@@ -682,6 +713,7 @@ fun MiniPlayerChrome(
                         .align(Alignment.TopEnd)
                         .size(48.dp),
                     iconSize = 24,
+                    glassHalo = true,
                 )
                 PlayerIconButton(
                     icon = R.drawable.ic_fullscreen,
@@ -692,6 +724,7 @@ fun MiniPlayerChrome(
                         .align(Alignment.Center)
                         .size(40.dp),
                     iconSize = 20,
+                    glassHalo = true,
                 )
                 Row(
                     modifier = Modifier
@@ -706,6 +739,7 @@ fun MiniPlayerChrome(
                         enabled = state.hasPrevious && !suppressControls,
                         modifier = Modifier.size(MiniPlayerLayout.CONTROL_SIDE_DP.dp),
                         iconSize = 20,
+                        glassHalo = true,
                     )
                     Spacer(Modifier.width(gap.dp))
                     PlayerIconButton(
@@ -716,6 +750,7 @@ fun MiniPlayerChrome(
                         enabled = !suppressControls,
                         modifier = Modifier.size(MiniPlayerLayout.CONTROL_PLAY_DP.dp),
                         iconSize = 24,
+                        glassHalo = true,
                     )
                     Spacer(Modifier.width(gap.dp))
                     PlayerIconButton(
@@ -725,6 +760,7 @@ fun MiniPlayerChrome(
                         enabled = state.hasNext && !suppressControls,
                         modifier = Modifier.size(MiniPlayerLayout.CONTROL_SIDE_DP.dp),
                         iconSize = 20,
+                        glassHalo = true,
                     )
                 }
             }

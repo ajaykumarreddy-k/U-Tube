@@ -91,69 +91,109 @@ internal fun SearchPanel(
         reveal.animateTo(1f, tween(motionDuration(100, motionScale), easing = LinearOutSlowInEasing))
     }
     DisposableEffect(Unit) { onDispose { keyboard?.hide() } }
-    Box(Modifier.fillMaxSize().padding(top = toolbarHeight).graphicsLayer { alpha = reveal.value }
+    val glassPalette = DesignTokens.Glass
+    Box(Modifier.fillMaxSize().graphicsLayer { alpha = reveal.value }
         .background(DesignTokens.Scrim)
         .clickable(onClick = close).appDescription(R.string.a11y_close_search))
-    Column(Modifier.fillMaxWidth().graphicsLayer {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp).graphicsLayer {
         alpha = reveal.value
         translationY = -4.dp.toPx() * (1f - reveal.value)
-    }.background(DesignTokens.Background).testTag("search-overlay").appPaneTitle(R.string.a11y_search_youtube)) {
-        Row(Modifier.fillMaxWidth().height(toolbarHeight).background(
-            if (DesignTokens.Background == Color.White) Color(0xFFF1F1F1) else DesignTokens.Surface), verticalAlignment = Alignment.CenterVertically) {
-            AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back), onClick = close, modifier = Modifier.testTag("search-panel-back"))
-            Row(Modifier.weight(1f).height(fieldHeight).clip(RoundedCornerShape(topStart = 32.dp, bottomStart = 32.dp))
-                .background(DesignTokens.Ghost).padding(start = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                BasicTextField(field, { field = it; onQueryChanged(it.text) },
-                    Modifier.weight(1f).focusRequester(focus).testTag("search-input").appDescription(R.string.a11y_search_youtube),
-                    textStyle = DesignTokens.text(15, 22), singleLine = true, cursorBrush = SolidColor(DesignTokens.Ink),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(onSearch = { keyboard?.hide(); onSubmit(query) }),
-                    decorationBox = { inner -> Box { if (query.isEmpty()) AppText(stringResource(R.string.a11y_search_youtube), size = 15, line = 22, color = DesignTokens.Secondary); inner() } })
-                if (query.isNotEmpty()) Box(Modifier.size(50.dp, 16.dp).clickable(role = Role.Button) {
-                    onQueryChanged(""); focus.requestFocus(); keyboard?.show()
-                }.appDescription(R.string.a11y_clear_search).padding(start = 8.dp, end = 26.dp)) { AppIcon(AppIcon.Close, Modifier.size(16.dp)) }
+    }.testTag("search-overlay").appPaneTitle(R.string.a11y_search_youtube),
+        verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            Modifier.fillMaxWidth().height(maxOf(48.dp, toolbarHeight)),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+                icon = AppIcon.Back,
+                description = stringResource(R.string.a11y_back),
+                onClick = close,
+                modifier = Modifier.testTag("search-panel-back"),
+                diameter = 40.dp,
+                tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+            )
+            com.hhst.youtubelite.ui.glass.LiquidGlassSurface(
+                modifier = Modifier.weight(1f).height(maxOf(42.dp, fieldHeight)),
+                shape = CircleShape,
+                cornerRadius = 21.dp,
+                tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+                contentAlignment = Alignment.CenterStart,
+            ) {
+                Row(
+                    Modifier.fillMaxSize().padding(start = 14.dp, end = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    BasicTextField(field, { field = it; onQueryChanged(it.text) },
+                        Modifier.weight(1f).focusRequester(focus).testTag("search-input").appDescription(R.string.a11y_search_youtube),
+                        textStyle = DesignTokens.text(15, 22).copy(color = glassPalette.contentPrimary),
+                        singleLine = true,
+                        cursorBrush = SolidColor(glassPalette.accent),
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                        keyboardActions = KeyboardActions(onSearch = { keyboard?.hide(); onSubmit(query) }),
+                        decorationBox = { inner -> Box { if (query.isEmpty()) AppText(stringResource(R.string.a11y_search_youtube), size = 15, line = 22, color = glassPalette.contentSecondary); inner() } })
+                    if (query.isNotEmpty()) Box(Modifier.size(32.dp).clip(CircleShape).clickable(role = Role.Button) {
+                        onQueryChanged(""); focus.requestFocus(); keyboard?.show()
+                    }.appDescription(R.string.a11y_clear_search), contentAlignment = Alignment.Center) {
+                        AppIcon(AppIcon.Close, Modifier.size(16.dp), color = glassPalette.contentSecondary)
+                    }
+                    Box(Modifier.size(34.dp).clip(CircleShape).clickable(role = Role.Button) { keyboard?.hide(); onSubmit(query) }
+                        .appDescription(R.string.a11y_search), contentAlignment = Alignment.Center) {
+                        AppIcon(AppIcon.Search, Modifier.size(20.dp), color = glassPalette.contentPrimary)
+                    }
+                }
             }
-            Box(Modifier.size(36.dp, fieldHeight).clip(RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp)).background(DesignTokens.Ghost)
-                .clickable(role = Role.Button) { keyboard?.hide(); onSubmit(query) }
-                .appDescription(R.string.a11y_search), contentAlignment = Alignment.CenterStart) { AppIcon(AppIcon.Search) }
-            Spacer(Modifier.width(8.dp))
-            if (query.isEmpty()) Box(Modifier.padding(start = 4.dp, end = 12.dp).size(32.dp).background(DesignTokens.Ghost, CircleShape), contentAlignment = Alignment.Center) {
-                AppIconButton(AppIcon.Voice, stringResource(R.string.a11y_voice_search), modifier = Modifier.wrapContentSize(unbounded = true), diameter = 40.dp) { onVoiceSearch() }
-            }
+            if (query.isEmpty()) com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+                icon = AppIcon.Voice,
+                description = stringResource(R.string.a11y_voice_search),
+                onClick = { onVoiceSearch() },
+                diameter = 40.dp,
+                tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+            )
         }
-        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).testTag("search-suggestions")) {
-            history.forEachIndexed { index, entry ->
-                Row(Modifier.fillMaxWidth().heightIn(min = 37.dp).clickable(role = Role.Button) {
-                    keyboard?.hide(); onSubmit(entry)
-                }.testTag("history-$index"), verticalAlignment = Alignment.CenterVertically) {
-                    AppIcon(AppIcon.Clock, Modifier.padding(start = 8.dp).size(16.dp))
-                    BasicText(entry, Modifier.weight(1f).padding(horizontal = 8.dp), style = DesignTokens.text(14, 17), maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    if (onRemoveHistory != null) Box(Modifier.size(37.dp).clickable(role = Role.Button) {
-                        onRemoveHistory(entry)
-                    }.appDescription(R.string.a11y_remove_from_search_history, entry), contentAlignment = Alignment.Center) {
-                        AppIcon(AppIcon.Close, Modifier.size(14.dp))
+        if (history.isNotEmpty() || suggestions.isNotEmpty()) {
+            com.hhst.youtubelite.ui.glass.LiquidGlassSurface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(22.dp),
+                cornerRadius = 22.dp,
+                tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+            ) {
+                Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).testTag("search-suggestions")) {
+                    history.forEachIndexed { index, entry ->
+                        Row(Modifier.fillMaxWidth().heightIn(min = 42.dp).clickable(role = Role.Button) {
+                            keyboard?.hide(); onSubmit(entry)
+                        }.padding(horizontal = 8.dp).testTag("history-$index"), verticalAlignment = Alignment.CenterVertically) {
+                            AppIcon(AppIcon.Clock, Modifier.padding(start = 6.dp).size(16.dp), color = glassPalette.contentSecondary)
+                            BasicText(entry, Modifier.weight(1f).padding(horizontal = 10.dp), style = DesignTokens.text(14, 18).copy(color = glassPalette.contentPrimary), maxLines = 2, overflow = TextOverflow.Ellipsis)
+                            if (onRemoveHistory != null) Box(Modifier.size(37.dp).clip(CircleShape).clickable(role = Role.Button) {
+                                onRemoveHistory(entry)
+                            }.appDescription(R.string.a11y_remove_from_search_history, entry), contentAlignment = Alignment.Center) {
+                                AppIcon(AppIcon.Close, Modifier.size(14.dp), color = glassPalette.contentSecondary)
+                            }
+                        }
+                        Box(Modifier.fillMaxWidth().height(0.5.dp).background(glassPalette.hairlineBorder))
+                    }
+                    suggestions.forEachIndexed { index, suggestion ->
+                        Row(Modifier.fillMaxWidth().heightIn(min = 42.dp).clickable(role = Role.Button) {
+                            keyboard?.hide(); onSubmit(suggestion)
+                        }.padding(start = 8.dp, end = 4.dp).testTag("suggestion-$index"), verticalAlignment = Alignment.CenterVertically) {
+                            AppIcon(AppIcon.Search, Modifier.padding(start = 6.dp).size(16.dp), color = glassPalette.contentSecondary)
+                            val prefixQuery = query.trim()
+                            val text = buildAnnotatedString {
+                                val prefix = if (suggestion.startsWith(prefixQuery, ignoreCase = true)) prefixQuery.length else suggestion.length
+                                append(suggestion.take(prefix))
+                                withStyle(SpanStyle(fontWeight = FontWeight.Medium)) { append(suggestion.drop(prefix)) }
+                            }
+                            BasicText(text, Modifier.weight(1f).padding(horizontal = 10.dp), style = DesignTokens.text(14, 18).copy(color = glassPalette.contentPrimary), maxLines = 2, overflow = TextOverflow.Ellipsis)
+                            Box(Modifier.size(37.dp).clip(CircleShape).clickable(role = Role.Button) {
+                                onQueryChanged(suggestion); focus.requestFocus(); keyboard?.show()
+                            }.appDescription(R.string.a11y_use_suggestion, suggestion), contentAlignment = Alignment.Center) {
+                                AppIcon(AppIcon.ArrowUpLeft, color = glassPalette.contentSecondary)
+                            }
+                        }
+                        if (index < suggestions.lastIndex) Box(Modifier.fillMaxWidth().height(0.5.dp).background(glassPalette.hairlineBorder))
                     }
                 }
-                Box(Modifier.fillMaxWidth().height(1.dp).background(DesignTokens.Border.copy(alpha = 0.05f)))
-            }
-            suggestions.forEachIndexed { index, suggestion ->
-                Row(Modifier.fillMaxWidth().heightIn(min = 37.dp).clickable(role = Role.Button) {
-                    keyboard?.hide(); onSubmit(suggestion)
-                }.testTag("suggestion-$index"), verticalAlignment = Alignment.CenterVertically) {
-                    val prefixQuery = query.trim()
-                    val text = buildAnnotatedString {
-                        val prefix = if (suggestion.startsWith(prefixQuery, ignoreCase = true)) prefixQuery.length else suggestion.length
-                        append(suggestion.take(prefix))
-                        withStyle(SpanStyle(fontWeight = FontWeight.Medium)) { append(suggestion.drop(prefix)) }
-                    }
-                    BasicText(text, Modifier.weight(1f).padding(horizontal = 8.dp), style = DesignTokens.text(14, 17), maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    Box(Modifier.size(37.dp).background(DesignTokens.Border.copy(alpha = 0.05f)).clickable(role = Role.Button) {
-                        onQueryChanged(suggestion); focus.requestFocus(); keyboard?.show()
-                    }.appDescription(R.string.a11y_use_suggestion, suggestion).padding(end = 4.dp), contentAlignment = Alignment.CenterEnd) {
-                        AppIcon(AppIcon.ArrowUpLeft, Modifier.offset(y = 2.dp))
-                    }
-                }
-                if (index < suggestions.lastIndex) Box(Modifier.fillMaxWidth().height(1.dp).background(DesignTokens.Border.copy(alpha = 0.05f)))
             }
         }
     }

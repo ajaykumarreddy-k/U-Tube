@@ -31,8 +31,9 @@ import com.hhst.youtubelite.R
 import com.hhst.youtubelite.extension.ExtensionManager
 import com.hhst.youtubelite.extension.PreferenceKeys
 import com.hhst.youtubelite.ui.components.AppSlider
-import com.hhst.youtubelite.ui.design.AppIconButton
 import com.hhst.youtubelite.ui.design.AppIcon
+import com.hhst.youtubelite.ui.glass.LiquidGlassIconButton
+import com.hhst.youtubelite.ui.glass.LiquidGlassTier
 import com.hhst.youtubelite.ui.design.AppText
 import com.hhst.youtubelite.ui.design.DesignTokens
 
@@ -94,10 +95,12 @@ fun AdvancedScreen(
 
 @Composable
 private fun AdvancedTopBar(title: String, onBack: () -> Unit) {
-    Row(Modifier.fillMaxWidth().height(DesignTokens.TopBarHeight).testTag("advanced-topbar"),
+    Row(Modifier.fillMaxWidth().height(DesignTokens.TopBarHeight + 8.dp).padding(horizontal = 12.dp).testTag("advanced-topbar"),
         verticalAlignment = Alignment.CenterVertically) {
-        AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back), diameter = 48.dp, onClick = onBack)
-        AppText(title, Modifier.padding(end = 16.dp), size = 20, line = 28, weight = FontWeight.Medium)
+        LiquidGlassIconButton(AppIcon.Back, stringResource(R.string.a11y_back), onClick = onBack,
+            diameter = 38.dp, tier = LiquidGlassTier.Translucent)
+        Spacer(Modifier.width(12.dp))
+        AppText(title, Modifier.padding(end = 16.dp), size = 20, line = 28, weight = FontWeight.SemiBold)
     }
 }
 

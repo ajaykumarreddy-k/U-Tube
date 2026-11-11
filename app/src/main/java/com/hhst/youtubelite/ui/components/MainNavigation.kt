@@ -65,27 +65,39 @@ object MainTabs {
 
 @Composable
 fun MainNavigationBar(tag: String, signedIn: Boolean, avatarAsset: String?, selected: MainTab = MainTab.You, onSelect: (MainTab) -> Unit) {
-    val haptic = com.hhst.youtubelite.ui.design.rememberHapticAction(com.hhst.youtubelite.core.HapticsController.Event.TAB)
-    Column(Modifier.fillMaxWidth().testTag("$tag-navigation")) {
-        Box(Modifier.fillMaxWidth().height(1.dp).background(DesignTokens.NavigationDivider))
-        Row(Modifier.fillMaxWidth().height(DesignTokens.BottomBarHeight)) {
-            MainTabs.tabs(signedIn, com.hhst.youtubelite.ui.design.LocalHideShorts.current).forEach { tab ->
-                Column(Modifier.weight(1f).fillMaxHeight()
-                    .clickable(role = Role.Tab) { haptic(); onSelect(tab) }
-                    .testTag("$tag-nav-${tab.name}").semantics { this.selected = tab == selected },
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center) {
+    val tabs = MainTabs.tabs(signedIn, com.hhst.youtubelite.ui.design.LocalHideShorts.current)
+    val glassPalette = DesignTokens.Glass
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 14.dp, vertical = 10.dp)
+            .testTag("$tag-navigation"),
+    ) {
+        com.hhst.youtubelite.ui.glass.LiquidGlassNavigationBar(
+            items = tabs.map { tab ->
+                val active = tab == selected
+                com.hhst.youtubelite.ui.glass.LiquidGlassNavItem(
+                    id = tab.name,
+                    label = stringResource(tab.labelResource),
+                    selected = active,
+                    testTag = "$tag-nav-${tab.name}",
+                ) {
                     if (signedIn && tab == MainTab.You && avatarAsset != null) {
-                        com.hhst.youtubelite.ui.design.Artwork(avatarAsset, modifier = Modifier.size(24.dp).clip(CircleShape),)
-                    } else AppIcon(when (tab) {
-                        MainTab.Home -> AppIcon.HomeOutline
-                        MainTab.Shorts -> AppIcon.Shorts
-                        MainTab.Subscriptions -> AppIcon.Subscriptions
-                        MainTab.You -> AppIcon.You
-                    })
-                    AppText(stringResource(tab.labelResource), size = 11, line = 14, maxLines = 1)
+                        com.hhst.youtubelite.ui.design.Artwork(avatarAsset, modifier = Modifier.size(24.dp).clip(CircleShape))
+                    } else {
+                        AppIcon(
+                            icon = when (tab) {
+                                MainTab.Home -> if (active) AppIcon.Home else AppIcon.HomeOutline
+                                MainTab.Shorts -> AppIcon.Shorts
+                                MainTab.Subscriptions -> AppIcon.Subscriptions
+                                MainTab.You -> AppIcon.You
+                            },
+                            color = if (active) glassPalette.contentPrimary else glassPalette.contentSecondary,
+                        )
+                    }
                 }
-            }
-        }
+            },
+            onSelect = { index -> onSelect(tabs[index]) },
+        )
     }
 }

@@ -885,7 +885,9 @@ fun MiniPlayerWindow(
                 exit = fadeOut(tween(motionDuration(100, motionScale))) + scaleOut(tween(motionDuration(100, motionScale)), targetScale = 0.9f)) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Box(Modifier.size(56.dp).graphicsLayer { scaleX = closeTargetScale; scaleY = closeTargetScale }
-                        .background(Color(0xCC303030), androidx.compose.foundation.shape.CircleShape), contentAlignment = Alignment.Center) {
+                        .background(PlayerUi.GlassBg, androidx.compose.foundation.shape.CircleShape)
+                        .border(0.75.dp, PlayerUi.GlassStroke, androidx.compose.foundation.shape.CircleShape),
+                        contentAlignment = Alignment.Center) {
                     Icon(painterResource(R.drawable.ic_close), contentDescription = stringResource(R.string.close_player),
                         tint = Color.White.copy(alpha = if (closeArmed) 1f else 0.95f),
                         modifier = Modifier.size(32.dp))
@@ -953,7 +955,7 @@ fun MiniPlayerWindow(
                         }
                         .then(
                             if ((mini || revealingSource) && (showStroke || revealingSource)) {
-                                Modifier.border(1.dp, Color(MiniPlayerLayout.STROKE_COLOR), corners)
+                                Modifier.border(1.dp, PlayerUi.GlassStroke, corners)
                             } else {
                                 Modifier
                             },

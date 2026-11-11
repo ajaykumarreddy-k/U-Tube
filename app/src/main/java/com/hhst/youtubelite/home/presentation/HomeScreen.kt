@@ -149,69 +149,75 @@ fun HomeScreen(state: HomeUiState, onAction: (HomeAction) -> Unit, modifier: Mod
                     onAction(HomeAction.AutomaticLoadNext)
             }
             val searchOpen = state.overlay == HomeOverlay.Search
-            Column(Modifier.fillMaxSize().then(if (state.overlay != HomeOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
-                if (feed == null && state.content != HomeContent.Loading) {
-                    HomeTopBar(onAction)
-                    if (catalogMode) ChipStrip(state.selectedChip, state.chips, true, onAction)
-                }
-                Box(Modifier.weight(1f).fillMaxWidth().clipToBounds().nestedScroll(chromeConnection)
-                    .pullRefreshGesture(pullMotion)) {
-                    when (val content = state.content) {
-                        is HomeContent.Empty -> Box(Modifier.fillMaxSize().graphicsLayer { translationY = pull }) {
-                            EmptyHome(content, showTools = !searchOpen && !catalogMode, wide = width >= 528,
-                                onAction = onAction, showMessage = !catalogMode)
-                        }
-                        HomeContent.Failed -> Box(Modifier.fillMaxSize().graphicsLayer { translationY = pull }) {
-                            if (state.verification != null) VerificationCard(
-                                state.verification,
-                                onVerify = { onAction(HomeAction.Navigate(HomeNavigationRequest.OpenVerification(state.verification!!.challengeUrl))) },
-                                onDismiss = { onAction(HomeAction.DismissVerification) },
-                                modifier = Modifier.testTag("home-verification"),
-                            ) else ErrorHome(onAction)
-                        }
-                        HomeContent.Loading -> Box(Modifier.fillMaxSize()) {
-                            HomeSkeleton(width, feedTopInset)
-                            // Keep navigation and card anchors in place while the first page loads.
-                            Box(Modifier.offset(y = DesignTokens.TopBarHeight).background(DesignTokens.Background)) {
-                                ChipStrip(state.selectedChip, state.chips, catalogMode, onAction)
+            val glassPalette = DesignTokens.Glass
+            val navBottomClearance = DesignTokens.BottomBarHeight + 28.dp
+            Box(Modifier.fillMaxSize().then(if (state.overlay != HomeOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
+                Column(Modifier.fillMaxSize()) {
+                    if (feed == null && state.content != HomeContent.Loading) {
+                        HomeTopBar(onAction)
+                        if (catalogMode) ChipStrip(state.selectedChip, state.chips, true, onAction)
+                    }
+                    Box(Modifier.weight(1f).fillMaxWidth().clipToBounds().nestedScroll(chromeConnection)
+                        .pullRefreshGesture(pullMotion)) {
+                        when (val content = state.content) {
+                            is HomeContent.Empty -> Box(Modifier.fillMaxSize().graphicsLayer { translationY = pull }) {
+                                EmptyHome(content, showTools = !searchOpen && !catalogMode, wide = width >= 528,
+                                    onAction = onAction, showMessage = !catalogMode, bottomInset = navBottomClearance)
                             }
-                            Box(Modifier.background(DesignTokens.Background)) { HomeTopBar(onAction) }
-                        }
-                        is HomeContent.Feed -> Box(Modifier.fillMaxSize()) {
-                            // Pull moves the feed rows only; the chrome stack keeps its place.
-                            Column(Modifier.fillMaxSize().graphicsLayer { translationY = pull }) {
-                            if (content.refreshFailed) Box(Modifier.graphicsLayer { translationY = (96f + chipExtraHeight.value - chromeTravel * chromeOffset) * density }) {
-                                RetryRow(stringResource(R.string.ui_couldn_t_refresh_try_again)) { onAction(HomeAction.Refresh) }
+                            HomeContent.Failed -> Box(Modifier.fillMaxSize().graphicsLayer { translationY = pull }) {
+                                if (state.verification != null) VerificationCard(
+                                    state.verification,
+                                    onVerify = { onAction(HomeAction.Navigate(HomeNavigationRequest.OpenVerification(state.verification!!.challengeUrl))) },
+                                    onDismiss = { onAction(HomeAction.DismissVerification) },
+                                    modifier = Modifier.padding(bottom = navBottomClearance).testTag("home-verification"),
+                                ) else ErrorHome(onAction, bottomInset = navBottomClearance)
                             }
-                            LazyVerticalGrid(
-                                columns = GridCells.Fixed(HomeLayout.columns(width)), state = grid,
-                                modifier = Modifier.fillMaxSize().testTag("home-feed"),
-                                contentPadding = PaddingValues(start = HomeLayout.outerPadding(width).dp, end = HomeLayout.outerPadding(width).dp, top = feedTopInset, bottom = 24.dp),
-                                horizontalArrangement = Arrangement.spacedBy(DesignTokens.GridGap),
-                            ) {
-                                homeCards(visibleItems, currentWidth, state.live, onAction, postInteractions)
-                                item(span = { GridItemSpan(maxLineSpan) }) {
-                                    when (content.append) {
-                                        AppendState.Loading -> Box(Modifier.fillMaxWidth().padding(top = 80.dp, bottom = 12.dp), contentAlignment = Alignment.Center) { LoadingSpinner() }
-                                        AppendState.Failed -> RetryRow(stringResource(R.string.ui_something_went_wrong_tap_to_retry)) { onAction(HomeAction.LoadNext) }
-                                        AppendState.Idle -> if (content.page.nextKey != null && content.automaticPagingPaused) {
-                                            Box(Modifier.fillMaxWidth().padding(vertical = 16.dp).testTag("home-load-more"), contentAlignment = Alignment.Center) {
-                                                PillButton(stringResource(R.string.load_more)) { onAction(HomeAction.LoadNext) }
-                                            }
-                                        } else Spacer(Modifier.height(1.dp))
+                            HomeContent.Loading -> Box(Modifier.fillMaxSize()) {
+                                HomeSkeleton(width, feedTopInset, navBottomClearance)
+                                // Keep navigation and card anchors in place while the first page loads.
+                                Box(Modifier.offset(y = DesignTokens.TopBarHeight).background(DesignTokens.Background.copy(alpha = 0.88f))) {
+                                    ChipStrip(state.selectedChip, state.chips, catalogMode, onAction)
+                                }
+                                Box(Modifier.background(DesignTokens.Background.copy(alpha = 0.9f))) { HomeTopBar(onAction) }
+                            }
+                            is HomeContent.Feed -> Box(Modifier.fillMaxSize()) {
+                                // Pull moves the feed rows only; the chrome stack keeps its place.
+                                Column(Modifier.fillMaxSize().graphicsLayer { translationY = pull }) {
+                                if (content.refreshFailed) Box(Modifier.graphicsLayer { translationY = (96f + chipExtraHeight.value - chromeTravel * chromeOffset) * density }) {
+                                    RetryRow(stringResource(R.string.ui_couldn_t_refresh_try_again)) { onAction(HomeAction.Refresh) }
+                                }
+                                LazyVerticalGrid(
+                                    columns = GridCells.Fixed(HomeLayout.columns(width)), state = grid,
+                                    modifier = Modifier.fillMaxSize().testTag("home-feed"),
+                                    contentPadding = PaddingValues(start = HomeLayout.outerPadding(width).dp, end = HomeLayout.outerPadding(width).dp, top = feedTopInset, bottom = navBottomClearance),
+                                    horizontalArrangement = Arrangement.spacedBy(DesignTokens.GridGap),
+                                ) {
+                                    homeCards(visibleItems, currentWidth, state.live, onAction, postInteractions)
+                                    item(span = { GridItemSpan(maxLineSpan) }) {
+                                        when (content.append) {
+                                            AppendState.Loading -> Box(Modifier.fillMaxWidth().padding(top = 80.dp, bottom = 12.dp), contentAlignment = Alignment.Center) { LoadingSpinner() }
+                                            AppendState.Failed -> RetryRow(stringResource(R.string.ui_something_went_wrong_tap_to_retry)) { onAction(HomeAction.LoadNext) }
+                                            AppendState.Idle -> if (content.page.nextKey != null && content.automaticPagingPaused) {
+                                                Box(Modifier.fillMaxWidth().padding(vertical = 16.dp).testTag("home-load-more"), contentAlignment = Alignment.Center) {
+                                                    PillButton(stringResource(R.string.load_more)) { onAction(HomeAction.LoadNext) }
+                                                }
+                                            } else Spacer(Modifier.height(1.dp))
+                                        }
                                     }
                                 }
+                                }
+                                Box(Modifier.graphicsLayer { translationY = (48f - chromeTravel * chromeOffset) * density }.background(DesignTokens.Background.copy(alpha = 0.86f))) { ChipStrip(state.selectedChip, state.chips, content.page.catalog != null, onAction) }
+                                Box(Modifier.graphicsLayer { translationY = -48f * chromeOffset * density }.background(DesignTokens.Background.copy(alpha = 0.9f))) { HomeTopBar(onAction) }
                             }
-                            }
-                            Box(Modifier.graphicsLayer { translationY = (48f - chromeTravel * chromeOffset) * density }.background(DesignTokens.Background)) { ChipStrip(state.selectedChip, state.chips, content.page.catalog != null, onAction) }
-                            Box(Modifier.graphicsLayer { translationY = -48f * chromeOffset * density }.background(DesignTokens.Background)) { HomeTopBar(onAction) }
                         }
+                        val refreshAnchor = if (state.content is HomeContent.Feed)
+                            (96f + chipExtraHeight.value - chromeTravel * chromeOffset).dp else 0.dp
+                        PullRefreshIndicator(pullMotion, "home-refresh-indicator", refreshAnchor)
                     }
-                    val refreshAnchor = if (state.content is HomeContent.Feed)
-                        (96f + chipExtraHeight.value - chromeTravel * chromeOffset).dp else 0.dp
-                    PullRefreshIndicator(pullMotion, "home-refresh-indicator", refreshAnchor)
                 }
-                HomeBottomBar(state.signedInPreview, onAction, state.avatar)
+                Box(Modifier.align(Alignment.BottomCenter)) {
+                    HomeBottomBar(state.signedInPreview, onAction, state.avatar)
+                }
             }
             when (val overlay = state.overlay) {
                 HomeOverlay.None -> Unit
@@ -287,69 +293,94 @@ private fun LazyGridScope.homeCards(items: List<FeedItem>, width: Float, live: B
 
 @Composable
 private fun HomeTopBar(onAction: (HomeAction) -> Unit) {
-    Row(Modifier.fillMaxWidth().height(DesignTokens.TopBarHeight).testTag("home-topbar"), verticalAlignment = Alignment.CenterVertically) {
-        Box(Modifier.width(117.dp).fillMaxHeight().clickable(role = Role.Button) {
+    val glassPalette = DesignTokens.Glass
+    Row(
+        Modifier.fillMaxWidth().height(DesignTokens.TopBarHeight).padding(end = 10.dp).testTag("home-topbar"),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(Modifier.width(124.dp).fillMaxHeight().clickable(role = Role.Button) {
             onAction(HomeAction.Navigate(HomeNavigationRequest.Destination(HomeDestination.Home)))
         }.appDescription(R.string.a11y_litube_home), contentAlignment = Alignment.CenterStart) {
-            com.hhst.youtubelite.ui.glass.UTubeWordmark(Modifier.padding(start = 12.dp))
+            com.hhst.youtubelite.ui.glass.UTubeWordmark(Modifier.padding(start = 16.dp))
         }
         Spacer(Modifier.weight(1f))
-        AppIconButton(AppIcon.Search, stringResource(R.string.a11y_search_youtube)) { onAction(HomeAction.OpenSearch) }
+        com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+            icon = AppIcon.Search,
+            description = stringResource(R.string.a11y_search_youtube),
+            onClick = { onAction(HomeAction.OpenSearch) },
+            diameter = 38.dp,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+        )
     }
 }
 
 @Composable
 private fun HomeBottomBar(signedIn: Boolean, onAction: (HomeAction) -> Unit, avatar: String? = null) {
-    val haptic = rememberHapticAction(com.hhst.youtubelite.core.HapticsController.Event.TAB)
-    Column(Modifier.fillMaxWidth().testTag("home-navigation")) {
-        Box(Modifier.fillMaxWidth().height(1.dp).background(DesignTokens.NavigationDivider))
-        Row(Modifier.fillMaxWidth().height(DesignTokens.BottomBarHeight)) {
-            val destinations = if (signedIn) HomeDestination.entries else listOf(HomeDestination.Home, HomeDestination.Shorts, HomeDestination.You)
-            destinations.filterNot { LocalHideShorts.current && it == HomeDestination.Shorts }.forEach { destination ->
-                Column(Modifier.weight(1f).fillMaxHeight()
-                    .selectable(destination == HomeDestination.Home, role = Role.Tab) {
-                        haptic()
-                        onAction(HomeAction.Navigate(HomeNavigationRequest.Destination(destination)))
-                    }.testTag("nav-${destination.name}"),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    val destinations = (if (signedIn) HomeDestination.entries else listOf(HomeDestination.Home, HomeDestination.Shorts, HomeDestination.You))
+        .filterNot { LocalHideShorts.current && it == HomeDestination.Shorts }
+    val glassPalette = DesignTokens.Glass
+    Box(
+        Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp).testTag("home-navigation"),
+    ) {
+        com.hhst.youtubelite.ui.glass.LiquidGlassNavigationBar(
+            items = destinations.map { destination ->
+                val selected = destination == HomeDestination.Home
+                com.hhst.youtubelite.ui.glass.LiquidGlassNavItem(
+                    id = destination.name,
+                    label = stringResource(destination.labelResource),
+                    selected = selected,
+                    testTag = "nav-${destination.name}",
+                ) {
                     if (signedIn && destination == HomeDestination.You) {
                         if (avatar.isNullOrBlank()) {
                             Image(
                                 painterResource(R.drawable.sample_bunny),
-                                contentDescription = null, modifier = Modifier.size(24.dp).clip(CircleShape),
+                                contentDescription = null, modifier = Modifier.size(22.dp).clip(CircleShape),
                                 contentScale = ContentScale.Crop,
                             )
                         } else {
                             com.hhst.youtubelite.ui.design.Artwork(avatar,
-                                modifier = Modifier.size(24.dp).clip(CircleShape), contentScale = ContentScale.Crop)
+                                modifier = Modifier.size(22.dp).clip(CircleShape), contentScale = ContentScale.Crop)
                         }
-                    } else AppIcon(when (destination) {
-                        HomeDestination.Home -> AppIcon.Home; HomeDestination.Shorts -> AppIcon.Shorts
-                        HomeDestination.Subscriptions -> AppIcon.Subscriptions; HomeDestination.You -> AppIcon.You
-                    })
-                    AppText(stringResource(destination.labelResource), size = 11, line = 14, maxLines = 1)
+                    } else AppIcon(
+                        icon = when (destination) {
+                            HomeDestination.Home -> AppIcon.Home
+                            HomeDestination.Shorts -> AppIcon.Shorts
+                            HomeDestination.Subscriptions -> AppIcon.Subscriptions
+                            HomeDestination.You -> AppIcon.You
+                        },
+                        color = if (selected) glassPalette.contentPrimary else glassPalette.contentSecondary,
+                    )
                 }
-            }
-        }
+            },
+            onSelect = { index -> onAction(HomeAction.Navigate(HomeNavigationRequest.Destination(destinations[index]))) },
+        )
     }
 }
 
 @Composable
 private fun ChipStrip(selected: String, chips: List<String>, catalog: Boolean, onAction: (HomeAction) -> Unit) {
     val extraHeight = with(LocalDensity.current) { (20.sp.toDp() - 20.dp).coerceAtLeast(0.dp) }
+    val glassPalette = DesignTokens.Glass
+    val chipShape = CircleShape
     LazyRow(Modifier.fillMaxWidth().height(48.dp + extraHeight).testTag("home-chips"), verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
+        horizontalArrangement = Arrangement.spacedBy(10.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
         item {
-            Box(Modifier.padding(end = 12.dp).size(width = 48.dp, height = 32.dp + extraHeight)
-                .clip(RoundedCornerShape(2.dp)).background(DesignTokens.Surface)
+            Box(Modifier.padding(end = 6.dp).size(width = 44.dp, height = 32.dp + extraHeight)
+                .clip(chipShape)
+                .background(glassPalette.frostFill)
+                .border(0.75.dp, glassPalette.hairlineBorder, chipShape)
                 .clickable(role = Role.Button) { onAction(HomeAction.Navigate(HomeNavigationRequest.Explore)) }
                 .appDescription(R.string.a11y_explore), contentAlignment = Alignment.Center) {
-                AppIcon(AppIcon.Explore)
+                AppIcon(AppIcon.Explore, color = glassPalette.contentPrimary)
             }
         }
         items(chips) { chip ->
-            Box(Modifier.widthIn(min = 48.dp).clip(RoundedCornerShape(8.dp)).background(if (chip == selected) DesignTokens.Ink else DesignTokens.Surface)
-                .selectable(chip == selected, role = Role.Tab) { onAction(HomeAction.SelectChip(chip)) }.padding(horizontal = 12.dp, vertical = 6.dp),
+            val active = chip == selected
+            Box(Modifier.widthIn(min = 48.dp).clip(chipShape)
+                .background(if (active) DesignTokens.Ink else glassPalette.frostFill)
+                .then(if (active) Modifier else Modifier.border(0.75.dp, glassPalette.hairlineBorder, chipShape))
+                .selectable(active, role = Role.Tab) { onAction(HomeAction.SelectChip(chip)) }.padding(horizontal = 14.dp, vertical = 6.dp),
                 contentAlignment = Alignment.Center) {
                 val label = if (!catalog) chip else when (HomeCatalog.forFilter(chip)) {
                     HomeCatalog.Popular -> stringResource(R.string.download_filter_all)
@@ -359,7 +390,7 @@ private fun ChipStrip(selected: String, chips: List<String>, catalog: Boolean, o
                     HomeCatalog.News -> stringResource(R.string.home_top_news)
                     null -> chip
                 }
-                AppText(label, size = 14, line = 20, weight = FontWeight.Medium, color = if (chip == selected) DesignTokens.Background else DesignTokens.Ink)
+                AppText(label, size = 14, line = 20, weight = FontWeight.Medium, color = if (active) DesignTokens.Background else glassPalette.contentPrimary)
             }
         }
     }
@@ -367,32 +398,57 @@ private fun ChipStrip(selected: String, chips: List<String>, catalog: Boolean, o
 
 @Composable
 private fun EmptyHome(content: HomeContent.Empty, showTools: Boolean, wide: Boolean, onAction: (HomeAction) -> Unit,
-    showMessage: Boolean = true) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).testTag("home-empty"), horizontalAlignment = Alignment.CenterHorizontally) {
+    showMessage: Boolean = true, bottomInset: Dp = 24.dp) {
+    val glassPalette = DesignTokens.Glass
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(bottom = bottomInset).testTag("home-empty"), horizontalAlignment = Alignment.CenterHorizontally) {
         if (showTools) {
             Spacer(Modifier.height(if (wide) 76.dp else 60.dp))
             com.hhst.youtubelite.ui.glass.UTubeWordmark(large = true, modifier = Modifier.appDescription(R.string.a11y_litube))
             Spacer(Modifier.height(16.dp))
-            Row(Modifier.fillMaxWidth().padding(horizontal = 23.dp), verticalAlignment = Alignment.CenterVertically,
+            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                AppIconButton(AppIcon.Explore, stringResource(R.string.a11y_explore), diameter = 40.dp, background = DesignTokens.Surface) { onAction(HomeAction.Navigate(HomeNavigationRequest.Explore)) }
-                Box(Modifier.weight(1f).height(40.dp).clip(CircleShape).background(DesignTokens.Surface)
-                    .clickable(role = Role.Button) { onAction(HomeAction.OpenSearch) }
-                    .appDescription(R.string.a11y_search_youtube).padding(horizontal = 16.dp), contentAlignment = Alignment.CenterStart) {
-                    AppText(stringResource(R.string.a11y_search_youtube), size = 16, line = 22, color = Color(0xFF909090))
+                com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+                    icon = AppIcon.Explore,
+                    description = stringResource(R.string.a11y_explore),
+                    onClick = { onAction(HomeAction.Navigate(HomeNavigationRequest.Explore)) },
+                    diameter = 42.dp,
+                    tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+                )
+                com.hhst.youtubelite.ui.glass.LiquidGlassSurface(
+                    modifier = Modifier.weight(1f).height(42.dp).appDescription(R.string.a11y_search_youtube),
+                    shape = CircleShape,
+                    cornerRadius = 21.dp,
+                    tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+                    contentAlignment = Alignment.CenterStart,
+                    onClick = { onAction(HomeAction.OpenSearch) },
+                ) {
+                    Row(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                        AppIcon(AppIcon.Search, Modifier.size(18.dp), color = glassPalette.contentSecondary)
+                        Spacer(Modifier.width(10.dp))
+                        AppText(stringResource(R.string.a11y_search_youtube), size = 15, line = 22, color = glassPalette.contentSecondary)
+                    }
                 }
-                AppIconButton(AppIcon.Voice, stringResource(R.string.a11y_voice_search), diameter = 40.dp, background = DesignTokens.Surface) { onAction(HomeAction.Navigate(HomeNavigationRequest.VoiceSearch)) }
+                com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+                    icon = AppIcon.Voice,
+                    description = stringResource(R.string.a11y_voice_search),
+                    onClick = { onAction(HomeAction.Navigate(HomeNavigationRequest.VoiceSearch)) },
+                    diameter = 42.dp,
+                    tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+                )
             }
             Spacer(Modifier.height(48.dp))
         } else Spacer(Modifier.height(12.dp))
-        Column(Modifier.padding(horizontal = 16.dp).widthIn(max = 392.dp).fillMaxWidth().testTag("empty-message")
-            .messageCardShadow()
-            .background(DesignTokens.Background, RoundedCornerShape(12.dp)).padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            AppText(content.title.ifBlank { stringResource(R.string.home_empty_title) }, size = 24, line = 32, weight = FontWeight.Black, align = TextAlign.Center)
-            if (showMessage) {
-                Spacer(Modifier.height(12.dp))
-                AppText(content.message.ifBlank { stringResource(R.string.home_empty_message) }, size = 14, line = 20, color = DesignTokens.Secondary, align = TextAlign.Center)
+        com.hhst.youtubelite.ui.glass.LiquidGlassCard(
+            modifier = Modifier.padding(horizontal = 16.dp).widthIn(max = 392.dp).fillMaxWidth().testTag("empty-message"),
+            cornerRadius = 20.dp,
+            contentPadding = PaddingValues(start = 18.dp, end = 18.dp, top = 24.dp, bottom = 16.dp),
+        ) {
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                AppText(content.title.ifBlank { stringResource(R.string.home_empty_title) }, size = 22, line = 30, weight = FontWeight.Black, align = TextAlign.Center)
+                if (showMessage) {
+                    Spacer(Modifier.height(12.dp))
+                    AppText(content.message.ifBlank { stringResource(R.string.home_empty_message) }, size = 14, line = 20, color = glassPalette.contentSecondary, align = TextAlign.Center)
+                }
             }
         }
         Spacer(Modifier.height(32.dp))
@@ -400,8 +456,8 @@ private fun EmptyHome(content: HomeContent.Empty, showTools: Boolean, wide: Bool
 }
 
 @Composable
-private fun ErrorHome(onAction: (HomeAction) -> Unit) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp).testTag("home-error"),
+private fun ErrorHome(onAction: (HomeAction) -> Unit, bottomInset: Dp = 24.dp) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 24.dp + bottomInset).testTag("home-error"),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         AppText(stringResource(R.string.ui_something_went_wrong), size = 20, line = 28, weight = FontWeight.Bold)
         AppText(stringResource(R.string.ui_please_try_again), modifier = Modifier.padding(top = 8.dp, bottom = 20.dp), color = DesignTokens.Secondary)
@@ -411,8 +467,11 @@ private fun ErrorHome(onAction: (HomeAction) -> Unit) {
 
 @Composable
 internal fun PillButton(label: String, onClick: () -> Unit) {
-    Box(Modifier.clip(CircleShape).background(DesignTokens.Surface).clickable(role = Role.Button, onClick = onClick)
-        .padding(horizontal = 16.dp, vertical = 8.dp), contentAlignment = Alignment.Center) {
+    com.hhst.youtubelite.ui.glass.LiquidGlassButton(
+        onClick = onClick,
+        style = com.hhst.youtubelite.ui.glass.LiquidGlassButtonStyle.Standard,
+        tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+    ) {
         AppText(label, weight = FontWeight.Medium)
     }
 }
@@ -426,10 +485,10 @@ private fun RetryRow(label: String, retry: () -> Unit) {
 }
 
 @Composable
-private fun HomeSkeleton(width: Float, topInset: Dp) {
+private fun HomeSkeleton(width: Float, topInset: Dp, bottomInset: Dp = 24.dp) {
     LazyVerticalGrid(GridCells.Fixed(HomeLayout.columns(width)), Modifier.fillMaxSize().testTag("home-skeleton").clearAndSetSemantics {},
         contentPadding = PaddingValues(start = HomeLayout.outerPadding(width).dp, end = HomeLayout.outerPadding(width).dp,
-            top = topInset, bottom = 24.dp),
+            top = topInset, bottom = bottomInset),
         horizontalArrangement = Arrangement.spacedBy(DesignTokens.GridGap), verticalArrangement = Arrangement.spacedBy(40.dp)) {
         items(12) { index ->
             Column(Modifier.testTag("skeleton-card-$index")) {

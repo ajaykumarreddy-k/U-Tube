@@ -1,6 +1,7 @@
 package com.hhst.youtubelite.ui.glass
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
@@ -31,8 +32,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -205,30 +210,46 @@ fun UTubeWordmark(
     large: Boolean = false,
 ) {
     val palette = LocalLiquidGlassPalette.current
+    val appName = stringResource(R.string.app_name)
+    val markSize = when {
+        large -> 34.dp
+        compact -> 26.dp
+        else -> 24.dp
+    }
     val fontSize = when {
-        large -> 28
-        compact -> 16
-        else -> 21
+        large -> 26
+        compact -> 15
+        else -> 20
     }
     val lineHeight = when {
         large -> 32
         compact -> 20
-        else -> 26
+        else -> 24
     }
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(if (large) 10.dp else 7.dp),
     ) {
-        BasicText(
-            text = stringResource(R.string.app_name),
-            style = DesignTokens.text(
-                size = fontSize,
-                line = lineHeight,
-                weight = FontWeight.Bold,
-                color = palette.contentPrimary,
-            ).copy(letterSpacing = (-0.4).sp),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+        Image(
+            painter = painterResource(R.drawable.ic_utube_mark),
+            contentDescription = if (compact) appName else null,
+            modifier = Modifier.size(markSize),
+            contentScale = ContentScale.Fit,
+            colorFilter = ColorFilter.tint(palette.contentPrimary),
         )
+        if (!compact) {
+            BasicText(
+                text = appName,
+                style = DesignTokens.text(
+                    size = fontSize,
+                    line = lineHeight,
+                    weight = FontWeight.Bold,
+                    color = palette.contentPrimary,
+                ).copy(letterSpacing = (-0.4).sp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
     }
 }

@@ -52,17 +52,18 @@ fun <T> SelectField(
     val dark = palette != LightAppPalette
     val select by rememberUpdatedState(onSelect)
     Box {
+        val glassPalette = DesignTokens.Glass
         Row(
             Modifier.width(width.dp).height(chipHeight).testTag(tag)
-                .clip(RoundedCornerShape(8.dp))
-                .background(if (dark) DesignTokens.Surface else Color(0xFFF1F1F1))
+                .clip(RoundedCornerShape(14.dp))
+                .background(glassPalette.frostFill)
                 .border(
-                    1.dp, DesignTokens.Border.copy(alpha = 0.2f),
-                    RoundedCornerShape(8.dp),
+                    1.dp, glassPalette.hairlineBorder,
+                    RoundedCornerShape(14.dp),
                 )
                 .clickable(role = Role.Button) { expanded = true }
                 .semantics { contentDescription = selectedLabel }
-                .padding(start = 11.dp, end = 5.dp),
+                .padding(start = 12.dp, end = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AppText(

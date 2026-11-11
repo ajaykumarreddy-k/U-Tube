@@ -128,49 +128,53 @@ fun SearchResultsScreen(
                 }
             } else null
             val backgroundHidden = state.searchOpen || state.overlay is SearchOverlay.ItemMenu || state.overlay is SearchOverlay.PlaylistMenu
-            Column(Modifier.fillMaxSize().then(if (backgroundHidden) Modifier.clearAndSetSemantics {} else Modifier)) {
-                CollapsingAppBar(appBar) {
-                    SearchTopBar(state.query, onAction, onBack)
-                }
+            Box(Modifier.fillMaxSize().then(if (backgroundHidden) Modifier.clearAndSetSemantics {} else Modifier)) {
+                Column(Modifier.fillMaxSize()) {
+                    CollapsingAppBar(appBar) {
+                        SearchTopBar(state.query, onAction, onBack)
+                    }
 
-                val motion = LocalMotionScale.current > 0f
-                androidx.compose.animation.AnimatedVisibility(visible = state.filtersOpen,
-                    enter = if (motion) fadeIn(tween(160)) + expandVertically(tween(180)) else EnterTransition.None,
-                    exit = if (motion) fadeOut(tween(100)) + shrinkVertically(tween(140)) else ExitTransition.None) {
-                    SearchFilterBar(state.filters, onAction)
-                }
-                RefreshableContent(value = state, refreshing = state.content == SearchContent.Loading,
-                    onRefresh = { onAction(SearchAction.Retry) }, modifier = Modifier.weight(1f).fillMaxWidth(),
-                    enabled = !backgroundHidden && state.overlay == SearchOverlay.None, contentKey = Triple(state.query, state.filters, state.signedInPreview), tag = "search-refresh",
-                    canPull = { if (state.filters.type == SearchResultType.Shorts) !shortsState.canScrollBackward else !listState.canScrollBackward }) { state ->
-                    when (val content = state.content) {
-                        SearchContent.Loading -> SearchSkeleton(width, height)
-                        SearchContent.Failed -> if (state.verification != null) VerificationCard(
-                            state.verification,
-                            onVerify = { onAction(SearchAction.OpenVerification(state.verification!!.challengeUrl)) },
-                            onDismiss = { onAction(SearchAction.DismissVerification) },
-                            modifier = Modifier.testTag("search-verification"),
-                        ) else SearchFailed(onAction)
-                        is SearchContent.Empty -> SearchNoResults(content.query, state.filters.type)
-                        is SearchContent.Results -> if (state.filters.type == SearchResultType.Playlists)
-                            com.hhst.youtubelite.playlist.presentation.PlaylistSearchList(content.page.playlists, width, height, listState,
-                                { onAction(SearchAction.OpenPlaylist(it)) }, { onAction(SearchAction.OpenChannel(it)) },
-                                { onAction(SearchAction.OpenPlaylistMenu(it)) }, footer)
-                            else if (state.filters.type == SearchResultType.Channels)
-                                ChannelResultsList(content.page.channels, listState, onAction, footer, state.subscriptions, state.subscriptionsPending)
-                            else if (state.filters.type == SearchResultType.Shorts)
-                                ShortsResultsList(content.page.shorts, shortsState, onAction, footer)
-                            else SearchList(content.page.results, width, height, listState, onAction, footer)
+                    val motion = LocalMotionScale.current > 0f
+                    androidx.compose.animation.AnimatedVisibility(visible = state.filtersOpen,
+                        enter = if (motion) fadeIn(tween(160)) + expandVertically(tween(180)) else EnterTransition.None,
+                        exit = if (motion) fadeOut(tween(100)) + shrinkVertically(tween(140)) else ExitTransition.None) {
+                        SearchFilterBar(state.filters, onAction)
                     }
-                    state.verification?.let { challenge ->
-                        VerificationBanner(challenge,
-                            onVerify = { onAction(SearchAction.OpenVerification(challenge.challengeUrl)) },
-                            onDismiss = { onAction(SearchAction.DismissVerification) },
-                            modifier = Modifier.align(Alignment.TopCenter).padding(horizontal = 12.dp, vertical = 8.dp)
-                                .testTag("search-verification-banner"))
+                    RefreshableContent(value = state, refreshing = state.content == SearchContent.Loading,
+                        onRefresh = { onAction(SearchAction.Retry) }, modifier = Modifier.weight(1f).fillMaxWidth(),
+                        enabled = !backgroundHidden && state.overlay == SearchOverlay.None, contentKey = Triple(state.query, state.filters, state.signedInPreview), tag = "search-refresh",
+                        canPull = { if (state.filters.type == SearchResultType.Shorts) !shortsState.canScrollBackward else !listState.canScrollBackward }) { state ->
+                        when (val content = state.content) {
+                            SearchContent.Loading -> SearchSkeleton(width, height)
+                            SearchContent.Failed -> if (state.verification != null) VerificationCard(
+                                state.verification,
+                                onVerify = { onAction(SearchAction.OpenVerification(state.verification!!.challengeUrl)) },
+                                onDismiss = { onAction(SearchAction.DismissVerification) },
+                                modifier = Modifier.testTag("search-verification"),
+                            ) else SearchFailed(onAction)
+                            is SearchContent.Empty -> SearchNoResults(content.query, state.filters.type)
+                            is SearchContent.Results -> if (state.filters.type == SearchResultType.Playlists)
+                                com.hhst.youtubelite.playlist.presentation.PlaylistSearchList(content.page.playlists, width, height, listState,
+                                    { onAction(SearchAction.OpenPlaylist(it)) }, { onAction(SearchAction.OpenChannel(it)) },
+                                    { onAction(SearchAction.OpenPlaylistMenu(it)) }, footer)
+                                else if (state.filters.type == SearchResultType.Channels)
+                                    ChannelResultsList(content.page.channels, listState, onAction, footer, state.subscriptions, state.subscriptionsPending)
+                                else if (state.filters.type == SearchResultType.Shorts)
+                                    ShortsResultsList(content.page.shorts, shortsState, onAction, footer)
+                                else SearchList(content.page.results, width, height, listState, onAction, footer)
+                        }
+                        state.verification?.let { challenge ->
+                            VerificationBanner(challenge,
+                                onVerify = { onAction(SearchAction.OpenVerification(challenge.challengeUrl)) },
+                                onDismiss = { onAction(SearchAction.DismissVerification) },
+                                modifier = Modifier.align(Alignment.TopCenter).padding(horizontal = 12.dp, vertical = 8.dp)
+                                    .testTag("search-verification-banner"))
+                        }
                     }
                 }
-                SearchNavigationBar(state.signedInPreview, onAction)
+                Box(Modifier.align(Alignment.BottomCenter)) {
+                    SearchNavigationBar(state.signedInPreview, onAction)
+                }
             }
             if (state.searchOpen) SearchPanel(
                 query = state.draftQuery,
@@ -287,60 +291,79 @@ private fun SearchFilterBar(filters: SearchFilters, onAction: (SearchAction) -> 
 
 @Composable
 private fun SearchTopBar(query: String, onAction: (SearchAction) -> Unit, onBack: () -> Unit) {
-    val fieldHeight = maxOf(32.dp, with(LocalDensity.current) { 22.sp.toDp() })
-    val barHeight = maxOf(SearchResultsLayout.TopBarHeight.dp, fieldHeight)
-    Row(Modifier.fillMaxWidth().height(barHeight).background(DesignTokens.Background)
-        .testTag("search-topbar"), verticalAlignment = Alignment.CenterVertically) {
-        Box(Modifier.width(53.dp), contentAlignment = Alignment.CenterStart) {
-            AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back), onClick = onBack)
-        }
-        Box(Modifier.weight(1f).fillMaxHeight()) {
-            Box(Modifier.align(Alignment.CenterStart).fillMaxWidth().height(fieldHeight)
-                .clip(RoundedCornerShape(32.dp)).background(DesignTokens.Surface).testTag("search-field"))
+    val fieldHeight = maxOf(38.dp, with(LocalDensity.current) { 24.sp.toDp() })
+    val barHeight = maxOf(SearchResultsLayout.TopBarHeight.dp, fieldHeight + 12.dp)
+    val glassPalette = DesignTokens.Glass
+    Row(Modifier.fillMaxWidth().height(barHeight).padding(horizontal = 8.dp)
+        .testTag("search-topbar"), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+            icon = AppIcon.Back,
+            description = stringResource(R.string.a11y_back),
+            onClick = onBack,
+            diameter = 38.dp,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+        )
+        com.hhst.youtubelite.ui.glass.LiquidGlassSurface(
+            modifier = Modifier.weight(1f).height(fieldHeight).testTag("search-field"),
+            shape = CircleShape,
+            cornerRadius = fieldHeight / 2,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+            contentAlignment = Alignment.CenterStart,
+        ) {
             Row(Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.weight(1f).fillMaxHeight().testTag("search-query").clickable(role = Role.Button) { onAction(SearchAction.OpenSearch) },
                     contentAlignment = Alignment.CenterStart) {
-                    AppText(query, Modifier.padding(start = 12.dp).testTag("search-query-label"),
-                        size = 15, line = 22, maxLines = 1)
+                    AppText(query, Modifier.padding(start = 14.dp).testTag("search-query-label"),
+                        size = 15, line = 22, maxLines = 1, color = glassPalette.contentPrimary)
                 }
-                AppIconButton(AppIcon.Filter, stringResource(R.string.a11y_search_filters), diameter = 48.dp) { onAction(SearchAction.OpenFilters) }
+                AppIconButton(AppIcon.Filter, stringResource(R.string.a11y_search_filters), diameter = 40.dp) { onAction(SearchAction.OpenFilters) }
             }
         }
-        Spacer(Modifier.width(12.dp))
-        Box(Modifier.size(32.dp), contentAlignment = Alignment.Center) {
-            AppIconButton(AppIcon.Voice, stringResource(R.string.a11y_voice_search),
-                modifier = Modifier.wrapContentSize(unbounded = true), diameter = 40.dp) { onAction(SearchAction.VoiceSearch) }
-        }
-        AppIconButton(AppIcon.More, stringResource(R.string.a11y_more_options), diameter = 48.dp) { onAction(SearchAction.OpenPageMenu) }
+        com.hhst.youtubelite.ui.glass.LiquidGlassIconButton(
+            icon = AppIcon.Voice,
+            description = stringResource(R.string.a11y_voice_search),
+            onClick = { onAction(SearchAction.VoiceSearch) },
+            diameter = 38.dp,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+        )
+        AppIconButton(AppIcon.More, stringResource(R.string.a11y_more_options), diameter = 40.dp) { onAction(SearchAction.OpenPageMenu) }
     }
 }
 
 @Composable
 private fun SearchNavigationBar(signedIn: Boolean, onAction: (SearchAction) -> Unit) {
-    val destinations = if (signedIn) SearchDestination.entries else listOf(
+    val destinations = (if (signedIn) SearchDestination.entries else listOf(
         SearchDestination.Home, SearchDestination.Shorts, SearchDestination.You,
-    )
-    Column(Modifier.fillMaxWidth().testTag("search-navigation")) {
-        Box(Modifier.fillMaxWidth().height(1.dp).background(DesignTokens.NavigationDivider))
-        Row(Modifier.fillMaxWidth().height(SearchResultsLayout.NavigationHeight.dp)) {
-            destinations.filterNot { LocalHideShorts.current && it == SearchDestination.Shorts }.forEach { destination ->
-                Column(Modifier.weight(1f).fillMaxHeight()
-                    .clickable(role = Role.Tab) { onAction(SearchAction.SelectDestination(destination)) }
-                    .testTag("search-nav-${destination.name}"),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    )).filterNot { LocalHideShorts.current && it == SearchDestination.Shorts }
+    val glassPalette = DesignTokens.Glass
+    Box(
+        Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp).testTag("search-navigation"),
+    ) {
+        com.hhst.youtubelite.ui.glass.LiquidGlassNavigationBar(
+            items = destinations.map { destination ->
+                com.hhst.youtubelite.ui.glass.LiquidGlassNavItem(
+                    id = destination.name,
+                    label = stringResource(destination.labelResource),
+                    selected = false,
+                    testTag = "search-nav-${destination.name}",
+                ) {
                     if (signedIn && destination == SearchDestination.You) {
                         Image(painterResource(R.drawable.sample_bunny), contentDescription = null,
-                            modifier = Modifier.size(24.dp).clip(CircleShape), contentScale = ContentScale.Crop)
-                    } else AppIcon(when (destination) {
-                        SearchDestination.Home -> AppIcon.HomeOutline
-                        SearchDestination.Shorts -> AppIcon.Shorts
-                        SearchDestination.Subscriptions -> AppIcon.Subscriptions
-                        SearchDestination.You -> AppIcon.You
-                    })
-                    AppText(stringResource(destination.labelResource), size = 11, line = 14, maxLines = 1)
+                            modifier = Modifier.size(22.dp).clip(CircleShape), contentScale = ContentScale.Crop)
+                    } else AppIcon(
+                        icon = when (destination) {
+                            SearchDestination.Home -> AppIcon.HomeOutline
+                            SearchDestination.Shorts -> AppIcon.Shorts
+                            SearchDestination.Subscriptions -> AppIcon.Subscriptions
+                            SearchDestination.You -> AppIcon.You
+                        },
+                        color = glassPalette.contentSecondary,
+                    )
                 }
-            }
-        }
+            },
+            onSelect = { index -> onAction(SearchAction.SelectDestination(destinations[index])) },
+        )
     }
 }
 
@@ -361,7 +384,7 @@ private fun SearchList(
             contentPadding = PaddingValues(
                 start = 0.dp, end = 0.dp,
                 top = SearchResultsLayout.listTopInset(width).dp,
-                bottom = 24.dp,
+                bottom = DesignTokens.BottomBarHeight + 28.dp,
             ),
             verticalArrangement = Arrangement.spacedBy(SearchResultsLayout.itemSpacing(width, height).dp),
         ) {
@@ -579,10 +602,6 @@ private fun SearchFailed(onAction: (SearchAction) -> Unit) {
     SearchMessage("search-error") {
         AppText(stringResource(R.string.ui_something_went_wrong), size = 20, line = 28, weight = FontWeight.Bold)
         AppText(stringResource(R.string.ui_please_try_again), Modifier.padding(top = 8.dp, bottom = 20.dp), color = DesignTokens.Secondary)
-        Box(Modifier.clip(CircleShape).background(DesignTokens.Surface)
-            .clickable(role = Role.Button) { onAction(SearchAction.Retry) }
-            .padding(horizontal = 16.dp, vertical = 8.dp), contentAlignment = Alignment.Center) {
-            AppText(stringResource(R.string.retry), weight = FontWeight.Medium)
-        }
+        com.hhst.youtubelite.home.presentation.PillButton(stringResource(R.string.retry)) { onAction(SearchAction.Retry) }
     }
 }

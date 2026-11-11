@@ -66,79 +66,81 @@ fun PlaylistScreen(state: PlaylistUiState, onAction: (PlaylistAction) -> Unit, o
             // Device-stored lists have no server artwork for the toolbar; an empty one
             // shows the neutral compact header instead of the accent hero.
             val neutralToolbar = page == null || (local && emptyList)
-            Column(Modifier.fillMaxSize().then(if (state.overlay != PlaylistOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
-                CollapsingAppBar(appBar) {
-Row(Modifier.fillMaxWidth().height(48.dp).background(if (neutralToolbar) DesignTokens.Background else page?.summary?.accent?.let(::Color) ?: DesignTokens.Background)
-                    .testTag("playlist-toolbar"), verticalAlignment = Alignment.CenterVertically) {
-                    val color = if (neutralToolbar) DesignTokens.Ink else Color.White
-                    AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back), color = color, onClick = onBack)
-                    Box(Modifier.weight(1f)) {
-                        if (headerScrolled) AppText(page?.summary?.title.orEmpty(),
-                            size = 20, line = 28, weight = FontWeight.Bold, color = color, maxLines = 1)
-                    }
-                    AppIconButton(AppIcon.Search, stringResource(R.string.a11y_search), color = color) { onAction(PlaylistAction.OpenSearch) }
-                    AppIconButton(AppIcon.More, stringResource(R.string.a11y_more_options), color = color) { onAction(PlaylistAction.OpenMenu) }
-                }
-
-                }
-                RefreshableContent(value = state, refreshing = state.content == PlaylistContent.Loading,
-                    onRefresh = { onAction(PlaylistAction.Retry) }, modifier = Modifier.weight(1f).fillMaxWidth(),
-                    enabled = state.overlay == PlaylistOverlay.None, contentKey = state.playlistId, tag = "playlist-refresh",
-                    canPull = { !listState.canScrollBackward }) { state ->
-                    when (val content = state.content) {
-                        PlaylistContent.Loading -> PlaylistSkeleton(width)
-                        PlaylistContent.Unavailable -> PlaylistMessage("playlist-unavailable", stringResource(R.string.ui_this_playlist_isn_t_available))
-                        PlaylistContent.Failed -> if (state.verification != null) VerificationCard(
-                            state.verification,
-                            onVerify = { onAction(PlaylistAction.OpenVerification(state.verification!!.challengeUrl)) },
-                            onDismiss = { onAction(PlaylistAction.DismissVerification) },
-                            modifier = Modifier.testTag("playlist-verification"),
-                        ) else PlaylistMessage("playlist-error", stringResource(R.string.ui_something_went_wrong)) {
-                            AppText(stringResource(R.string.retry), Modifier.padding(top = 16.dp).clip(CircleShape).background(DesignTokens.Surface)
-                                .clickable { onAction(PlaylistAction.Retry) }.padding(horizontal = 20.dp, vertical = 10.dp), weight = FontWeight.Medium)
-                        }
-                        is PlaylistContent.Ready -> {
-                            val nearEnd by remember(content) { derivedStateOf {
-                                (listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1) >= content.page.entries.size - 2
-                            } }
-                            androidx.compose.runtime.LaunchedEffect(nearEnd, content.page.nextKey, state.append) {
-                                if (nearEnd && content.page.nextKey != null && state.append == com.hhst.youtubelite.home.domain.AppendState.Idle) {
-                                    onAction(PlaylistAction.LoadNext)
-                                }
+            Box(Modifier.fillMaxSize().then(if (state.overlay != PlaylistOverlay.None) Modifier.clearAndSetSemantics {} else Modifier)) {
+                Column(Modifier.fillMaxSize()) {
+                    CollapsingAppBar(appBar) {
+                        Row(Modifier.fillMaxWidth().height(48.dp).background(if (neutralToolbar) DesignTokens.Background else page?.summary?.accent?.let(::Color) ?: DesignTokens.Background)
+                            .testTag("playlist-toolbar"), verticalAlignment = Alignment.CenterVertically) {
+                            val color = if (neutralToolbar) DesignTokens.Ink else Color.White
+                            AppIconButton(AppIcon.Back, stringResource(R.string.a11y_back), color = color, onClick = onBack)
+                            Box(Modifier.weight(1f)) {
+                                if (headerScrolled) AppText(page?.summary?.title.orEmpty(),
+                                    size = 20, line = 28, weight = FontWeight.Bold, color = color, maxLines = 1)
                             }
-                            LazyColumn(Modifier.fillMaxSize().testTag("playlist-list"), state = listState,
-                                contentPadding = PaddingValues(bottom = 16.dp)) {
-                                item(key = "header") {
-                                    val w = viewport.value
-                                    if (local && emptyList) PlaylistCompactHeader(content.page)
-                                    else PlaylistHero(content.page, w, PlaylistLayout.sideBySide(w), state.descriptionExpanded, onAction)
-                                }
-                                if (content.page.entries.isEmpty() && content.page.nextKey == null) item {
-                                    // Formal empty state: an honest message, no fake cover or author.
-                                    Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 48.dp).testTag("playlist-empty"),
-                                        horizontalAlignment = Alignment.CenterHorizontally) {
-                                        AppText(stringResource(R.string.ui_no_videos_in_this_playlist_yet), size = 16, line = 22, weight = FontWeight.Medium,
-                                            align = TextAlign.Center)
-                                        AppText(stringResource(R.string.ui_videos_you_add_will_appear_here), Modifier.padding(top = 6.dp),
-                                            size = 14, line = 20, color = DesignTokens.Secondary, align = TextAlign.Center)
+                            AppIconButton(AppIcon.Search, stringResource(R.string.a11y_search), color = color) { onAction(PlaylistAction.OpenSearch) }
+                            AppIconButton(AppIcon.More, stringResource(R.string.a11y_more_options), color = color) { onAction(PlaylistAction.OpenMenu) }
+                        }
+                    }
+                    RefreshableContent(value = state, refreshing = state.content == PlaylistContent.Loading,
+                        onRefresh = { onAction(PlaylistAction.Retry) }, modifier = Modifier.weight(1f).fillMaxWidth(),
+                        enabled = state.overlay == PlaylistOverlay.None, contentKey = state.playlistId, tag = "playlist-refresh",
+                        canPull = { !listState.canScrollBackward }) { state ->
+                        when (val content = state.content) {
+                            PlaylistContent.Loading -> PlaylistSkeleton(width)
+                            PlaylistContent.Unavailable -> PlaylistMessage("playlist-unavailable", stringResource(R.string.ui_this_playlist_isn_t_available))
+                            PlaylistContent.Failed -> if (state.verification != null) VerificationCard(
+                                state.verification,
+                                onVerify = { onAction(PlaylistAction.OpenVerification(state.verification!!.challengeUrl)) },
+                                onDismiss = { onAction(PlaylistAction.DismissVerification) },
+                                modifier = Modifier.testTag("playlist-verification"),
+                            ) else PlaylistMessage("playlist-error", stringResource(R.string.ui_something_went_wrong)) {
+                                com.hhst.youtubelite.home.presentation.PillButton(stringResource(R.string.retry)) { onAction(PlaylistAction.Retry) }
+                            }
+                            is PlaylistContent.Ready -> {
+                                val nearEnd by remember(content) { derivedStateOf {
+                                    (listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1) >= content.page.entries.size - 2
+                                } }
+                                androidx.compose.runtime.LaunchedEffect(nearEnd, content.page.nextKey, state.append) {
+                                    if (nearEnd && content.page.nextKey != null && state.append == com.hhst.youtubelite.home.domain.AppendState.Idle) {
+                                        onAction(PlaylistAction.LoadNext)
                                     }
                                 }
-                                items(content.page.entries, key = { it.id }, contentType = { "video" }) { entry -> PlaylistVideoRow(entry, onAction) }
-                                item(key = "append") {
-                                    PlaylistAppendRow(state, onAction)
+                                LazyColumn(Modifier.fillMaxSize().testTag("playlist-list"), state = listState,
+                                    contentPadding = PaddingValues(bottom = DesignTokens.BottomBarHeight + 28.dp)) {
+                                    item(key = "header") {
+                                        val w = viewport.value
+                                        if (local && emptyList) PlaylistCompactHeader(content.page)
+                                        else PlaylistHero(content.page, w, PlaylistLayout.sideBySide(w), state.descriptionExpanded, onAction)
+                                    }
+                                    if (content.page.entries.isEmpty() && content.page.nextKey == null) item {
+                                        // Formal empty state: an honest message, no fake cover or author.
+                                        Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 48.dp).testTag("playlist-empty"),
+                                            horizontalAlignment = Alignment.CenterHorizontally) {
+                                            AppText(stringResource(R.string.ui_no_videos_in_this_playlist_yet), size = 16, line = 22, weight = FontWeight.Medium,
+                                                align = TextAlign.Center)
+                                            AppText(stringResource(R.string.ui_videos_you_add_will_appear_here), Modifier.padding(top = 6.dp),
+                                                size = 14, line = 20, color = DesignTokens.Secondary, align = TextAlign.Center)
+                                        }
+                                    }
+                                    items(content.page.entries, key = { it.id }, contentType = { "video" }) { entry -> PlaylistVideoRow(entry, onAction) }
+                                    item(key = "append") {
+                                        PlaylistAppendRow(state, onAction)
+                                    }
                                 }
-                            }
-                            state.verification?.let { challenge ->
-                                VerificationBanner(challenge,
-                                    onVerify = { onAction(PlaylistAction.OpenVerification(challenge.challengeUrl)) },
-                                    onDismiss = { onAction(PlaylistAction.DismissVerification) },
-                                    modifier = Modifier.align(Alignment.TopCenter).padding(horizontal = 12.dp, vertical = 8.dp)
-                                        .testTag("playlist-verification-banner"))
+                                state.verification?.let { challenge ->
+                                    VerificationBanner(challenge,
+                                        onVerify = { onAction(PlaylistAction.OpenVerification(challenge.challengeUrl)) },
+                                        onDismiss = { onAction(PlaylistAction.DismissVerification) },
+                                        modifier = Modifier.align(Alignment.TopCenter).padding(horizontal = 12.dp, vertical = 8.dp)
+                                            .testTag("playlist-verification-banner"))
+                                }
                             }
                         }
                     }
                 }
-                PlaylistNavigation(state.signedIn, onAction)
+                Box(Modifier.align(Alignment.BottomCenter)) {
+                    PlaylistNavigation(state.signedIn, onAction)
+                }
             }
             when (state.overlay) {
                 PlaylistOverlay.None -> Unit

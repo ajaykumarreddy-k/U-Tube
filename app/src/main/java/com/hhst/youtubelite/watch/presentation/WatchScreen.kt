@@ -6,6 +6,7 @@ import com.hhst.youtubelite.ui.design.reasonResources
 import com.hhst.youtubelite.ui.design.labelResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -564,6 +565,7 @@ private fun WatchSlotButton(
     val haptic = com.hhst.youtubelite.ui.design.rememberHapticAction()
     val interactions = remember { MutableInteractionSource() }
     val pressed by interactions.collectIsPressedAsState()
+    val glassPalette = DesignTokens.Glass
     Box(
         Modifier.heightIn(min = surfaceHeight + 12.dp).widthIn(min = 48.dp)
             .clickable(enabled = enabled, interactionSource = interactions, indication = null, role = Role.Button) { haptic(); onClick() }
@@ -571,14 +573,26 @@ private fun WatchSlotButton(
             .testTag(testTag),
         contentAlignment = Alignment.Center,
     ) {
-        Row(Modifier.heightIn(min = surfaceHeight).clip(RoundedCornerShape(18.dp))
-            .background(if (selected) DesignTokens.Red.copy(alpha = 0.12f) else if (pressed) DesignTokens.Ghost else DesignTokens.Surface)
-            .testTag("$testTag-surface").padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.heightIn(min = surfaceHeight).clip(CircleShape)
+            .background(
+                when {
+                    selected -> glassPalette.accent.copy(alpha = 0.16f)
+                    pressed -> glassPalette.recessedFill
+                    else -> glassPalette.frostFill
+                },
+            )
+            .border(
+                0.75.dp,
+                if (selected) glassPalette.accent.copy(alpha = 0.4f) else glassPalette.hairlineBorder,
+                CircleShape,
+            )
+            .testTag("$testTag-surface").padding(horizontal = 13.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             if (pending) com.hhst.youtubelite.ui.design.ActionProgress()
-            else AppIcon(icon, Modifier.testTag("$testTag-icon"), color = if (selected) DesignTokens.Red else DesignTokens.Ink)
+            else AppIcon(icon, Modifier.testTag("$testTag-icon"), color = if (selected) glassPalette.accent else glassPalette.contentPrimary)
             if (!label.isNullOrBlank()) {
                 Spacer(Modifier.width(8.dp))
-                AppText(label, Modifier.testTag("$testTag-count"), size = 14, line = 20, maxLines = 1)
+                AppText(label, Modifier.testTag("$testTag-count"), size = 14, line = 20, maxLines = 1,
+                    color = if (selected) glassPalette.accent else glassPalette.contentPrimary)
             }
         }
     }
@@ -595,17 +609,16 @@ private fun WatchComments(video: WatchVideo, onAction: (WatchAction) -> Unit) {
         Modifier.fillMaxWidth().testTag("watch-comments").heightIn(min = WatchLayout.CommentsSectionHeight.dp).padding(bottom = 13.dp),
     ) {
         Spacer(Modifier.height(8.dp))
-        Box(
-            Modifier.fillMaxWidth()
+        com.hhst.youtubelite.ui.glass.LiquidGlassCard(
+            modifier = Modifier.fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .heightIn(min = WatchLayout.CommentsCardHeight.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(DesignTokens.Surface)
-                .testTag("watch-comments-card")
-                .clickable(enabled = !chatUnavailable, role = Role.Button) {
-                    onAction(if (chatFailed) WatchAction.Retry else WatchAction.OpenComments(video.id))
-                }
-                .padding(12.dp),
+                .testTag("watch-comments-card"),
+            cornerRadius = 18.dp,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
+            contentPadding = PaddingValues(14.dp),
+            enabled = !chatUnavailable,
+            onClick = { onAction(if (chatFailed) WatchAction.Retry else WatchAction.OpenComments(video.id)) },
         ) {
             Column {
                 Row(Modifier.heightIn(min = 20.dp), verticalAlignment = Alignment.CenterVertically) {

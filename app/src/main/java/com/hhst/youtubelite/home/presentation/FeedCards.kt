@@ -85,30 +85,45 @@ private fun VideoCard(item: FeedItem.Video, compact: Boolean, onAction: (HomeAct
         onAction(HomeAction.Navigate(HomeNavigationRequest.Watch(item.id)))
     }
     Column(Modifier.testTag("feed-item-${item.id}")) {
-        Box(Modifier.fillMaxWidth().aspectRatio(16f / 9).clip(RoundedCornerShape(if (compact) 0.dp else 12.dp))
-            .clickable(role = Role.Button) { openWatch() }
-            .semanticsLabel("${item.title}, ${item.duration}")) {
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = if (compact) 12.dp else 0.dp)
+                .aspectRatio(16f / 9)
+                .clip(RoundedCornerShape(14.dp))
+                .clickable(role = Role.Button) { openWatch() }
+                .semanticsLabel("${item.title}, ${item.duration}"),
+        ) {
             VideoArtwork(item.id, item.artwork, Modifier.fillMaxSize())
-            Box(Modifier.align(Alignment.BottomEnd).padding(8.dp).background(if (item.live) DesignTokens.Red else Color.Black.copy(alpha = 0.75f), RoundedCornerShape(4.dp)).padding(horizontal = 4.dp, vertical = 1.dp)) {
+            Box(
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(8.dp)
+                    .background(
+                        if (item.live) DesignTokens.Red else Color.Black.copy(alpha = 0.72f),
+                        RoundedCornerShape(6.dp),
+                    )
+                    .padding(horizontal = 6.dp, vertical = 2.dp),
+            ) {
                 AppText(item.duration, size = 12, line = 16, weight = FontWeight.Medium, color = Color.White)
             }
             item.progress?.let { progress ->
-                Box(Modifier.align(Alignment.BottomStart).fillMaxWidth().height(3.dp).background(Color.Black.copy(alpha = 0.5f))) {
+                Box(Modifier.align(Alignment.BottomStart).fillMaxWidth().height(3.dp).background(Color.Black.copy(alpha = 0.45f))) {
                     Box(Modifier.fillMaxHeight().fillMaxWidth(progress.coerceIn(0f, 1f)).background(DesignTokens.Red))
                 }
             }
         }
-        Row(Modifier.padding(start = if (compact) 12.dp else 0.dp, top = 8.dp), verticalAlignment = Alignment.Top) {
+        Row(Modifier.padding(start = if (compact) 14.dp else 0.dp, end = if (compact) 12.dp else 0.dp, top = 10.dp), verticalAlignment = Alignment.Top) {
             Avatar(item.avatar.orEmpty(), item.author, item.channelId, onAction, size = 36.dp)
-            Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(10.dp))
             Box(Modifier.weight(1f)) {
-                Column(Modifier.padding(end = if (compact) 12.dp else 0.dp).clickable(role = Role.Button) { openWatch() }) {
-                    AppText(rememberDeArrowTitle(item.id, item.title), Modifier.padding(end = 24.dp), size = 16, line = 22, weight = FontWeight.Medium, maxLines = 2)
-                    AppText(listOf(item.author, item.metadata).filter(String::isNotBlank).joinToString(" · "), Modifier.padding(top = 2.dp), size = 12, line = 18, color = DesignTokens.Secondary, maxLines = 1)
+                Column(Modifier.padding(end = 28.dp).clickable(role = Role.Button) { openWatch() }) {
+                    AppText(rememberDeArrowTitle(item.id, item.title), Modifier.padding(end = 8.dp), size = 15, line = 21, weight = FontWeight.Medium, maxLines = 2)
+                    AppText(listOf(item.author, item.metadata).filter(String::isNotBlank).joinToString(" · "), Modifier.padding(top = 3.dp), size = 12, line = 17, color = DesignTokens.Secondary, maxLines = 1)
                 }
                 // Sampled menu anchors: phone right inset 2px, grid +10px overhang, top -6px.
                 AppIconButton(AppIcon.More, stringResource(R.string.a11y_more_actions_for, item.title),
-                    modifier = Modifier.align(Alignment.TopEnd).offset(x = if (compact) (-2).dp else 10.dp, y = (-6).dp),
+                    modifier = Modifier.align(Alignment.TopEnd).offset(x = if (compact) 4.dp else 10.dp, y = (-6).dp),
                     diameter = 40.dp) { onAction(HomeAction.OpenMenu(item.id)) }
             }
         }
@@ -165,7 +180,7 @@ private fun ShortsShelf(item: FeedItem.Shorts, windowWidth: Float, live: Boolean
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(gap)) {
                     row.forEach { video ->
                         Box(Modifier.weight(1f).aspectRatio(2f / 3f).testTag("short-${video.id}")
-                            .clip(RoundedCornerShape(8.dp)).clickable(role = Role.Button) {
+                            .clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button) {
                             onAction(HomeAction.Navigate(HomeNavigationRequest.Shorts(video.id)))
                         }.semanticsLabel(video.title)) {
                             VideoArtwork(video.id, video.artwork, Modifier.fillMaxSize())

@@ -143,20 +143,25 @@ fun MenuBottomSheet(
         val playerBottom = watchHost?.sheetPlayerBottomPx ?: 0
         val watchHeight = if (playerBottom > 0 && containerBottom > playerBottom)
             with(localDensity) { (containerBottom - playerBottom).toDp() } else null
-        Column(
-            Modifier.heightIn(max = watchHeight?.coerceAtMost(maxHeight) ?: maxHeight)
+        val sheetCorner = 24.dp
+        val glassPalette = DesignTokens.Glass
+        com.hhst.youtubelite.ui.glass.LiquidGlassSurface(
+            modifier = Modifier.heightIn(max = watchHeight?.coerceAtMost(maxHeight) ?: maxHeight)
                 .then(if (fillWatchHeight && watchHeight != null) Modifier.height(watchHeight) else Modifier)
                 .padding(bottom = bottomPadding)
                 .width(sheetWidth ?: MenuSheetLayout.sheetWidth(maxWidth.value, maxHeight.value).dp)
                 .graphicsLayer {
                     translationY = (1f - progress.value) * (size.height + bottomPadding.toPx()) + drag
-                }.clip(RoundedCornerShape(MenuSheetLayout.Corner.dp))
-                .background(DesignTokens.Panel)
+                }
                 .testTag(tag).semantics {
                     this.paneTitle = paneTitle
                     customActions = listOf(CustomAccessibilityAction(closeMenuLabel) { if (dismissEnabled) { finish(); true } else false })
                 },
+            shape = RoundedCornerShape(sheetCorner),
+            cornerRadius = sheetCorner,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
         ) {
+        Column(Modifier.fillMaxWidth()) {
             Box(
                 Modifier.fillMaxWidth().height(MenuSheetLayout.HandleStrip.dp).testTag("menu-handle")
                     .pointerInput(closing, dismissEnabled) {
@@ -189,7 +194,7 @@ fun MenuBottomSheet(
             ) {
                 Box(
                     Modifier.padding(bottom = 1.dp).size(MenuSheetLayout.HandleWidth.dp, MenuSheetLayout.HandleHeight.dp)
-                        .background(DesignTokens.Ink.copy(alpha = 0.15f), CircleShape),
+                        .background(glassPalette.contentSecondary.copy(alpha = 0.42f), CircleShape),
                 )
             }
             Column(Modifier.verticalScroll(rememberScrollState()).testTag("menu-actions")) {
@@ -212,6 +217,7 @@ fun MenuBottomSheet(
                     }
                 }
             }
+        }
         }
     }
 }
