@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Слухайте у фоновому режимі</string>
     <string name="back_again_to_exit">Натисніть назад ще раз, щоб вийти</string>
     <string name="navigate_back">Назад</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Налаштування історії</string>
     <string name="a11y_send_message">Надіслати повідомлення</string>
     <string name="a11y_explore">Дослідити</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Головна</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Головна</string>
     <string name="a11y_loading">Завантаження</string>
     <string name="a11y_add_comment">Додати коментар</string>
     <string name="a11y_sort_comments">Сортувати коментарі</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Доступ до сповіщень системи</string>
     <string name="settings_advanced">Розширений</string>
     <string name="settings_advanced_summary">Гравець, жести, SponsorBlock і резервна копія</string>
-    <string name="settings_about_title">Про Litube</string>
+    <string name="settings_about_title">Про U Tube</string>
     <string name="settings_about_summary">Версія, оновлення та діагностика</string>
     <string name="settings_group_appearance">Зовнішній вигляд</string>
     <string name="settings_group_feed">Корм</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Увімкнено</string>
     <string name="settings_notifications_state_off">Вимк</string>
     <string name="settings_open_system_settings">Відкрити налаштування системи</string>
-    <string name="settings_open_system_settings_summary">Налаштування сповіщень Android для Litube</string>
+    <string name="settings_open_system_settings_summary">Налаштування сповіщень Android для U Tube</string>
     <string name="settings_state_on">Увімкнено</string>
     <string name="settings_state_off">Вимк</string>
     <string name="subscription_visit_channel">Відвідайте канал</string>

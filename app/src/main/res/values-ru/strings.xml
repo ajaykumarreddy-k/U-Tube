@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Слушать в фоне</string>
     <string name="back_again_to_exit">Нажмите «Назад» ещё раз для выхода</string>
     <string name="navigate_back">Назад</string>
@@ -328,7 +328,7 @@
 <string name="settings_notifications_summary">Доступ к системным уведомлениям</string>
 <string name="settings_advanced">Расширенные</string>
 <string name="settings_advanced_summary">Плеер, жесты, SponsorBlock и резервные копии</string>
-<string name="settings_about_title">О Litube</string>
+<string name="settings_about_title">О U Tube</string>
 <string name="settings_about_summary">Версия, обновления и диагностика</string>
 <string name="settings_group_appearance">Оформление</string>
 <string name="settings_group_feed">Лента</string>
@@ -355,7 +355,7 @@
 <string name="settings_notifications_state_on">Вкл.</string>
 <string name="settings_notifications_state_off">Выкл.</string>
 <string name="settings_open_system_settings">Открыть настройки системы</string>
-<string name="settings_open_system_settings_summary">Настройки уведомлений Android для Litube</string>
+<string name="settings_open_system_settings_summary">Настройки уведомлений Android для U Tube</string>
 <string name="settings_state_on">Вкл.</string>
 <string name="settings_state_off">Выкл.</string>
     <string name="cast_searching">Поиск…</string>
@@ -453,8 +453,8 @@
     <string name="a11y_history_settings">Настройки истории</string>
     <string name="a11y_send_message">Отправить сообщение</string>
     <string name="a11y_explore">Исследуйте</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Главная страница</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Главная страница</string>
     <string name="a11y_loading">Загрузка</string>
     <string name="a11y_add_comment">Добавить комментарий</string>
     <string name="a11y_sort_comments">Сортировка комментариев</string>

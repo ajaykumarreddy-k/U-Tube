@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">ฟังในพื้นหลัง</string>
     <string name="back_again_to_exit">กดกลับอีกครั้งเพื่อออก</string>
     <string name="navigate_back">กลับ</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">การตั้งค่าประวัติ</string>
     <string name="a11y_send_message">ส่งข้อความ</string>
     <string name="a11y_explore">สำรวจ</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">บ้าน Litube</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">บ้าน U Tube</string>
     <string name="a11y_loading">กำลังโหลด</string>
     <string name="a11y_add_comment">เพิ่มความคิดเห็น</string>
     <string name="a11y_sort_comments">จัดเรียงความคิดเห็น</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">การเข้าถึงการแจ้งเตือนของระบบ</string>
     <string name="settings_advanced">ขั้นสูง</string>
     <string name="settings_advanced_summary">ผู้เล่น ท่าทาง SponsorBlock และการสำรองข้อมูล</string>
-    <string name="settings_about_title">เกี่ยวกับ Litube</string>
+    <string name="settings_about_title">เกี่ยวกับ U Tube</string>
     <string name="settings_about_summary">เวอร์ชัน อัปเดต และการวินิจฉัย</string>
     <string name="settings_group_appearance">ลักษณะที่ปรากฏ</string>
     <string name="settings_group_feed">ฟีด</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">เปิด</string>
     <string name="settings_notifications_state_off">ปิด</string>
     <string name="settings_open_system_settings">เปิดการตั้งค่าระบบ</string>
-    <string name="settings_open_system_settings_summary">การตั้งค่าการแจ้งเตือน Android สำหรับ Litube</string>
+    <string name="settings_open_system_settings_summary">การตั้งค่าการแจ้งเตือน Android สำหรับ U Tube</string>
     <string name="settings_state_on">เปิด</string>
     <string name="settings_state_off">ปิด</string>
     <string name="subscription_visit_channel">เยี่ยมชมช่อง</string>

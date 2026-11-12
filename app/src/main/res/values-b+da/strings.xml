@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Lyt i baggrunden</string>
     <string name="back_again_to_exit">Tryk tilbage igen for at afslutte</string>
     <string name="navigate_back">Tilbage</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Indstillinger for visningshistorik</string>
     <string name="a11y_send_message">Send besked</string>
     <string name="a11y_explore">Udforsk</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Hjem</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Hjem</string>
     <string name="a11y_loading">Indlæsning</string>
     <string name="a11y_add_comment">Tilføj en kommentar</string>
     <string name="a11y_sort_comments">Sorter kommentarer</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Systemmeddelelsesadgang</string>
     <string name="settings_advanced">Avanceret</string>
     <string name="settings_advanced_summary">Spiller, bevægelser, SponsorBlock og backup</string>
-    <string name="settings_about_title">Om Litube</string>
+    <string name="settings_about_title">Om U Tube</string>
     <string name="settings_about_summary">Version, opdateringer og diagnostik</string>
     <string name="settings_group_appearance">Udseende</string>
     <string name="settings_group_feed">Foder</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Til</string>
     <string name="settings_notifications_state_off">Fra</string>
     <string name="settings_open_system_settings">Åbn systemindstillinger</string>
-    <string name="settings_open_system_settings_summary">Android-meddelelsesindstillinger for Litube</string>
+    <string name="settings_open_system_settings_summary">Android-meddelelsesindstillinger for U Tube</string>
     <string name="settings_state_on">Til</string>
     <string name="settings_state_off">Fra</string>
     <string name="subscription_visit_channel">Besøg kanalen</string>

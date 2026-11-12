@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Hallgassa a háttérben</string>
     <string name="back_again_to_exit">Nyomja meg ismét a vissza gombot a kilépéshez</string>
     <string name="navigate_back">Vissza</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Előzmények beállításai</string>
     <string name="a11y_send_message">Üzenet küldése</string>
     <string name="a11y_explore">Fedezze fel</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Kezdőlap</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Kezdőlap</string>
     <string name="a11y_loading">Betöltés</string>
     <string name="a11y_add_comment">Megjegyzés hozzáadása</string>
     <string name="a11y_sort_comments">Megjegyzések rendezése</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Rendszerértesítés hozzáférés</string>
     <string name="settings_advanced">Haladó</string>
     <string name="settings_advanced_summary">Lejátszó, gesztusok, SponsorBlock és biztonsági mentés</string>
-    <string name="settings_about_title">A Litube-ről</string>
+    <string name="settings_about_title">A U Tube-ről</string>
     <string name="settings_about_summary">Verzió, frissítések és diagnosztika</string>
     <string name="settings_group_appearance">Megjelenés</string>
     <string name="settings_group_feed">Takarmány</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">On</string>
     <string name="settings_notifications_state_off">Ki</string>
     <string name="settings_open_system_settings">Nyissa meg a rendszerbeállításokat</string>
-    <string name="settings_open_system_settings_summary">Android értesítési beállítások a Litube-hez</string>
+    <string name="settings_open_system_settings_summary">Android értesítési beállítások a U Tube-hez</string>
     <string name="settings_state_on">Be</string>
     <string name="settings_state_off">Ki</string>
     <string name="subscription_visit_channel">Csatorna felkeresése</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Poslouchejte na pozadí</string>
     <string name="back_again_to_exit">Opětovným stisknutím tlačítka zpět opustíte nabídku</string>
     <string name="navigate_back">Zpět</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Nastavení historie sledování</string>
     <string name="a11y_send_message">Odeslat zprávu</string>
     <string name="a11y_explore">Prozkoumat</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Home</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Home</string>
     <string name="a11y_loading">Načítání</string>
     <string name="a11y_add_comment">Přidejte komentář</string>
     <string name="a11y_sort_comments">Řazení komentářů</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Přístup k oznámení systému</string>
     <string name="settings_advanced">Pokročilé</string>
     <string name="settings_advanced_summary">Přehrávač, gesta, SponsorBlock a záloha</string>
-    <string name="settings_about_title">O Litube</string>
+    <string name="settings_about_title">O U Tube</string>
     <string name="settings_about_summary">Verze, aktualizace a diagnostika</string>
     <string name="settings_group_appearance">Vzhled</string>
     <string name="settings_group_feed">Krmivo</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Zapnuto</string>
     <string name="settings_notifications_state_off">Vypnuto</string>
     <string name="settings_open_system_settings">Otevřete nastavení systému</string>
-    <string name="settings_open_system_settings_summary">Nastavení oznámení Android pro Litube</string>
+    <string name="settings_open_system_settings_summary">Nastavení oznámení Android pro U Tube</string>
     <string name="settings_state_on">Zapnuto</string>
     <string name="settings_state_off">Vypnuto</string>
     <string name="subscription_visit_channel">Navštivte kanál</string>

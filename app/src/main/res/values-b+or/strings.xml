@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">ପୃଷ୍ଠଭୂମିରେ ଶୁଣନ୍ତୁ</string>
     <string name="back_again_to_exit">ବାହାରିବାକୁ ପଛକୁ ବଟନ୍ ପୁଣି ଦବାନ୍ତୁ</string>
     <string name="navigate_back">ପଛକୁ</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">ଇତିହାସ ସେଟିଙ୍ଗ୍ |</string>
     <string name="a11y_send_message">ବାର୍ତ୍ତା ପଠାନ୍ତୁ |</string>
     <string name="a11y_explore">ଏକ୍ସପ୍ଲୋର୍ କରନ୍ତୁ |</string>
-    <string name="a11y_litube">Litube |</string>
-    <string name="a11y_litube_home">Litube ଘର |</string>
+    <string name="a11y_litube">U Tube |</string>
+    <string name="a11y_litube_home">U Tube ଘର |</string>
     <string name="a11y_loading">ଲୋଡିଂ |</string>
     <string name="a11y_add_comment">ଏକ ମନ୍ତବ୍ୟ ଯୋଡନ୍ତୁ |</string>
     <string name="a11y_sort_comments">ମନ୍ତବ୍ୟଗୁଡିକ ସର୍ଟ କରନ୍ତୁ |</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">ସିଷ୍ଟମ୍ ବିଜ୍ଞପ୍ତି ପ୍ରବେଶ |</string>
     <string name="settings_advanced">ଉନ୍ନତ</string>
     <string name="settings_advanced_summary">ପ୍ଲେୟାର, ଅଙ୍ଗଭଙ୍ଗୀ, SponsorBlock ଏବଂ ବ୍ୟାକଅପ୍ |</string>
-    <string name="settings_about_title">Litube ବିଷୟରେ |</string>
+    <string name="settings_about_title">U Tube ବିଷୟରେ |</string>
     <string name="settings_about_summary">ସଂସ୍କରଣ, ଅଦ୍ୟତନ ଏବଂ ନିଦାନ</string>
     <string name="settings_group_appearance">ଦୃଶ୍ୟ |</string>
     <string name="settings_group_feed">ଫିଡ୍ |</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">ଅନ୍</string>
     <string name="settings_notifications_state_off">ବନ୍ଦ |</string>
     <string name="settings_open_system_settings">ସିଷ୍ଟମ୍ ସେଟିଙ୍ଗ୍ ଖୋଲନ୍ତୁ |</string>
-    <string name="settings_open_system_settings_summary">Litube ପାଇଁ ଆଣ୍ଡ୍ରଏଡ୍ ବିଜ୍ଞପ୍ତି ସେଟିଂସମୂହ |</string>
+    <string name="settings_open_system_settings_summary">U Tube ପାଇଁ ଆଣ୍ଡ୍ରଏଡ୍ ବିଜ୍ଞପ୍ତି ସେଟିଂସମୂହ |</string>
     <string name="settings_state_on">ଅନ୍</string>
     <string name="settings_state_off">ବନ୍ଦ |</string>
     <string name="subscriptions_title">ସଦସ୍ୟତା |</string>

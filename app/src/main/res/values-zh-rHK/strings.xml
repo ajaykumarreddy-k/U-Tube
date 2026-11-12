@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">背景收聽</string>
     <string name="back_again_to_exit">再按一次返回鍵即可結束</string>
     <string name="navigate_back">返回</string>
@@ -324,7 +324,7 @@
     <string name="settings_title">設定</string>
 
     <string name="settings_about_summary">版本、更新與診斷</string>
-    <string name="settings_about_title">關於 Litube</string>
+    <string name="settings_about_title">關於 U Tube</string>
     <string name="settings_advanced">進階</string>
     <string name="settings_advanced_summary">播放器、手勢、SponsorBlock 和備份</string>
     <string name="settings_background_play">背景播放</string>
@@ -348,7 +348,7 @@
     <string name="settings_notifications_state_on">開</string>
     <string name="settings_notifications_summary">系統通知權限</string>
     <string name="settings_open_system_settings">開啟系統設定</string>
-    <string name="settings_open_system_settings_summary">Litube 的 Android 通知設定</string>
+    <string name="settings_open_system_settings_summary">U Tube 的 Android 通知設定</string>
     <string name="settings_pip">子母畫面</string>
     <string name="settings_pip_summary">在浮動視窗中繼續播放</string>
     <string name="settings_playback">播放</string>
@@ -455,8 +455,8 @@
     <string name="a11y_history_settings">觀看歷史記錄設定</string>
     <string name="a11y_send_message">發送訊息</string>
     <string name="a11y_explore">探索</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube 首頁</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube 首頁</string>
     <string name="a11y_loading">載入中</string>
     <string name="a11y_add_comment">新增評論</string>
     <string name="a11y_sort_comments">評論排序</string>

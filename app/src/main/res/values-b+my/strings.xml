@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">နောက်ခံတွင် နားထောင်ပါ။</string>
     <string name="back_again_to_exit">ထွက်ရန် နောက်တစ်ကြိမ် ပြန်နှိပ်ပါ။</string>
     <string name="navigate_back">နောက်ပြန်</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">မှတ်တမ်းဆက်တင်များ</string>
     <string name="a11y_send_message">မက်ဆေ့ချ်ပို့ပါ။</string>
     <string name="a11y_explore">စူးစမ်းပါ။</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ပင်မ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ပင်မ</string>
     <string name="a11y_loading">တင်နေသည်။</string>
     <string name="a11y_add_comment">မှတ်ချက်တစ်ခုထည့်ပါ။</string>
     <string name="a11y_sort_comments">မှတ်ချက်များကို စီပါ။</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">စနစ်သတိပေးချက်ဝင်ရောက်ခွင့်</string>
     <string name="settings_advanced">အဆင့်မြင့်</string>
     <string name="settings_advanced_summary">ကစားသမား၊ လက်ဟန်များ၊ SponsorBlock နှင့် အရန်သိမ်းခြင်း။</string>
-    <string name="settings_about_title">Litube အကြောင်း</string>
+    <string name="settings_about_title">U Tube အကြောင်း</string>
     <string name="settings_about_summary">ဗားရှင်း၊ အပ်ဒိတ်များနှင့် ရောဂါရှာဖွေမှုများ</string>
     <string name="settings_group_appearance">အသွင်အပြင်</string>
     <string name="settings_group_feed">အစာကျွေးပါ။</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">On</string>
     <string name="settings_notifications_state_off">ပိတ်</string>
     <string name="settings_open_system_settings">စနစ်ဆက်တင်များကို ဖွင့်ပါ။</string>
-    <string name="settings_open_system_settings_summary">Litube အတွက် Android အကြောင်းကြားချက် ဆက်တင်များ</string>
+    <string name="settings_open_system_settings_summary">U Tube အတွက် Android အကြောင်းကြားချက် ဆက်တင်များ</string>
     <string name="settings_state_on">ဖွင့်သည်။</string>
     <string name="settings_state_off">ပိတ်သည်။</string>
     <string name="subscriptions_title">စာရင်းသွင်းမှုများ</string>

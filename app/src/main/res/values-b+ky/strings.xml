@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Фондо угуңуз</string>
     <string name="back_again_to_exit">Чыгуу үчүн кайра басыңыз</string>
     <string name="navigate_back">Артка</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Тарых орнотуулары</string>
     <string name="a11y_send_message">Билдирүү жөнөтүү</string>
     <string name="a11y_explore">Изилдөө</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Башкы бет</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Башкы бет</string>
     <string name="a11y_loading">Жүктөө</string>
     <string name="a11y_add_comment">Комментарий кошуу</string>
     <string name="a11y_sort_comments">Пикирлерди сорттоо</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Системанын эскертмелерине кирүү</string>
     <string name="settings_advanced">Өркүндөтүлгөн</string>
     <string name="settings_advanced_summary">Оюнчу, жаңсоолор, SponsorBlock жана камдык көчүрмө</string>
-    <string name="settings_about_title">Litube жөнүндө</string>
+    <string name="settings_about_title">U Tube жөнүндө</string>
     <string name="settings_about_summary">Версия, жаңыртуулар жана диагностика</string>
     <string name="settings_group_appearance">Көрүнүшү</string>
     <string name="settings_group_feed">Жем</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Күйүк</string>
     <string name="settings_notifications_state_off">Өчүк</string>
     <string name="settings_open_system_settings">Системанын жөндөөлөрүн ачыңыз</string>
-    <string name="settings_open_system_settings_summary">Litube үчүн Android эскертме жөндөөлөрү</string>
+    <string name="settings_open_system_settings_summary">U Tube үчүн Android эскертме жөндөөлөрү</string>
     <string name="settings_state_on">Күйүк</string>
     <string name="settings_state_off">Өчүк</string>
     <string name="subscriptions_title">Жазылуулар</string>

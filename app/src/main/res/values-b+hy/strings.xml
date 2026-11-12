@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Լսեք ֆոնին</string>
     <string name="back_again_to_exit">Դուրս գալու համար կրկին սեղմեք հետ</string>
     <string name="navigate_back">Ետ</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Պատմության կարգավորումներ</string>
     <string name="a11y_send_message">Ուղարկել հաղորդագրություն</string>
     <string name="a11y_explore">Հետազոտել</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Գլխավոր</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Գլխավոր</string>
     <string name="a11y_loading">Բեռնվում է</string>
     <string name="a11y_add_comment">Ավելացնել մեկնաբանություն</string>
     <string name="a11y_sort_comments">Տեսակավորել մեկնաբանությունները</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Համակարգի ծանուցման հասանելիություն</string>
     <string name="settings_advanced">Ընդլայնված</string>
     <string name="settings_advanced_summary">Նվագարկիչ, ժեստեր, SponsorBlock և կրկնօրինակում</string>
-    <string name="settings_about_title">Litube-ի մասին</string>
+    <string name="settings_about_title">U Tube-ի մասին</string>
     <string name="settings_about_summary">Տարբերակ, թարմացումներ և ախտորոշում</string>
     <string name="settings_group_appearance">Արտաքին տեսք</string>
     <string name="settings_group_feed">Կերակրում</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">On</string>
     <string name="settings_notifications_state_off">Անջատված</string>
     <string name="settings_open_system_settings">Բացեք համակարգի կարգավորումները</string>
-    <string name="settings_open_system_settings_summary">Android-ի ծանուցման կարգավորումներ Litube-ի համար</string>
+    <string name="settings_open_system_settings_summary">Android-ի ծանուցման կարգավորումներ U Tube-ի համար</string>
     <string name="settings_state_on">On</string>
     <string name="settings_state_off">Անջատված</string>
     <string name="subscriptions_title">Բաժանորդագրություններ</string>

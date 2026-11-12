@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Dengarkan di latar belakang</string>
     <string name="back_again_to_exit">Tekan kembali lagi untuk keluar</string>
     <string name="navigate_back">Kembali</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Pengaturan riwayat</string>
     <string name="a11y_send_message">Kirim pesan</string>
     <string name="a11y_explore">Jelajahi</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Beranda</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Beranda</string>
     <string name="a11y_loading">Memuat</string>
     <string name="a11y_add_comment">Tambahkan komentar</string>
     <string name="a11y_sort_comments">Urutkan komentar</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Akses notifikasi sistem</string>
     <string name="settings_advanced">Tingkat Lanjut</string>
     <string name="settings_advanced_summary">Pemutar, gerakan, SponsorBlock dan cadangan</string>
-    <string name="settings_about_title">Tentang Litube</string>
+    <string name="settings_about_title">Tentang U Tube</string>
     <string name="settings_about_summary">Versi, pembaruan, dan diagnostik</string>
     <string name="settings_group_appearance">Penampilan</string>
     <string name="settings_group_feed">Umpan</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Aktif</string>
     <string name="settings_notifications_state_off">Mati</string>
     <string name="settings_open_system_settings">Buka pengaturan sistem</string>
-    <string name="settings_open_system_settings_summary">Pengaturan notifikasi Android untuk Litube</string>
+    <string name="settings_open_system_settings_summary">Pengaturan notifikasi Android untuk U Tube</string>
     <string name="settings_state_on">Aktif</string>
     <string name="settings_state_off">Mati</string>
     <string name="subscription_visit_channel">Kunjungi saluran</string>

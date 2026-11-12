@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Lalela ngemuva</string>
     <string name="back_again_to_exit">Cindezela emuva futhi ukuze uphume</string>
     <string name="navigate_back">Emuva</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Izilungiselelo zomlando</string>
     <string name="a11y_send_message">Thumela umlayezo</string>
     <string name="a11y_explore">Hlola</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Ikhaya</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Ikhaya</string>
     <string name="a11y_loading">Iyalayisha</string>
     <string name="a11y_add_comment">Engeza amazwana</string>
     <string name="a11y_sort_comments">Hlunga amazwana</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Ukufinyelela kwesaziso sesistimu</string>
     <string name="settings_advanced">Okuthuthukile</string>
     <string name="settings_advanced_summary">Umdlali, ukuthinta, SponsorBlock nokwenza isipele</string>
-    <string name="settings_about_title">Mayelana ne-Litube</string>
+    <string name="settings_about_title">Mayelana ne-U Tube</string>
     <string name="settings_about_summary">Inguqulo, izibuyekezo kanye nokuxilonga</string>
     <string name="settings_group_appearance">Ukubukeka</string>
     <string name="settings_group_feed">Okuphakelayo</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Vuliwe</string>
     <string name="settings_notifications_state_off">Valiwe</string>
     <string name="settings_open_system_settings">Vula izilungiselelo zesistimu</string>
-    <string name="settings_open_system_settings_summary">Izilungiselelo zezaziso ze-Android ze-Litube</string>
+    <string name="settings_open_system_settings_summary">Izilungiselelo zezaziso ze-Android ze-U Tube</string>
     <string name="settings_state_on">Vuliwe</string>
     <string name="settings_state_off">Valiwe</string>
     <string name="subscriptions_title">Okubhaliselwe</string>

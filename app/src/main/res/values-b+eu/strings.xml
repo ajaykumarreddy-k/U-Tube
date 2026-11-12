@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Entzun atzeko planoan</string>
     <string name="back_again_to_exit">Sakatu atzera berriro irteteko</string>
     <string name="navigate_back">Itzuli</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Ikusleen historiaren ezarpenak</string>
     <string name="a11y_send_message">Bidali mezua</string>
     <string name="a11y_explore">Arakatu</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Hasiera</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Hasiera</string>
     <string name="a11y_loading">Kargatzen</string>
     <string name="a11y_add_comment">Gehitu iruzkin bat</string>
     <string name="a11y_sort_comments">Ordenatu iruzkinak</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Sistemaren jakinarazpenerako sarbidea</string>
     <string name="settings_advanced">Aurreratua</string>
     <string name="settings_advanced_summary">Erreproduzitzailea, keinuak, SponsorBlock eta babeskopia</string>
-    <string name="settings_about_title">Litube buruz</string>
+    <string name="settings_about_title">U Tube buruz</string>
     <string name="settings_about_summary">Bertsioa, eguneraketak eta diagnostikoak</string>
     <string name="settings_group_appearance">Itxura</string>
     <string name="settings_group_feed">Elikadura</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">On</string>
     <string name="settings_notifications_state_off">Desaktibatuta</string>
     <string name="settings_open_system_settings">Ireki sistemaren ezarpenak</string>
-    <string name="settings_open_system_settings_summary">Litube-rako Android jakinarazpenen ezarpenak</string>
+    <string name="settings_open_system_settings_summary">U Tube-rako Android jakinarazpenen ezarpenak</string>
     <string name="settings_state_on">On</string>
     <string name="settings_state_off">Desaktibatuta</string>
     <string name="subscriptions_title">Harpidetzak</string>

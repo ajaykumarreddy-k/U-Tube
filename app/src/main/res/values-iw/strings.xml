@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">האזינו ברקע</string>
     <string name="back_again_to_exit">לחץ שוב אחורה כדי לצאת</string>
     <string name="navigate_back">חזרה</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">הגדרות היסטוריה</string>
     <string name="a11y_send_message">שלח הודעה</string>
     <string name="a11y_explore">חקור</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">בית Litube</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">בית U Tube</string>
     <string name="a11y_loading">טוען</string>
     <string name="a11y_add_comment">הוסף תגובה</string>
     <string name="a11y_sort_comments">מיין הערות</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">גישה להודעות מערכת</string>
     <string name="settings_advanced">מתקדם</string>
     <string name="settings_advanced_summary">נגן, מחוות, SponsorBlock וגיבוי</string>
-    <string name="settings_about_title">אודות Litube</string>
+    <string name="settings_about_title">אודות U Tube</string>
     <string name="settings_about_summary">גרסה, עדכונים ואבחון</string>
     <string name="settings_group_appearance">מראה</string>
     <string name="settings_group_feed">הזנה</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">על</string>
     <string name="settings_notifications_state_off">כבוי</string>
     <string name="settings_open_system_settings">פתח את הגדרות המערכת</string>
-    <string name="settings_open_system_settings_summary">הגדרות התראות אנדרואיד עבור Litube</string>
+    <string name="settings_open_system_settings_summary">הגדרות התראות אנדרואיד עבור U Tube</string>
     <string name="settings_state_on">על</string>
     <string name="settings_state_off">כבוי</string>
     <string name="subscription_visit_channel">בקר בערוץ</string>

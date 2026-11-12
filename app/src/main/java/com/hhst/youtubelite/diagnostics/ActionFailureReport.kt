@@ -36,7 +36,7 @@ data class ActionFailureReport(val id: String, val operation: String, val summar
                 else -> error.javaClass.simpleName
             }
             val report = buildString {
-                appendLine("Litube action report")
+                appendLine("U Tube action report")
                 appendLine("Report: $id")
                 appendLine("Time: ${SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ROOT).apply {
                     timeZone = TimeZone.getTimeZone("UTC")

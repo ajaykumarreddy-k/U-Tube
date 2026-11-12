@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Lyssna i bakgrunden</string>
     <string name="back_again_to_exit">Tryck tillbaka igen för att avsluta</string>
     <string name="navigate_back">Tillbaka</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Historikinställningar</string>
     <string name="a11y_send_message">Skicka meddelande</string>
     <string name="a11y_explore">Utforska</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Hem</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Hem</string>
     <string name="a11y_loading">Laddar</string>
     <string name="a11y_add_comment">Lägg till en kommentar</string>
     <string name="a11y_sort_comments">Sortera kommentarer</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Systemaviseringsåtkomst</string>
     <string name="settings_advanced">Avancerat</string>
     <string name="settings_advanced_summary">Spelare, gester, SponsorBlock och backup</string>
-    <string name="settings_about_title">Om Litube</string>
+    <string name="settings_about_title">Om U Tube</string>
     <string name="settings_about_summary">Version, uppdateringar och diagnostik</string>
     <string name="settings_group_appearance">Utseende</string>
     <string name="settings_group_feed">Matning</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">På</string>
     <string name="settings_notifications_state_off">Av</string>
     <string name="settings_open_system_settings">Öppna systeminställningar</string>
-    <string name="settings_open_system_settings_summary">Android-aviseringsinställningar för Litube</string>
+    <string name="settings_open_system_settings_summary">Android-aviseringsinställningar för U Tube</string>
     <string name="settings_state_on">På</string>
     <string name="settings_state_off">Av</string>
     <string name="subscription_visit_channel">Besök kanalen</string>

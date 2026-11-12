@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Klausykitės fone</string>
     <string name="back_again_to_exit">Norėdami išeiti, dar kartą paspauskite atgal</string>
     <string name="navigate_back">Atgal</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Istorijos nustatymai</string>
     <string name="a11y_send_message">Siųsti žinutę</string>
     <string name="a11y_explore">Naršyti</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Pradžia</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Pradžia</string>
     <string name="a11y_loading">Pakrovimas</string>
     <string name="a11y_add_comment">Pridėti komentarą</string>
     <string name="a11y_sort_comments">Rūšiuoti komentarus</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Prieiga prie sistemos pranešimų</string>
     <string name="settings_advanced">Išplėstinė</string>
     <string name="settings_advanced_summary">Grotuvas, gestai, SponsorBlock ir atsarginė kopija</string>
-    <string name="settings_about_title">Apie Litube</string>
+    <string name="settings_about_title">Apie U Tube</string>
     <string name="settings_about_summary">Versija, atnaujinimai ir diagnostika</string>
     <string name="settings_group_appearance">Išvaizda</string>
     <string name="settings_group_feed">Pašaras</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Įjungta</string>
     <string name="settings_notifications_state_off">Išjungta</string>
     <string name="settings_open_system_settings">Atidarykite sistemos nustatymus</string>
-    <string name="settings_open_system_settings_summary">„Android“ pranešimų nustatymai, skirti Litube</string>
+    <string name="settings_open_system_settings_summary">„Android“ pranešimų nustatymai, skirti U Tube</string>
     <string name="settings_state_on">Įjungta</string>
     <string name="settings_state_off">Išjungta</string>
     <string name="subscriptions_title">Prenumeratos</string>

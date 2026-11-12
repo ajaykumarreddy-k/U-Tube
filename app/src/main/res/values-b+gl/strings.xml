@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Escoita en segundo plano</string>
     <string name="back_again_to_exit">Preme cara atrás de novo para saír</string>
     <string name="navigate_back">Atrás</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Configuración do historial de visualización</string>
     <string name="a11y_send_message">Enviar mensaxe</string>
     <string name="a11y_explore">Explorar</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Inicio</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Inicio</string>
     <string name="a11y_loading">Cargando</string>
     <string name="a11y_add_comment">Engade un comentario</string>
     <string name="a11y_sort_comments">Ordenar comentarios</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Acceso á notificación do sistema</string>
     <string name="settings_advanced">Avanzado</string>
     <string name="settings_advanced_summary">Xogador, xestos, SponsorBlock e copia de seguridade</string>
-    <string name="settings_about_title">Acerca de Litube</string>
+    <string name="settings_about_title">Acerca de U Tube</string>
     <string name="settings_about_summary">Versión, actualizacións e diagnósticos</string>
     <string name="settings_group_appearance">Aspecto</string>
     <string name="settings_group_feed">Alimentación</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Activado</string>
     <string name="settings_notifications_state_off">Desactivado</string>
     <string name="settings_open_system_settings">Abre a configuración do sistema</string>
-    <string name="settings_open_system_settings_summary">Configuración de notificación de Android para Litube</string>
+    <string name="settings_open_system_settings_summary">Configuración de notificación de Android para U Tube</string>
     <string name="settings_state_on">Activado</string>
     <string name="settings_state_off">Desactivado</string>
     <string name="subscriptions_title">Subscricións</string>

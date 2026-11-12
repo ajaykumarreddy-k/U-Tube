@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Gwrandewch yn y cefndir</string>
     <string name="back_again_to_exit">Pwyswch yn ôl eto i ymadael</string>
     <string name="navigate_back">Yn ôl</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Gwylio gosodiadau hanes</string>
     <string name="a11y_send_message">Anfon neges</string>
     <string name="a11y_explore">Archwiliwch</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Cartref</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Cartref</string>
     <string name="a11y_loading">Llwytho</string>
     <string name="a11y_add_comment">Ychwanegu sylw</string>
     <string name="a11y_sort_comments">Trefnu sylwadau</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Mynediad hysbysu system</string>
     <string name="settings_advanced">Uwch</string>
     <string name="settings_advanced_summary">Chwaraewr, ystumiau, SponsorBlock a chopi wrth gefn</string>
-    <string name="settings_about_title">Ynglŷn â Litube</string>
+    <string name="settings_about_title">Ynglŷn â U Tube</string>
     <string name="settings_about_summary">Fersiwn, diweddariadau a diagnosteg</string>
     <string name="settings_group_appearance">Ymddangosiad</string>
     <string name="settings_group_feed">Porthiant</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Ymlaen</string>
     <string name="settings_notifications_state_off">Wedi\'i ddiffodd</string>
     <string name="settings_open_system_settings">Agor gosodiadau system</string>
-    <string name="settings_open_system_settings_summary">Gosodiadau hysbysu Android ar gyfer Litube</string>
+    <string name="settings_open_system_settings_summary">Gosodiadau hysbysu Android ar gyfer U Tube</string>
     <string name="settings_state_on">Ymlaen</string>
     <string name="settings_state_off">Wedi\'i ddiffodd</string>
     <string name="subscriptions_title">Tanysgrifiadau</string>

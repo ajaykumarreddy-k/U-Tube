@@ -84,7 +84,7 @@ class AboutActivity : ComponentActivity() {
                 onSource = { openUrl(SOURCE) },
                 onUpdate = { action("check_update") {
                     val latest = withContext(Dispatchers.IO) {
-                        val request = Request.Builder().url("https://api.github.com/repos/HydeYYHH/litube/releases/latest")
+                        val request = Request.Builder().url("https://api.github.com/repos/ajaykumarreddy-k/U-Tube/releases/latest")
                             .header("Accept", "application/vnd.github+json").build()
                         get<OkHttpClient>(OkHttpClient::class.java).newCall(request).execute().use { response ->
                             check(response.isSuccessful) { "HTTP ${response.code}" }
@@ -172,5 +172,5 @@ class AboutActivity : ComponentActivity() {
         runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
             .onFailure { Toast.makeText(this, R.string.application_not_found, Toast.LENGTH_SHORT).show() }
     }
-    companion object { private const val SOURCE = "https://github.com/HydeYYHH/litube" }
+    companion object { private const val SOURCE = "https://github.com/ajaykumarreddy-k/U-Tube" }
 }

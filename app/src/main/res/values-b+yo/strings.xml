@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Gbọ ni abẹlẹ</string>
     <string name="back_again_to_exit">Tẹ pada lẹẹkansi lati jade</string>
     <string name="navigate_back">Pada</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Awọn eto itan</string>
     <string name="a11y_send_message">Firanṣẹ ifiranṣẹ</string>
     <string name="a11y_explore">Ye</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Ile Litube</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">Ile U Tube</string>
     <string name="a11y_loading">ikojọpọ</string>
     <string name="a11y_add_comment">Fi ọrọìwòye</string>
     <string name="a11y_sort_comments">Too comments</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Wiwọle iwifunni eto</string>
     <string name="settings_advanced">To ti ni ilọsiwaju</string>
     <string name="settings_advanced_summary">Player, idari, SponsorBlock ati afẹyinti</string>
-    <string name="settings_about_title">Nipa Litube</string>
+    <string name="settings_about_title">Nipa U Tube</string>
     <string name="settings_about_summary">Ẹya, awọn imudojuiwọn ati awọn iwadii aisan</string>
     <string name="settings_group_appearance">Irisi</string>
     <string name="settings_group_feed">Ifunni</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Lori</string>
     <string name="settings_notifications_state_off">Paa</string>
     <string name="settings_open_system_settings">Ṣii awọn eto eto</string>
-    <string name="settings_open_system_settings_summary">Awọn eto iwifunni Android fun Litube</string>
+    <string name="settings_open_system_settings_summary">Awọn eto iwifunni Android fun U Tube</string>
     <string name="settings_state_on">Lori</string>
     <string name="settings_state_off">Paa</string>
     <string name="subscriptions_title">alabapin</string>

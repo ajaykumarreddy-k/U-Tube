@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Слушајте во позадина</string>
     <string name="back_again_to_exit">Притиснете назад повторно за да излезете</string>
     <string name="navigate_back">Назад</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Поставки за историја</string>
     <string name="a11y_send_message">Испрати порака</string>
     <string name="a11y_explore">Истражувајте</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Дома</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Дома</string>
     <string name="a11y_loading">Се вчитува</string>
     <string name="a11y_add_comment">Додадете коментар</string>
     <string name="a11y_sort_comments">Подреди коментари</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Пристап до системски известувања</string>
     <string name="settings_advanced">Напредно</string>
     <string name="settings_advanced_summary">Плеер, гестови, SponsorBlock и резервна копија</string>
-    <string name="settings_about_title">За Litube</string>
+    <string name="settings_about_title">За U Tube</string>
     <string name="settings_about_summary">Верзија, ажурирања и дијагностика</string>
     <string name="settings_group_appearance">Изглед</string>
     <string name="settings_group_feed">Feed</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Вклучено</string>
     <string name="settings_notifications_state_off">Исклучено</string>
     <string name="settings_open_system_settings">Отворете ги системските поставки</string>
-    <string name="settings_open_system_settings_summary">Поставки за известување за Android за Litube</string>
+    <string name="settings_open_system_settings_summary">Поставки за известување за Android за U Tube</string>
     <string name="settings_state_on">На</string>
     <string name="settings_state_off">Исклучено</string>
     <string name="subscriptions_title">Претплати</string>

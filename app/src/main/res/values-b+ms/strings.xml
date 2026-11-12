@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Dengar di latar belakang</string>
     <string name="back_again_to_exit">Tekan kembali sekali lagi untuk keluar</string>
     <string name="navigate_back">Belakang</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Tetapan sejarah</string>
     <string name="a11y_send_message">Hantar mesej</string>
     <string name="a11y_explore">Teroka</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Laman Utama</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Laman Utama</string>
     <string name="a11y_loading">Memuatkan</string>
     <string name="a11y_add_comment">Tambah ulasan</string>
     <string name="a11y_sort_comments">Isih ulasan</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Akses pemberitahuan sistem</string>
     <string name="settings_advanced">Lanjutan</string>
     <string name="settings_advanced_summary">Pemain, gerak isyarat, SponsorBlock dan sandaran</string>
-    <string name="settings_about_title">Mengenai Litube</string>
+    <string name="settings_about_title">Mengenai U Tube</string>
     <string name="settings_about_summary">Versi, kemas kini dan diagnostik</string>
     <string name="settings_group_appearance">Rupa</string>
     <string name="settings_group_feed">Suapan</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Hidup</string>
     <string name="settings_notifications_state_off">Mati</string>
     <string name="settings_open_system_settings">Buka tetapan sistem</string>
-    <string name="settings_open_system_settings_summary">Tetapan pemberitahuan Android untuk Litube</string>
+    <string name="settings_open_system_settings_summary">Tetapan pemberitahuan Android untuk U Tube</string>
     <string name="settings_state_on">Hidup</string>
     <string name="settings_state_off">Mati</string>
     <string name="subscription_visit_channel">Lawati saluran</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Słuchaj w tle</string>
     <string name="back_again_to_exit">Naciśnij ponownie, aby wyjść</string>
     <string name="navigate_back">Powrót</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Ustawienia historii</string>
     <string name="a11y_send_message">Wyślij wiadomość</string>
     <string name="a11y_explore">Eksploruj</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Strona główna</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Strona główna</string>
     <string name="a11y_loading">Ładowanie</string>
     <string name="a11y_add_comment">Dodaj komentarz</string>
     <string name="a11y_sort_comments">Sortuj komentarze</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Dostęp do powiadomień systemowych</string>
     <string name="settings_advanced">Zaawansowane</string>
     <string name="settings_advanced_summary">Gracz, gesty, SponsorBlock i kopia zapasowa</string>
-    <string name="settings_about_title">O Litube</string>
+    <string name="settings_about_title">O U Tube</string>
     <string name="settings_about_summary">Wersja, aktualizacje i diagnostyka</string>
     <string name="settings_group_appearance">Wygląd</string>
     <string name="settings_group_feed">Pasza</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Włączone</string>
     <string name="settings_notifications_state_off">Wyłączone</string>
     <string name="settings_open_system_settings">Otwórz ustawienia systemu</string>
-    <string name="settings_open_system_settings_summary">Ustawienia powiadomień Androida dla Litube</string>
+    <string name="settings_open_system_settings_summary">Ustawienia powiadomień Androida dla U Tube</string>
     <string name="settings_state_on">Włączone</string>
     <string name="settings_state_off">Wyłączone</string>
     <string name="subscription_visit_channel">Odwiedź kanał</string>

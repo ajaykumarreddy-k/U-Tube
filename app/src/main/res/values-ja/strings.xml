@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">バックグラウンドで聴く</string>
     <string name="back_again_to_exit">もう一度戻ると終了します</string>
     <string name="navigate_back">戻る</string>
@@ -331,7 +331,7 @@
 <string name="settings_notifications_summary">システム通知へのアクセス</string>
 <string name="settings_advanced">詳細</string>
 <string name="settings_advanced_summary">プレーヤー、ジェスチャー、SponsorBlock、バックアップ</string>
-<string name="settings_about_title">Litube について</string>
+<string name="settings_about_title">U Tube について</string>
 <string name="settings_about_summary">バージョン、更新、診断</string>
 <string name="settings_group_appearance">外観</string>
 <string name="settings_group_feed">フィード</string>
@@ -358,7 +358,7 @@
 <string name="settings_notifications_state_on">オン</string>
 <string name="settings_notifications_state_off">オフ</string>
 <string name="settings_open_system_settings">システム設定を開く</string>
-<string name="settings_open_system_settings_summary">Litube の Android 通知設定</string>
+<string name="settings_open_system_settings_summary">U Tube の Android 通知設定</string>
 <string name="settings_state_on">オン</string>
 <string name="settings_state_off">オフ</string>
     <string name="cast_searching">検索中…</string>
@@ -453,8 +453,8 @@
     <string name="a11y_history_settings">履歴設定</string>
     <string name="a11y_send_message">メッセージを送信する</string>
     <string name="a11y_explore">探検する</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ホーム</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ホーム</string>
     <string name="a11y_loading">ローディング</string>
     <string name="a11y_add_comment">コメントを追加する</string>
     <string name="a11y_sort_comments">コメントの並べ替え</string>

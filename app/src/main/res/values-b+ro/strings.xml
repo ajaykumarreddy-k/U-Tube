@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Ascultă în fundal</string>
     <string name="back_again_to_exit">Apăsați înapoi din nou pentru a ieși</string>
     <string name="navigate_back">Înapoi</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Setări istoric</string>
     <string name="a11y_send_message">Trimite mesaj</string>
     <string name="a11y_explore">Explorează</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Acasă</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Acasă</string>
     <string name="a11y_loading">Încărcare</string>
     <string name="a11y_add_comment">Adăugați un comentariu</string>
     <string name="a11y_sort_comments">Sortați comentariile</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Acces la notificări de sistem</string>
     <string name="settings_advanced">Avansat</string>
     <string name="settings_advanced_summary">Player, gesturi, SponsorBlock și backup</string>
-    <string name="settings_about_title">Despre Litube</string>
+    <string name="settings_about_title">Despre U Tube</string>
     <string name="settings_about_summary">Versiune, actualizări și diagnosticare</string>
     <string name="settings_group_appearance">Aspect</string>
     <string name="settings_group_feed">Hrănire</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Pornit</string>
     <string name="settings_notifications_state_off">Oprit</string>
     <string name="settings_open_system_settings">Deschideți setările sistemului</string>
-    <string name="settings_open_system_settings_summary">Setări de notificare Android pentru Litube</string>
+    <string name="settings_open_system_settings_summary">Setări de notificare Android pentru U Tube</string>
     <string name="settings_state_on">Pornit</string>
     <string name="settings_state_off">Oprit</string>
     <string name="subscription_visit_channel">Vizitați canalul</string>

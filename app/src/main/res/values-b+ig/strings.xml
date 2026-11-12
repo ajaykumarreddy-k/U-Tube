@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Gee ntị n\'azụ</string>
     <string name="back_again_to_exit">Pịa azụ ọzọ ka ịpụ</string>
     <string name="navigate_back">Azụ</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Ntọala akụkọ ihe mere eme</string>
     <string name="a11y_send_message">Ziga ozi</string>
     <string name="a11y_explore">Chọpụta</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Ụlọ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Ụlọ</string>
     <string name="a11y_loading">na-ebu</string>
     <string name="a11y_add_comment">Tinye okwu</string>
     <string name="a11y_sort_comments">Hazie nkọwa</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Nweta ngosi sistemụ</string>
     <string name="settings_advanced">Nke dị elu</string>
     <string name="settings_advanced_summary">Onye ọkpụkpọ, mmegharị ahụ, SponsorBlock na ndabere</string>
-    <string name="settings_about_title">Banyere Litube</string>
+    <string name="settings_about_title">Banyere U Tube</string>
     <string name="settings_about_summary">Ụdị, mmelite na nchọpụta nchọpụta</string>
     <string name="settings_group_appearance">Ọdịdị</string>
     <string name="settings_group_feed">Nri</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Na</string>
     <string name="settings_notifications_state_off">Gbanyụọ</string>
     <string name="settings_open_system_settings">Mepee ntọala sistemụ</string>
-    <string name="settings_open_system_settings_summary">Ntọala ngosi gam akporo maka Litube</string>
+    <string name="settings_open_system_settings_summary">Ntọala ngosi gam akporo maka U Tube</string>
     <string name="settings_state_on">Na</string>
     <string name="settings_state_off">Gbanyụọ</string>
     <string name="subscriptions_title">Ndebanye aha</string>

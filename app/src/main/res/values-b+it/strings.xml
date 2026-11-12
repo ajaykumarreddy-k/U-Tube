@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Ascolta in background</string>
     <string name="back_again_to_exit">Premere di nuovo Indietro per uscire</string>
     <string name="navigate_back">Indietro</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Impostazioni della cronologia</string>
     <string name="a11y_send_message">Invia messaggio</string>
     <string name="a11y_explore">Esplora</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Casa</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Casa</string>
     <string name="a11y_loading">Caricamento</string>
     <string name="a11y_add_comment">Aggiungere un commento</string>
     <string name="a11y_sort_comments">Ordinare i commenti</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Accesso alle notifiche di sistema</string>
     <string name="settings_advanced">Avanzato</string>
     <string name="settings_advanced_summary">Lettore, gesti, SponsorBlock e backup</string>
-    <string name="settings_about_title">Informazioni su Litube</string>
+    <string name="settings_about_title">Informazioni su U Tube</string>
     <string name="settings_about_summary">Versione, aggiornamenti e diagnostica</string>
     <string name="settings_group_appearance">Aspetto</string>
     <string name="settings_group_feed">Alimentare</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Acceso</string>
     <string name="settings_notifications_state_off">Spento</string>
     <string name="settings_open_system_settings">Aprire le impostazioni di sistema</string>
-    <string name="settings_open_system_settings_summary">Impostazioni di notifica Android per Litube</string>
+    <string name="settings_open_system_settings_summary">Impostazioni di notifica Android per U Tube</string>
     <string name="settings_state_on">Acceso</string>
     <string name="settings_state_off">Spento</string>
     <string name="subscription_visit_channel">Visita il canale</string>

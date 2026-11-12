@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಆಲಿಸಿ</string>
     <string name="back_again_to_exit">ನಿರ್ಗಮಿಸಲು ಮತ್ತೆ ಹಿಂದಕ್ಕೆ ಒತ್ತಿರಿ</string>
     <string name="navigate_back">ಹಿಂದೆ</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">ಇತಿಹಾಸ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
     <string name="a11y_send_message">ಸಂದೇಶ ಕಳುಹಿಸಿ</string>
     <string name="a11y_explore">ಅನ್ವೇಷಿಸಿ</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ಮುಖಪುಟ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ಮುಖಪುಟ</string>
     <string name="a11y_loading">ಲೋಡ್ ಆಗುತ್ತಿದೆ</string>
     <string name="a11y_add_comment">ಕಾಮೆಂಟ್ ಸೇರಿಸಿ</string>
     <string name="a11y_sort_comments">ಕಾಮೆಂಟ್‌ಗಳನ್ನು ವಿಂಗಡಿಸಿ</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">ಸಿಸ್ಟಂ ಅಧಿಸೂಚನೆ ಪ್ರವೇಶ</string>
     <string name="settings_advanced">ಸುಧಾರಿತ</string>
     <string name="settings_advanced_summary">ಆಟಗಾರ, ಸನ್ನೆಗಳು, SponsorBlock ಮತ್ತು ಬ್ಯಾಕಪ್</string>
-    <string name="settings_about_title">Litube ಕುರಿತು</string>
+    <string name="settings_about_title">U Tube ಕುರಿತು</string>
     <string name="settings_about_summary">ಆವೃತ್ತಿ, ನವೀಕರಣಗಳು ಮತ್ತು ರೋಗನಿರ್ಣಯ</string>
     <string name="settings_group_appearance">ಗೋಚರತೆ</string>
     <string name="settings_group_feed">ಫೀಡ್</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">ಆನ್</string>
     <string name="settings_notifications_state_off">ಆಫ್</string>
     <string name="settings_open_system_settings">ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
-    <string name="settings_open_system_settings_summary">Litube ಗಾಗಿ Android ಅಧಿಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
+    <string name="settings_open_system_settings_summary">U Tube ಗಾಗಿ Android ಅಧಿಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
     <string name="settings_state_on">ಆನ್</string>
     <string name="settings_state_off">ಆಫ್</string>
     <string name="subscription_visit_channel">ಚಾನಲ್‌ಗೆ ಭೇಟಿ ನೀಡಿ</string>

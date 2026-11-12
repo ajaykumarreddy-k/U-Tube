@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">ຟັງໃນພື້ນຫຼັງ</string>
     <string name="back_again_to_exit">ກົດກັບຄືນອີກຄັ້ງເພື່ອອອກ</string>
     <string name="navigate_back">ກັບຄືນໄປບ່ອນ</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">ການຕັ້ງຄ່າປະຫວັດ</string>
     <string name="a11y_send_message">ສົ່ງຂໍ້ຄວາມ</string>
     <string name="a11y_explore">ສຳຫຼວດ</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ຫນ້າທໍາອິດ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ຫນ້າທໍາອິດ</string>
     <string name="a11y_loading">ກຳລັງໂຫຼດ</string>
     <string name="a11y_add_comment">ເພີ່ມຄຳເຫັນ</string>
     <string name="a11y_sort_comments">ຈັດຮຽງຄຳເຫັນ</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">ການເຂົ້າເຖິງການແຈ້ງເຕືອນລະບົບ</string>
     <string name="settings_advanced">ຂັ້ນສູງ</string>
     <string name="settings_advanced_summary">ຜູ້ນ, gestures, SponsorBlock ແລະສໍາຮອງຂໍ້ມູນ</string>
-    <string name="settings_about_title">ກ່ຽວກັບ Litube</string>
+    <string name="settings_about_title">ກ່ຽວກັບ U Tube</string>
     <string name="settings_about_summary">ເວີຊັ່ນ, ອັບເດດ ແລະວິນິດໄສ</string>
     <string name="settings_group_appearance">ຮູບລັກສະນະ</string>
     <string name="settings_group_feed">ອາຫານ</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">ໃນ</string>
     <string name="settings_notifications_state_off">ປິດ</string>
     <string name="settings_open_system_settings">ເປີດການຕັ້ງຄ່າລະບົບ</string>
-    <string name="settings_open_system_settings_summary">ການຕັ້ງຄ່າການແຈ້ງເຕືອນ Android ສໍາລັບ Litube</string>
+    <string name="settings_open_system_settings_summary">ການຕັ້ງຄ່າການແຈ້ງເຕືອນ Android ສໍາລັບ U Tube</string>
     <string name="settings_state_on">ໃນ</string>
     <string name="settings_state_off">ປິດ</string>
     <string name="subscriptions_title">ການສະໝັກໃຊ້</string>

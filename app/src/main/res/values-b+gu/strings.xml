@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">પૃષ્ઠભૂમિમાં સાંભળો</string>
     <string name="back_again_to_exit">બહાર નીકળવા માટે ફરી પાછા દબાવો</string>
     <string name="navigate_back">પાછળ</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">ઇતિહાસ સેટિંગ્સ</string>
     <string name="a11y_send_message">સંદેશ મોકલો</string>
     <string name="a11y_explore">અન્વેષણ કરો</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube હોમ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube હોમ</string>
     <string name="a11y_loading">લોડ કરી રહ્યું છે</string>
     <string name="a11y_add_comment">એક ટિપ્પણી ઉમેરો</string>
     <string name="a11y_sort_comments">ટિપ્પણીઓને સૉર્ટ કરો</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">સિસ્ટમ સૂચના ઍક્સેસ</string>
     <string name="settings_advanced">અદ્યતન</string>
     <string name="settings_advanced_summary">પ્લેયર, હાવભાવ, SponsorBlock અને બેકઅપ</string>
-    <string name="settings_about_title">Litube વિશે</string>
+    <string name="settings_about_title">U Tube વિશે</string>
     <string name="settings_about_summary">સંસ્કરણ, અપડેટ્સ અને ડાયગ્નોસ્ટિક્સ</string>
     <string name="settings_group_appearance">દેખાવ</string>
     <string name="settings_group_feed">ફીડ</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">ચાલુ</string>
     <string name="settings_notifications_state_off">બંધ</string>
     <string name="settings_open_system_settings">સિસ્ટમ સેટિંગ્સ ખોલો</string>
-    <string name="settings_open_system_settings_summary">Litube માટે Android સૂચના સેટિંગ્સ</string>
+    <string name="settings_open_system_settings_summary">U Tube માટે Android સૂચના સેટિંગ્સ</string>
     <string name="settings_state_on">ચાલુ</string>
     <string name="settings_state_off">બંધ</string>
     <string name="subscription_visit_channel">ચેનલની મુલાકાત લો</string>

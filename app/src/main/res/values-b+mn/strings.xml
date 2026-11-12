@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Ар талд нь сонс</string>
     <string name="back_again_to_exit">Гарахын тулд буцааж дарна уу</string>
     <string name="navigate_back">Буцах</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Түүхийн тохиргоо</string>
     <string name="a11y_send_message">Зурвас илгээх</string>
     <string name="a11y_explore">Судлах</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Нүүр хуудас</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Нүүр хуудас</string>
     <string name="a11y_loading">Ачааж байна</string>
     <string name="a11y_add_comment">Сэтгэгдэл нэмэх</string>
     <string name="a11y_sort_comments">Сэтгэгдэлүүдийг эрэмбэлэх</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Системийн мэдэгдлийн хандалт</string>
     <string name="settings_advanced">Дэвшилтэт</string>
     <string name="settings_advanced_summary">Тоглогч, дохио зангаа, SponsorBlock болон нөөцлөлт</string>
-    <string name="settings_about_title">Litube-ийн тухай</string>
+    <string name="settings_about_title">U Tube-ийн тухай</string>
     <string name="settings_about_summary">Хувилбар, шинэчлэлт, оношлогоо</string>
     <string name="settings_group_appearance">Гадаад төрх</string>
     <string name="settings_group_feed">Тэжээл</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Асаалттай</string>
     <string name="settings_notifications_state_off">Унтраах</string>
     <string name="settings_open_system_settings">Системийн тохиргоог нээнэ үү</string>
-    <string name="settings_open_system_settings_summary">Litube-д зориулсан Android мэдэгдлийн тохиргоо</string>
+    <string name="settings_open_system_settings_summary">U Tube-д зориулсан Android мэдэгдлийн тохиргоо</string>
     <string name="settings_state_on">Асаалттай</string>
     <string name="settings_state_off">Унтраах</string>
     <string name="subscriptions_title">Захиалга</string>

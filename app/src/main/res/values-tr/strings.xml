@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Arka planda dinle</string>
     <string name="back_again_to_exit">Çıkmak için tekrar geri basın</string>
     <string name="navigate_back">Geri</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Geçmiş ayarları</string>
     <string name="a11y_send_message">Mesaj gönder</string>
     <string name="a11y_explore">Keşfet</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Ana Sayfa</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Ana Sayfa</string>
     <string name="a11y_loading">Yükleniyor</string>
     <string name="a11y_add_comment">Yorum ekle</string>
     <string name="a11y_sort_comments">Yorumları sırala</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Sistem bildirim erişimi</string>
     <string name="settings_advanced">Gelişmiş</string>
     <string name="settings_advanced_summary">Oynatıcı, hareketler, SponsorBlock ve yedekleme</string>
-    <string name="settings_about_title">Litube Hakkında</string>
+    <string name="settings_about_title">U Tube Hakkında</string>
     <string name="settings_about_summary">Sürüm, güncellemeler ve teşhis</string>
     <string name="settings_group_appearance">Görünüm</string>
     <string name="settings_group_feed">Besleme</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Açık</string>
     <string name="settings_notifications_state_off">Kapalı</string>
     <string name="settings_open_system_settings">Sistem ayarlarını aç</string>
-    <string name="settings_open_system_settings_summary">Litube için Android bildirim ayarları</string>
+    <string name="settings_open_system_settings_summary">U Tube için Android bildirim ayarları</string>
     <string name="settings_state_on">Açık</string>
     <string name="settings_state_off">Kapalı</string>
     <string name="subscription_visit_channel">Kanalı ziyaret edin</string>

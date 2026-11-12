@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Dengekeun di tukang</string>
     <string name="back_again_to_exit">Pencét deui pikeun kaluar</string>
     <string name="navigate_back">Balik deui</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Setélan sajarah</string>
     <string name="a11y_send_message">Kirim pesen</string>
     <string name="a11y_explore">Ngajalajah</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Imah</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Imah</string>
     <string name="a11y_loading">Ngamuat</string>
     <string name="a11y_add_comment">Tambahkeun komentar</string>
     <string name="a11y_sort_comments">Urut komentar</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Aksés béwara sistem</string>
     <string name="settings_advanced">Majeng</string>
     <string name="settings_advanced_summary">Pamuter, sapuan, SponsorBlock sareng cadangan</string>
-    <string name="settings_about_title">Ngeunaan Litube</string>
+    <string name="settings_about_title">Ngeunaan U Tube</string>
     <string name="settings_about_summary">Vérsi, apdet sarta diagnostics</string>
     <string name="settings_group_appearance">Penampilan</string>
     <string name="settings_group_feed">Eupan</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Dina</string>
     <string name="settings_notifications_state_off">Pareum</string>
     <string name="settings_open_system_settings">Buka setélan sistem</string>
-    <string name="settings_open_system_settings_summary">Setélan béwara Android pikeun Litube</string>
+    <string name="settings_open_system_settings_summary">Setélan béwara Android pikeun U Tube</string>
     <string name="settings_state_on">Dina</string>
     <string name="settings_state_off">Pareum</string>
     <string name="subscriptions_title">Langganan</string>

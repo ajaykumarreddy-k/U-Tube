@@ -22,7 +22,7 @@ data class PlaybackFailureReport(val id: String, val videoId: String?, val summa
         ): PlaybackFailureReport {
             val id = UUID.randomUUID().toString()
             val report = buildString {
-                appendLine("Litube playback report")
+                appendLine("U Tube playback report")
                 appendLine("Report: $id")
                 val time = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ROOT).apply { timeZone = TimeZone.getTimeZone("UTC") }
                 appendLine("Time: ${time.format(Date(timestamp))}")

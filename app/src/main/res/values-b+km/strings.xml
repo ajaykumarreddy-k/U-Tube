@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">ស្តាប់ក្នុងផ្ទៃខាងក្រោយ</string>
     <string name="back_again_to_exit">ចុចត្រឡប់មកវិញម្តងទៀតដើម្បីចេញ</string>
     <string name="navigate_back">ត្រឡប់មកវិញ</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">ការកំណត់ប្រវត្តិ</string>
     <string name="a11y_send_message">ផ្ញើសារ</string>
     <string name="a11y_explore">រុករក</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ទំព័រដើម</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ទំព័រដើម</string>
     <string name="a11y_loading">កំពុងផ្ទុក</string>
     <string name="a11y_add_comment">បន្ថែមមតិ</string>
     <string name="a11y_sort_comments">តម្រៀបមតិ</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">ការចូលប្រើការជូនដំណឹងប្រព័ន្ធ</string>
     <string name="settings_advanced">កម្រិតខ្ពស់</string>
     <string name="settings_advanced_summary">អ្នកលេង កាយវិការ SponsorBlock និងការបម្រុងទុក</string>
-    <string name="settings_about_title">អំពី Litube</string>
+    <string name="settings_about_title">អំពី U Tube</string>
     <string name="settings_about_summary">កំណែ ការអាប់ដេត និងការវិនិច្ឆ័យ</string>
     <string name="settings_group_appearance">រូបរាង</string>
     <string name="settings_group_feed">ចំណី</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">បើក</string>
     <string name="settings_notifications_state_off">បិទ</string>
     <string name="settings_open_system_settings">បើកការកំណត់ប្រព័ន្ធ</string>
-    <string name="settings_open_system_settings_summary">ការកំណត់ការជូនដំណឹង Android សម្រាប់ Litube</string>
+    <string name="settings_open_system_settings_summary">ការកំណត់ការជូនដំណឹង Android សម្រាប់ U Tube</string>
     <string name="settings_state_on">បើក</string>
     <string name="settings_state_off">បិទ</string>
     <string name="subscriptions_title">ការជាវ</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Makinig sa background</string>
     <string name="back_again_to_exit">Pindutin muli upang lumabas</string>
     <string name="navigate_back">Bumalik</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Mga setting ng history ng panonood</string>
     <string name="a11y_send_message">Magpadala ng mensahe</string>
     <string name="a11y_explore">Galugarin</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Tahanan</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Tahanan</string>
     <string name="a11y_loading">Naglo-load</string>
     <string name="a11y_add_comment">Magdagdag ng komento</string>
     <string name="a11y_sort_comments">Pagbukud-bukurin ang mga komento</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Access sa notification ng system</string>
     <string name="settings_advanced">Advanced</string>
     <string name="settings_advanced_summary">Manlalaro, kilos, SponsorBlock at backup</string>
-    <string name="settings_about_title">Tungkol sa Litube</string>
+    <string name="settings_about_title">Tungkol sa U Tube</string>
     <string name="settings_about_summary">Bersyon, mga update at diagnostic</string>
     <string name="settings_group_appearance">Hitsura</string>
     <string name="settings_group_feed">Feed</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Naka-on</string>
     <string name="settings_notifications_state_off">Naka-off</string>
     <string name="settings_open_system_settings">Buksan ang mga setting ng system</string>
-    <string name="settings_open_system_settings_summary">Mga setting ng notification ng Android para sa Litube</string>
+    <string name="settings_open_system_settings_summary">Mga setting ng notification ng Android para sa U Tube</string>
     <string name="settings_state_on">Naka-on</string>
     <string name="settings_state_off">Naka-off</string>
     <string name="subscription_visit_channel">Bisitahin ang channel</string>

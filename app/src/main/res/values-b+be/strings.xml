@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Слухайце ў фонавым рэжыме</string>
     <string name="back_again_to_exit">Каб выйсці, націсніце назад яшчэ раз</string>
     <string name="navigate_back">Назад</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Налады гісторыі праглядаў</string>
     <string name="a11y_send_message">Адправіць паведамленне</string>
     <string name="a11y_explore">Даследаваць</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Галоўная</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Галоўная</string>
     <string name="a11y_loading">Загрузка</string>
     <string name="a11y_add_comment">Дадаць каментар</string>
     <string name="a11y_sort_comments">Сартаванне каментарыяў</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Доступ да сістэмных апавяшчэнняў</string>
     <string name="settings_advanced">Пашыраны</string>
     <string name="settings_advanced_summary">Прайгравальнік, жэсты, SponsorBlock і рэзервовая копія</string>
-    <string name="settings_about_title">Пра Litube</string>
+    <string name="settings_about_title">Пра U Tube</string>
     <string name="settings_about_summary">Версія, абнаўленні і дыягностыка</string>
     <string name="settings_group_appearance">Знешні выгляд</string>
     <string name="settings_group_feed">Корм</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Укл</string>
     <string name="settings_notifications_state_off">Выкл</string>
     <string name="settings_open_system_settings">Адкрыйце налады сістэмы</string>
-    <string name="settings_open_system_settings_summary">Налады апавяшчэнняў Android для Litube</string>
+    <string name="settings_open_system_settings_summary">Налады апавяшчэнняў Android для U Tube</string>
     <string name="settings_state_on">Укл</string>
     <string name="settings_state_off">Выкл</string>
     <string name="subscriptions_title">Падпіскі</string>

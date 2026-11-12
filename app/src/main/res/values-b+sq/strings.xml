@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Dëgjo në sfond</string>
     <string name="back_again_to_exit">Shtypni përsëri për të dalë</string>
     <string name="navigate_back">Mbrapa</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Cilësimet e historisë</string>
     <string name="a11y_send_message">Dërgo mesazh</string>
     <string name="a11y_explore">Eksploro</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Faqja kryesore</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Faqja kryesore</string>
     <string name="a11y_loading">Duke u ngarkuar</string>
     <string name="a11y_add_comment">Shto një koment</string>
     <string name="a11y_sort_comments">Rendit komentet</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Qasja në njoftimin e sistemit</string>
     <string name="settings_advanced">E avancuar</string>
     <string name="settings_advanced_summary">Luajtësi, gjestet, SponsorBlock dhe kopje rezervë</string>
-    <string name="settings_about_title">Rreth Litube</string>
+    <string name="settings_about_title">Rreth U Tube</string>
     <string name="settings_about_summary">Versioni, përditësimet dhe diagnostifikimi</string>
     <string name="settings_group_appearance">Pamja</string>
     <string name="settings_group_feed">Feed</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Në</string>
     <string name="settings_notifications_state_off">Joaktiv</string>
     <string name="settings_open_system_settings">Hap cilësimet e sistemit</string>
-    <string name="settings_open_system_settings_summary">Cilësimet e njoftimit të Android për Litube</string>
+    <string name="settings_open_system_settings_summary">Cilësimet e njoftimit të Android për U Tube</string>
     <string name="settings_state_on">Në</string>
     <string name="settings_state_off">Joaktiv</string>
     <string name="subscriptions_title">Abonimet</string>

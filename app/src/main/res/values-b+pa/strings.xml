@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">ਪਿਛੋਕੜ ਵਿੱਚ ਸੁਣੋ</string>
     <string name="back_again_to_exit">ਬਾਹਰ ਜਾਣ ਲਈ ਦੁਬਾਰਾ ਦਬਾਓ</string>
     <string name="navigate_back">ਵਾਪਸ</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">ਇਤਿਹਾਸ ਸੈਟਿੰਗਾਂ</string>
     <string name="a11y_send_message">ਸੁਨੇਹਾ ਭੇਜੋ</string>
     <string name="a11y_explore">ਪੜਚੋਲ ਕਰੋ</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ਘਰ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ਘਰ</string>
     <string name="a11y_loading">ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ</string>
     <string name="a11y_add_comment">ਇੱਕ ਟਿੱਪਣੀ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="a11y_sort_comments">ਟਿੱਪਣੀਆਂ ਨੂੰ ਕ੍ਰਮਬੱਧ ਕਰੋ</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">ਸਿਸਟਮ ਸੂਚਨਾ ਪਹੁੰਚ</string>
     <string name="settings_advanced">ਉੱਨਤ</string>
     <string name="settings_advanced_summary">ਪਲੇਅਰ, ਇਸ਼ਾਰੇ, SponsorBlock ਅਤੇ ਬੈਕਅੱਪ</string>
-    <string name="settings_about_title">Litube ਬਾਰੇ</string>
+    <string name="settings_about_title">U Tube ਬਾਰੇ</string>
     <string name="settings_about_summary">ਸੰਸਕਰਣ, ਅੱਪਡੇਟ ਅਤੇ ਡਾਇਗਨੌਸਟਿਕਸ</string>
     <string name="settings_group_appearance">ਦਿੱਖ</string>
     <string name="settings_group_feed">ਫੀਡ</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">ਚਾਲੂ</string>
     <string name="settings_notifications_state_off">ਬੰਦ</string>
     <string name="settings_open_system_settings">ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹੋ</string>
-    <string name="settings_open_system_settings_summary">Litube ਲਈ Android ਸੂਚਨਾ ਸੈਟਿੰਗਾਂ</string>
+    <string name="settings_open_system_settings_summary">U Tube ਲਈ Android ਸੂਚਨਾ ਸੈਟਿੰਗਾਂ</string>
     <string name="settings_state_on">ਚਾਲੂ</string>
     <string name="settings_state_off">ਬੰਦ</string>
     <string name="subscription_visit_channel">ਚੈਨਲ \'ਤੇ ਜਾਓ</string>

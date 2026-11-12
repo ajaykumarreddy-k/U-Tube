@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Kuulake taustal</string>
     <string name="back_again_to_exit">Väljumiseks vajutage uuesti tagasi</string>
     <string name="navigate_back">Tagasi</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Vaatamiste ajaloo seaded</string>
     <string name="a11y_send_message">Saada sõnum</string>
     <string name="a11y_explore">Uurige</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Avaleht</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Avaleht</string>
     <string name="a11y_loading">Laadimine</string>
     <string name="a11y_add_comment">Lisa kommentaar</string>
     <string name="a11y_sort_comments">Sorteeri kommentaare</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Juurdepääs süsteemiteatistele</string>
     <string name="settings_advanced">Täiustatud</string>
     <string name="settings_advanced_summary">Mängija, žestid, SponsorBlock ja varundus</string>
-    <string name="settings_about_title">Umbes Litube</string>
+    <string name="settings_about_title">Umbes U Tube</string>
     <string name="settings_about_summary">Versioon, uuendused ja diagnostika</string>
     <string name="settings_group_appearance">Välimus</string>
     <string name="settings_group_feed">Sööt</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Sees</string>
     <string name="settings_notifications_state_off">Väljas</string>
     <string name="settings_open_system_settings">Avage süsteemi sätted</string>
-    <string name="settings_open_system_settings_summary">Androidi teavitusseaded Litube jaoks</string>
+    <string name="settings_open_system_settings_summary">Androidi teavitusseaded U Tube jaoks</string>
     <string name="settings_state_on">Sees</string>
     <string name="settings_state_off">Väljas</string>
     <string name="subscriptions_title">Tellimused</string>

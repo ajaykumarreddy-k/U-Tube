@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">പശ്ചാത്തലത്തിൽ കേൾക്കുക</string>
     <string name="back_again_to_exit">പുറത്തുകടക്കാൻ വീണ്ടും വീണ്ടും അമർത്തുക</string>
     <string name="navigate_back">തിരികെ</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">ചരിത്ര ക്രമീകരണങ്ങൾ</string>
     <string name="a11y_send_message">സന്ദേശം അയയ്‌ക്കുക</string>
     <string name="a11y_explore">പര്യവേക്ഷണം ചെയ്യുക</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ഹോം</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ഹോം</string>
     <string name="a11y_loading">ലോഡ് ചെയ്യുന്നു</string>
     <string name="a11y_add_comment">ഒരു അഭിപ്രായം ചേർക്കുക</string>
     <string name="a11y_sort_comments">അഭിപ്രായങ്ങൾ അടുക്കുക</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">സിസ്റ്റം അറിയിപ്പ് ആക്സസ്</string>
     <string name="settings_advanced">വിപുലമായത്</string>
     <string name="settings_advanced_summary">പ്ലെയർ, ആംഗ്യങ്ങൾ, SponsorBlock, ബാക്കപ്പ്</string>
-    <string name="settings_about_title">ഏകദേശം Litube</string>
+    <string name="settings_about_title">ഏകദേശം U Tube</string>
     <string name="settings_about_summary">പതിപ്പ്, അപ്ഡേറ്റുകൾ, ഡയഗ്നോസ്റ്റിക്സ്</string>
     <string name="settings_group_appearance">രൂപഭാവം</string>
     <string name="settings_group_feed">ഫീഡ്</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">ഓൺ</string>
     <string name="settings_notifications_state_off">ഓഫ്</string>
     <string name="settings_open_system_settings">സിസ്റ്റം ക്രമീകരണങ്ങൾ തുറക്കുക</string>
-    <string name="settings_open_system_settings_summary">Litube-നുള്ള Android അറിയിപ്പ് ക്രമീകരണങ്ങൾ</string>
+    <string name="settings_open_system_settings_summary">U Tube-നുള്ള Android അറിയിപ്പ് ക്രമീകരണങ്ങൾ</string>
     <string name="settings_state_on">ഓൺ</string>
     <string name="settings_state_off">ഓഫ്</string>
     <string name="subscription_visit_channel">ചാനൽ സന്ദർശിക്കുക</string>

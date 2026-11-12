@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Poslušaj v ozadju</string>
     <string name="back_again_to_exit">Ponovno pritisnite nazaj za izhod</string>
     <string name="navigate_back">Nazaj</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Nastavitve zgodovine</string>
     <string name="a11y_send_message">Pošlji sporočilo</string>
     <string name="a11y_explore">Raziščite</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Domov</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Domov</string>
     <string name="a11y_loading">Nalaganje</string>
     <string name="a11y_add_comment">Dodajte komentar</string>
     <string name="a11y_sort_comments">Razvrsti komentarje</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Dostop do sistemskih obvestil</string>
     <string name="settings_advanced">Napredno</string>
     <string name="settings_advanced_summary">Predvajalnik, kretnje, SponsorBlock in varnostna kopija</string>
-    <string name="settings_about_title">O Litube</string>
+    <string name="settings_about_title">O U Tube</string>
     <string name="settings_about_summary">Različica, posodobitve in diagnostika</string>
     <string name="settings_group_appearance">Videz</string>
     <string name="settings_group_feed">Krma</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Vklopljeno</string>
     <string name="settings_notifications_state_off">Izklopljeno</string>
     <string name="settings_open_system_settings">Odprite sistemske nastavitve</string>
-    <string name="settings_open_system_settings_summary">Nastavitve obvestil za Android za Litube</string>
+    <string name="settings_open_system_settings_summary">Nastavitve obvestil za Android za U Tube</string>
     <string name="settings_state_on">Vklopljeno</string>
     <string name="settings_state_off">Izklopljeno</string>
     <string name="subscription_visit_channel">Obiščite kanal</string>

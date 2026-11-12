@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Éist sa chúlra</string>
     <string name="back_again_to_exit">Brúigh ar ais arís chun imeacht</string>
     <string name="navigate_back">Ar ais</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Féach ar shocruithe staire</string>
     <string name="a11y_send_message">Seol teachtaireacht</string>
     <string name="a11y_explore">Déan iniúchadh</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Baile</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Baile</string>
     <string name="a11y_loading">Ag lódáil</string>
     <string name="a11y_add_comment">Cuir nóta tráchta leis</string>
     <string name="a11y_sort_comments">Sórtáil tuairimí</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Rochtain ar fhógra an chórais</string>
     <string name="settings_advanced">Casta</string>
     <string name="settings_advanced_summary">Imreoir, gothaí, SponsorBlock agus cúltaca</string>
-    <string name="settings_about_title">Maidir le Litube</string>
+    <string name="settings_about_title">Maidir le U Tube</string>
     <string name="settings_about_summary">Leagan, nuashonruithe agus diagnóisic</string>
     <string name="settings_group_appearance">Dealramh</string>
     <string name="settings_group_feed">Beatha</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Ar</string>
     <string name="settings_notifications_state_off">As</string>
     <string name="settings_open_system_settings">Oscail socruithe córais</string>
-    <string name="settings_open_system_settings_summary">Socruithe fógra Android le haghaidh Litube</string>
+    <string name="settings_open_system_settings_summary">Socruithe fógra Android le haghaidh U Tube</string>
     <string name="settings_state_on">Ar</string>
     <string name="settings_state_off">As</string>
     <string name="subscriptions_title">Síntiúis</string>

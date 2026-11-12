@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">నేపథ్యంలో వినండి</string>
     <string name="back_again_to_exit">నిష్క్రమించడానికి మళ్లీ వెనుకకు నొక్కండి</string>
     <string name="navigate_back">వెనుకకు</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">చరిత్ర సెట్టింగ్‌లు</string>
     <string name="a11y_send_message">సందేశం పంపండి</string>
     <string name="a11y_explore">అన్వేషించండి</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube హోమ్</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube హోమ్</string>
     <string name="a11y_loading">లోడ్ అవుతోంది</string>
     <string name="a11y_add_comment">వ్యాఖ్యను జోడించండి</string>
     <string name="a11y_sort_comments">వ్యాఖ్యలను క్రమబద్ధీకరించండి</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">సిస్టమ్ నోటిఫికేషన్ యాక్సెస్</string>
     <string name="settings_advanced">అధునాతనమైనది</string>
     <string name="settings_advanced_summary">ప్లేయర్, సంజ్ఞలు, SponsorBlock మరియు బ్యాకప్</string>
-    <string name="settings_about_title">Litube గురించి</string>
+    <string name="settings_about_title">U Tube గురించి</string>
     <string name="settings_about_summary">వెర్షన్, అప్‌డేట్‌లు మరియు డయాగ్నస్టిక్స్</string>
     <string name="settings_group_appearance">స్వరూపం</string>
     <string name="settings_group_feed">ఫీడ్</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">ఆన్</string>
     <string name="settings_notifications_state_off">ఆఫ్</string>
     <string name="settings_open_system_settings">సిస్టమ్ సెట్టింగ్‌లను తెరవండి</string>
-    <string name="settings_open_system_settings_summary">Litube కోసం Android నోటిఫికేషన్ సెట్టింగ్‌లు</string>
+    <string name="settings_open_system_settings_summary">U Tube కోసం Android నోటిఫికేషన్ సెట్టింగ్‌లు</string>
     <string name="settings_state_on">ఆన్</string>
     <string name="settings_state_off">ఆఫ్</string>
     <string name="subscription_visit_channel">ఛానెల్‌ని సందర్శించండి</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">පසුබිමේ සවන් දෙන්න</string>
     <string name="back_again_to_exit">පිටවීමට නැවත ඔබන්න</string>
     <string name="navigate_back">ආපසු</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">ඉතිහාස සැකසුම්</string>
     <string name="a11y_send_message">පණිවිඩයක් යවන්න</string>
     <string name="a11y_explore">ගවේෂණය කරන්න</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube නිවස</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube නිවස</string>
     <string name="a11y_loading">පූරණය වෙමින් පවතී</string>
     <string name="a11y_add_comment">අදහසක් එක් කරන්න</string>
     <string name="a11y_sort_comments">අදහස් වර්ග කරන්න</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">පද්ධති දැනුම්දීම් ප්‍රවේශය</string>
     <string name="settings_advanced">උසස්</string>
     <string name="settings_advanced_summary">ක්‍රීඩකයා, අභිනයන්, SponsorBlock සහ උපස්ථය</string>
-    <string name="settings_about_title">Litube ගැන</string>
+    <string name="settings_about_title">U Tube ගැන</string>
     <string name="settings_about_summary">අනුවාදය, යාවත්කාලීන සහ රෝග විනිශ්චය</string>
     <string name="settings_group_appearance">පෙනුම</string>
     <string name="settings_group_feed">පෝෂණය</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">මත</string>
     <string name="settings_notifications_state_off">අක්‍රියයි</string>
     <string name="settings_open_system_settings">පද්ධති සැකසුම් විවෘත කරන්න</string>
-    <string name="settings_open_system_settings_summary">Litube සඳහා Android දැනුම්දීම් සැකසීම්</string>
+    <string name="settings_open_system_settings_summary">U Tube සඳහා Android දැනුම්දීම් සැකසීම්</string>
     <string name="settings_state_on">මත</string>
     <string name="settings_state_off">අක්‍රියයි</string>
     <string name="subscriptions_title">දායකත්ව</string>

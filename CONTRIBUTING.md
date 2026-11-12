@@ -1,4 +1,4 @@
-# Contributing to Litube
+# Contributing to U Tube
 
 Use JDK 21 and the Android SDK as described in the [README](README.md).
 Gradle resolves the pinned MediaServiceCore release from JitPack.
@@ -94,7 +94,4 @@ Add tests that reproduce externally observable failures or meaningful concurrenc
 interleavings. Avoid timing thresholds and assertions that merely repeat the
 implementation. Pure formatting and documentation edits do not need new tests.
 
-Describe the problem, resulting behavior, validation and remaining limits in the
-pull request. Keep unrelated cleanup separate. Develop and test core changes in the
-[MediaServiceCore repository](https://github.com/HydeYYHH/MediaServiceCore), publish a release,
-then update the pinned `msc` version in `gradle/libs.versions.toml`.
+For bug reports or notes, open an issue in [U Tube Issues](https://github.com/ajaykumarreddy-k/U-Tube/issues) with reproduction steps, device/Android details, validation results, and any diagnostic logs. Upstream extraction engine changes belong in [MediaServiceCore](https://github.com/HydeYYHH/MediaServiceCore), with the pinned `msc` version updated in `gradle/libs.versions.toml` as needed.

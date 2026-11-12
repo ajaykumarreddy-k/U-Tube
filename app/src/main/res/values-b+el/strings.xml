@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Ακούστε στο παρασκήνιο</string>
     <string name="back_again_to_exit">Πατήστε ξανά πίσω για έξοδο</string>
     <string name="navigate_back">Πίσω</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Ρυθμίσεις ιστορικού παρακολούθησης</string>
     <string name="a11y_send_message">Αποστολή μηνύματος</string>
     <string name="a11y_explore">Εξερευνήστε</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Αρχική</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Αρχική</string>
     <string name="a11y_loading">Φόρτωση</string>
     <string name="a11y_add_comment">Προσθέστε ένα σχόλιο</string>
     <string name="a11y_sort_comments">Ταξινόμηση σχολίων</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Πρόσβαση στις ειδοποιήσεις συστήματος</string>
     <string name="settings_advanced">Για προχωρημένους</string>
     <string name="settings_advanced_summary">Πρόγραμμα αναπαραγωγής, χειρονομίες, SponsorBlock και δημιουργία αντιγράφων ασφαλείας</string>
-    <string name="settings_about_title">Σχετικά με το Litube</string>
+    <string name="settings_about_title">Σχετικά με το U Tube</string>
     <string name="settings_about_summary">Έκδοση, ενημερώσεις και διαγνωστικά</string>
     <string name="settings_group_appearance">Εμφάνιση</string>
     <string name="settings_group_feed">Τροφοδοσία</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Ενεργό</string>
     <string name="settings_notifications_state_off">Ανενεργό</string>
     <string name="settings_open_system_settings">Ανοίξτε τις ρυθμίσεις συστήματος</string>
-    <string name="settings_open_system_settings_summary">Ρυθμίσεις ειδοποιήσεων Android για Litube</string>
+    <string name="settings_open_system_settings_summary">Ρυθμίσεις ειδοποιήσεων Android για U Tube</string>
     <string name="settings_state_on">Ενεργ</string>
     <string name="settings_state_off">Ανενεργό</string>
     <string name="subscription_visit_channel">Επισκεφτείτε το κανάλι</string>

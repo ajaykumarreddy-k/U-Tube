@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Arxa fonda qulaq asın</string>
     <string name="back_again_to_exit">Çıxmaq üçün yenidən geri basın</string>
     <string name="navigate_back">Geri</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Baxış tarixçəsi parametrləri</string>
     <string name="a11y_send_message">Mesaj göndər</string>
     <string name="a11y_explore">Araşdırın</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Ev</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Ev</string>
     <string name="a11y_loading">Yüklənir</string>
     <string name="a11y_add_comment">Şərh əlavə edin</string>
     <string name="a11y_sort_comments">Şərhləri çeşidləyin</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Sistem bildirişinə giriş</string>
     <string name="settings_advanced">Qabaqcıl</string>
     <string name="settings_advanced_summary">Oyunçu, jestlər, SponsorBlock və ehtiyat</string>
-    <string name="settings_about_title">Litube haqqında</string>
+    <string name="settings_about_title">U Tube haqqında</string>
     <string name="settings_about_summary">Versiya, yeniləmələr və diaqnostika</string>
     <string name="settings_group_appearance">Görünüş</string>
     <string name="settings_group_feed">Yem</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Aktivdir</string>
     <string name="settings_notifications_state_off">Söndür</string>
     <string name="settings_open_system_settings">Sistem parametrlərini açın</string>
-    <string name="settings_open_system_settings_summary">Litube üçün Android bildiriş parametrləri</string>
+    <string name="settings_open_system_settings_summary">U Tube üçün Android bildiriş parametrləri</string>
     <string name="settings_state_on">Aktivdir</string>
     <string name="settings_state_off">Söndür</string>
     <string name="subscriptions_title">Abunəliklər</string>

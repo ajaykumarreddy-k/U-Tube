@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Фондық режимде тыңдау</string>
     <string name="back_again_to_exit">Шығу үшін артқа қайта басыңыз</string>
     <string name="navigate_back">Артқа</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Тарих параметрлері</string>
     <string name="a11y_send_message">Хабарлама жіберу</string>
     <string name="a11y_explore">Зерттеу</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Басты</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Басты</string>
     <string name="a11y_loading">Жүктелуде</string>
     <string name="a11y_add_comment">Пікір қосу</string>
     <string name="a11y_sort_comments">Түсініктемелерді сұрыптау</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Жүйе хабарландыруына қол жеткізу</string>
     <string name="settings_advanced">Жетілдірілген</string>
     <string name="settings_advanced_summary">Ойыншы, қимылдар, SponsorBlock және сақтық көшірме</string>
-    <string name="settings_about_title">Litube туралы</string>
+    <string name="settings_about_title">U Tube туралы</string>
     <string name="settings_about_summary">Нұсқа, жаңартулар және диагностика</string>
     <string name="settings_group_appearance">Сыртқы түрі</string>
     <string name="settings_group_feed">Арна</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Қосулы</string>
     <string name="settings_notifications_state_off">Өшірулі</string>
     <string name="settings_open_system_settings">Жүйе параметрлерін ашыңыз</string>
-    <string name="settings_open_system_settings_summary">Litube үшін Android хабарландыру параметрлері</string>
+    <string name="settings_open_system_settings_summary">U Tube үшін Android хабарландыру параметрлері</string>
     <string name="settings_state_on">Қосулы</string>
     <string name="settings_state_off">Өшірулі</string>
     <string name="subscriptions_title">Жазылымдар</string>

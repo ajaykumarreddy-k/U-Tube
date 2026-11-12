@@ -123,7 +123,7 @@ class GalleryActivity : ComponentActivity() {
                     pendingSave = image.file
                     runCatching { saveImage.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                         addCategory(Intent.CATEGORY_OPENABLE); type = image.mime
-                        putExtra(Intent.EXTRA_TITLE, "LiTube-${System.currentTimeMillis()}.${image.extension}")
+                        putExtra(Intent.EXTRA_TITLE, "U-Tube-${System.currentTimeMillis()}.${image.extension}")
                     }) }.onFailure {
                         AppLog.event(AppLog.Category.GALLERY, "image_save_picker_failed", failure = it)
                         pendingSave = null

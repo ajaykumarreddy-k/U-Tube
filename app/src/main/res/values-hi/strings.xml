@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">बैकग्राउंड में सुनें</string>
     <string name="back_again_to_exit">बाहर निकलने के लिए वापस फिर दबाएँ</string>
     <string name="navigate_back">वापस</string>
@@ -329,7 +329,7 @@
 <string name="settings_notifications_summary">सिस्टम सूचनाओं तक पहुंच</string>
 <string name="settings_advanced">उन्नत</string>
 <string name="settings_advanced_summary">प्लेयर, जेस्चर, SponsorBlock और बैकअप</string>
-<string name="settings_about_title">Litube के बारे में</string>
+<string name="settings_about_title">U Tube के बारे में</string>
 <string name="settings_about_summary">वर्शन, अपडेट और जांच</string>
 <string name="settings_group_appearance">रूप-रंग</string>
 <string name="settings_group_feed">फ़ीड</string>
@@ -356,7 +356,7 @@
 <string name="settings_notifications_state_on">चालू</string>
 <string name="settings_notifications_state_off">बंद</string>
 <string name="settings_open_system_settings">सिस्टम सेटिंग खोलें</string>
-<string name="settings_open_system_settings_summary">Litube के लिए Android सूचना सेटिंग</string>
+<string name="settings_open_system_settings_summary">U Tube के लिए Android सूचना सेटिंग</string>
 <string name="settings_state_on">चालू</string>
 <string name="settings_state_off">बंद</string>
     <string name="comments_title">टिप्पणियाँ</string>
@@ -453,8 +453,8 @@
     <string name="a11y_history_settings">इतिहास सेटिंग्स</string>
     <string name="a11y_send_message">संदेश भेजें</string>
     <string name="a11y_explore">अन्वेषण करें</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube होम</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube होम</string>
     <string name="a11y_loading">लोड हो रहा है</string>
     <string name="a11y_add_comment">एक टिप्पणी जोड़ें</string>
     <string name="a11y_sort_comments">टिप्पणियाँ क्रमबद्ध करें</string>

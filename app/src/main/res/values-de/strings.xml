@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Im Hintergrund hören</string>
     <string name="back_again_to_exit">Zum Beenden erneut zurück drücken</string>
     <string name="navigate_back">Zurück</string>
@@ -331,7 +331,7 @@
 <string name="settings_notifications_summary">Zugriff auf Systembenachrichtigungen</string>
 <string name="settings_advanced">Erweitert</string>
 <string name="settings_advanced_summary">Player, Gesten, SponsorBlock und Backup</string>
-<string name="settings_about_title">Über Litube</string>
+<string name="settings_about_title">Über U Tube</string>
 <string name="settings_about_summary">Version, Updates und Diagnose</string>
 <string name="settings_group_appearance">Erscheinungsbild</string>
 <string name="settings_group_feed">Feed</string>
@@ -358,7 +358,7 @@
 <string name="settings_notifications_state_on">Ein</string>
 <string name="settings_notifications_state_off">Aus</string>
 <string name="settings_open_system_settings">Systemeinstellungen öffnen</string>
-<string name="settings_open_system_settings_summary">Android-Benachrichtigungseinstellungen für Litube</string>
+<string name="settings_open_system_settings_summary">Android-Benachrichtigungseinstellungen für U Tube</string>
 <string name="settings_state_on">Ein</string>
 <string name="settings_state_off">Aus</string>
     <string name="cast_searching">Geräte werden gesucht…</string>
@@ -453,8 +453,8 @@
     <string name="a11y_history_settings">Verlaufseinstellungen</string>
     <string name="a11y_send_message">Nachricht senden</string>
     <string name="a11y_explore">Erkunden</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Startseite</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Startseite</string>
     <string name="a11y_loading">Laden</string>
     <string name="a11y_add_comment">Fügen Sie einen Kommentar hinzu</string>
     <string name="a11y_sort_comments">Kommentare sortieren</string>

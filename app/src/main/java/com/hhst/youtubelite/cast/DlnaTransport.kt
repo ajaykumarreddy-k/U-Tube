@@ -32,7 +32,7 @@ internal class DlnaTransport(private val client: OkHttpClient) {
     fun close() { client.connectionPool.evictAll() }
 
     suspend fun describe(location: HttpUrl): DlnaRenderer? {
-        val request = Request.Builder().url(location).header("User-Agent", "Litube/1.0 UPnP/1.1")
+        val request = Request.Builder().url(location).header("User-Agent", "U-Tube/1.0 UPnP/1.1")
             .header("Connection", "close").build()
         val (status, bytes) = read(request, "description")
         return try {

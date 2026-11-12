@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">მოუსმინეთ ფონზე</string>
     <string name="back_again_to_exit">გასასვლელად დააჭირეთ ისევ უკან</string>
     <string name="navigate_back">უკან</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">ისტორიის პარამეტრები</string>
     <string name="a11y_send_message">შეტყობინების გაგზავნა</string>
     <string name="a11y_explore">გამოიკვლიე</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube მთავარი</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube მთავარი</string>
     <string name="a11y_loading">იტვირთება</string>
     <string name="a11y_add_comment">დაამატეთ კომენტარი</string>
     <string name="a11y_sort_comments">კომენტარების დალაგება</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">სისტემის შეტყობინებების წვდომა</string>
     <string name="settings_advanced">გაფართოებული</string>
     <string name="settings_advanced_summary">პლეერი, ჟესტები, SponsorBlock და სარეზერვო</string>
-    <string name="settings_about_title">Litube-ის შესახებ</string>
+    <string name="settings_about_title">U Tube-ის შესახებ</string>
     <string name="settings_about_summary">ვერსია, განახლებები და დიაგნოსტიკა</string>
     <string name="settings_group_appearance">გარეგნობა</string>
     <string name="settings_group_feed">არხი</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">On</string>
     <string name="settings_notifications_state_off">გამორთულია</string>
     <string name="settings_open_system_settings">გახსენით სისტემის პარამეტრები</string>
-    <string name="settings_open_system_settings_summary">Android შეტყობინებების პარამეტრები Litube-ისთვის</string>
+    <string name="settings_open_system_settings_summary">Android შეტყობინებების პარამეტრები U Tube-ისთვის</string>
     <string name="settings_state_on">On</string>
     <string name="settings_state_off">გამორთულია</string>
     <string name="subscriptions_title">გამოწერები</string>

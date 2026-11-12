@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">पार्श्वभूमीत ऐका</string>
     <string name="back_again_to_exit">बाहेर पडण्यासाठी पुन्हा दाबा</string>
     <string name="navigate_back">मागे</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">इतिहास सेटिंग्ज</string>
     <string name="a11y_send_message">संदेश पाठवा</string>
     <string name="a11y_explore">एक्सप्लोर करा</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube घर</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube घर</string>
     <string name="a11y_loading">लोड होत आहे</string>
     <string name="a11y_add_comment">एक टिप्पणी जोडा</string>
     <string name="a11y_sort_comments">टिप्पण्या क्रमवारी लावा</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">सिस्टम सूचना प्रवेश</string>
     <string name="settings_advanced">प्रगत</string>
     <string name="settings_advanced_summary">प्लेअर, जेश्चर, SponsorBlock आणि बॅकअप</string>
-    <string name="settings_about_title">Litube बद्दल</string>
+    <string name="settings_about_title">U Tube बद्दल</string>
     <string name="settings_about_summary">आवृत्ती, अद्यतने आणि निदान</string>
     <string name="settings_group_appearance">देखावा</string>
     <string name="settings_group_feed">फीड</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">चालू</string>
     <string name="settings_notifications_state_off">बंद</string>
     <string name="settings_open_system_settings">सिस्टम सेटिंग्ज उघडा</string>
-    <string name="settings_open_system_settings_summary">Litube साठी Android सूचना सेटिंग्ज</string>
+    <string name="settings_open_system_settings_summary">U Tube साठी Android सूचना सेटिंग्ज</string>
     <string name="settings_state_on">चालू</string>
     <string name="settings_state_off">बंद</string>
     <string name="subscription_visit_channel">चॅनेलला भेट द्या</string>

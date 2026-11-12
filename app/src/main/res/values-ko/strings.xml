@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">백그라운드에서 듣기</string>
     <string name="back_again_to_exit">뒤로 가기를 한 번 더 누르면 종료됩니다</string>
     <string name="navigate_back">뒤로</string>
@@ -331,7 +331,7 @@
 <string name="settings_notifications_summary">시스템 알림 액세스</string>
 <string name="settings_advanced">고급</string>
 <string name="settings_advanced_summary">플레이어, 동작, SponsorBlock, 백업</string>
-<string name="settings_about_title">Litube 정보</string>
+<string name="settings_about_title">U Tube 정보</string>
 <string name="settings_about_summary">버전, 업데이트, 진단</string>
 <string name="settings_group_appearance">모양</string>
 <string name="settings_group_feed">피드</string>
@@ -358,7 +358,7 @@
 <string name="settings_notifications_state_on">사용</string>
 <string name="settings_notifications_state_off">사용 안 함</string>
 <string name="settings_open_system_settings">시스템 설정 열기</string>
-<string name="settings_open_system_settings_summary">Litube의 Android 알림 설정</string>
+<string name="settings_open_system_settings_summary">U Tube의 Android 알림 설정</string>
 <string name="settings_state_on">사용</string>
 <string name="settings_state_off">사용 안 함</string>
     <string name="cast_searching">검색 중…</string>
@@ -453,8 +453,8 @@
     <string name="a11y_history_settings">히스토리 설정</string>
     <string name="a11y_send_message">메시지 보내기</string>
     <string name="a11y_explore">탐구하다</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube 홈</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube 홈</string>
     <string name="a11y_loading">로드 중</string>
     <string name="a11y_add_comment">코멘트 추가</string>
     <string name="a11y_sort_comments">댓글 정렬</string>

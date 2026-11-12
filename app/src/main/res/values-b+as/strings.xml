@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">পটভূমিত শুনক</string>
     <string name="back_again_to_exit">প্ৰস্থান কৰিবলৈ আকৌ পিছলৈ টিপক</string>
     <string name="navigate_back">পিছলৈ</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">ইতিহাসৰ ছেটিংছ চাওক</string>
     <string name="a11y_send_message">বাৰ্তা প্ৰেৰণ কৰক</string>
     <string name="a11y_explore">অন্বেষণ কৰক</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube ঘৰ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube ঘৰ</string>
     <string name="a11y_loading">লোড কৰা হৈছে</string>
     <string name="a11y_add_comment">এটা মন্তব্য যোগ কৰক</string>
     <string name="a11y_sort_comments">মন্তব্যসমূহ সজাই লওক</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">চিস্টেম অধিসূচনা অভিগম</string>
     <string name="settings_advanced">উন্নত</string>
     <string name="settings_advanced_summary">খেলুৱৈ, ইংগিত, SponsorBlock আৰু বেকআপ</string>
-    <string name="settings_about_title">Litube ৰ বিষয়ে</string>
+    <string name="settings_about_title">U Tube ৰ বিষয়ে</string>
     <string name="settings_about_summary">সংস্কৰণ, আপডেট আৰু নিদান</string>
     <string name="settings_group_appearance">চেহেৰা</string>
     <string name="settings_group_feed">খাদ্য</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">অন</string>
     <string name="settings_notifications_state_off">বন্ধ</string>
     <string name="settings_open_system_settings">ব্যৱস্থাপ্ৰণালীৰ সংহতিসমূহ খোলক</string>
-    <string name="settings_open_system_settings_summary">Litube ৰ বাবে এণ্ড্ৰইড অধিসূচনা ছেটিংছ</string>
+    <string name="settings_open_system_settings_summary">U Tube ৰ বাবে এণ্ড্ৰইড অধিসূচনা ছেটিংছ</string>
     <string name="settings_state_on">অন</string>
     <string name="settings_state_off">বন্ধ</string>
     <string name="subscriptions_title">চাবস্ক্ৰিপচনসমূহ</string>

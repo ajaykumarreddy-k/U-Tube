@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Orqa fonda tinglang</string>
     <string name="back_again_to_exit">Chiqish uchun yana orqaga bosing</string>
     <string name="navigate_back">Orqaga</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Tarix sozlamalari</string>
     <string name="a11y_send_message">Xabar yuboring</string>
     <string name="a11y_explore">O\'rganing</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Bosh sahifa</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Bosh sahifa</string>
     <string name="a11y_loading">Yuklanmoqda</string>
     <string name="a11y_add_comment">Izoh qo\'shing</string>
     <string name="a11y_sort_comments">Sharhlarni tartiblash</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Tizim bildirishnomalariga kirish</string>
     <string name="settings_advanced">Murakkab</string>
     <string name="settings_advanced_summary">Pleyer, imo-ishoralar, SponsorBlock va zaxira</string>
-    <string name="settings_about_title">Litube haqida</string>
+    <string name="settings_about_title">U Tube haqida</string>
     <string name="settings_about_summary">Versiya, yangilanishlar va diagnostika</string>
     <string name="settings_group_appearance">Tashqi ko\'rinish</string>
     <string name="settings_group_feed">Oziqlantirish</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Yoqilgan</string>
     <string name="settings_notifications_state_off">Oʻchirilgan</string>
     <string name="settings_open_system_settings">Tizim sozlamalarini oching</string>
-    <string name="settings_open_system_settings_summary">Litube uchun Android bildirishnoma sozlamalari</string>
+    <string name="settings_open_system_settings_summary">U Tube uchun Android bildirishnoma sozlamalari</string>
     <string name="settings_state_on">Yoqilgan</string>
     <string name="settings_state_off">Oʻchirilgan</string>
     <string name="subscriptions_title">Obunalar</string>

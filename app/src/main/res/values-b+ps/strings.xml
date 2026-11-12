@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">په شاليد کې واورئ</string>
     <string name="back_again_to_exit">د وتلو لپاره بیرته فشار ورکړئ</string>
     <string name="navigate_back">شاته</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">د تاریخ ترتیبات</string>
     <string name="a11y_send_message">پیغام ولېږئ</string>
     <string name="a11y_explore">سپړنه</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube کور</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube کور</string>
     <string name="a11y_loading">بار کول</string>
     <string name="a11y_add_comment">یو نظر اضافه کړئ</string>
     <string name="a11y_sort_comments">تبصرې ترتیب کړئ</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">د سیسټم خبرتیا لاسرسی</string>
     <string name="settings_advanced">پرمختللی</string>
     <string name="settings_advanced_summary">پلیر، اشارې، SponsorBlock او بیک اپ</string>
-    <string name="settings_about_title">د Litube په اړه</string>
+    <string name="settings_about_title">د U Tube په اړه</string>
     <string name="settings_about_summary">نسخه، تازه معلومات او تشخیص</string>
     <string name="settings_group_appearance">بڼه</string>
     <string name="settings_group_feed">تغذیه</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">پر</string>
     <string name="settings_notifications_state_off">بند</string>
     <string name="settings_open_system_settings">د سیسټم ترتیبات خلاص کړئ</string>
-    <string name="settings_open_system_settings_summary">د Litube لپاره د Android خبرتیا تنظیمات</string>
+    <string name="settings_open_system_settings_summary">د U Tube لپاره د Android خبرتیا تنظیمات</string>
     <string name="settings_state_on">پر</string>
     <string name="settings_state_off">بند</string>
     <string name="subscriptions_title">ګډون</string>

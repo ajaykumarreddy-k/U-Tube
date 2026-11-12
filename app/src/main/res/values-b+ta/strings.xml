@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">பின்னணியில் கேளுங்கள்</string>
     <string name="back_again_to_exit">வெளியேற மீண்டும் மீண்டும் அழுத்தவும்</string>
     <string name="navigate_back">மீண்டும்</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">வரலாற்று அமைப்புகள்</string>
     <string name="a11y_send_message">செய்தியை அனுப்பு</string>
     <string name="a11y_explore">ஆராயுங்கள்</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube முகப்பு</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube முகப்பு</string>
     <string name="a11y_loading">ஏற்றுகிறது</string>
     <string name="a11y_add_comment">கருத்தைச் சேர்க்கவும்</string>
     <string name="a11y_sort_comments">கருத்துகளை வரிசைப்படுத்தவும்</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">சிஸ்டம் அறிவிப்பு அணுகல்</string>
     <string name="settings_advanced">மேம்பட்டது</string>
     <string name="settings_advanced_summary">பிளேயர், சைகைகள், SponsorBlock மற்றும் காப்புப்பிரதி</string>
-    <string name="settings_about_title">Litube பற்றி</string>
+    <string name="settings_about_title">U Tube பற்றி</string>
     <string name="settings_about_summary">பதிப்பு, புதுப்பிப்புகள் மற்றும் கண்டறிதல்</string>
     <string name="settings_group_appearance">தோற்றம்</string>
     <string name="settings_group_feed">ஊட்டம்</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">அன்று</string>
     <string name="settings_notifications_state_off">ஆஃப்</string>
     <string name="settings_open_system_settings">கணினி அமைப்புகளைத் திறக்கவும்</string>
-    <string name="settings_open_system_settings_summary">Litube க்கான Android அறிவிப்பு அமைப்புகள்</string>
+    <string name="settings_open_system_settings_summary">U Tube க்கான Android அறிவிப்பு அமைப்புகள்</string>
     <string name="settings_state_on">அன்று</string>
     <string name="settings_state_off">ஆஃப்</string>
     <string name="subscription_visit_channel">சேனலைப் பார்வையிடவும்</string>

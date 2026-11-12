@@ -66,7 +66,7 @@ class AccountSettingsAndroidTest {
             .assertCountEquals(1)
         compose.onNodeWithText("Switch account").assertIsDisplayed()
         compose.onNodeWithText("Settings").assertIsDisplayed()
-        compose.onNodeWithText("About Litube").assertIsDisplayed()
+        compose.onNodeWithText("About U Tube").assertIsDisplayed()
         // Opening the menu is local UI state, not a navigation request.
         host.onActivity { assertNull(it.lastNavigationRequest) }
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Luister op de achtergrond</string>
     <string name="back_again_to_exit">Druk nogmaals op terug om af te sluiten</string>
     <string name="navigate_back">Terug</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Geschiedenisinstellingen</string>
     <string name="a11y_send_message">Bericht verzenden</string>
     <string name="a11y_explore">Ontdek</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Thuis</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Thuis</string>
     <string name="a11y_loading">Laden</string>
     <string name="a11y_add_comment">Voeg een opmerking toe</string>
     <string name="a11y_sort_comments">Sorteer opmerkingen</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Toegang tot systeemmeldingen</string>
     <string name="settings_advanced">Geavanceerd</string>
     <string name="settings_advanced_summary">Speler, gebaren, SponsorBlock en back-up</string>
-    <string name="settings_about_title">Over Litube</string>
+    <string name="settings_about_title">Over U Tube</string>
     <string name="settings_about_summary">Versie, updates en diagnostiek</string>
     <string name="settings_group_appearance">Uiterlijk</string>
     <string name="settings_group_feed">Voer</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Aan</string>
     <string name="settings_notifications_state_off">Uit</string>
     <string name="settings_open_system_settings">Open systeeminstellingen</string>
-    <string name="settings_open_system_settings_summary">Android-meldingsinstellingen voor Litube</string>
+    <string name="settings_open_system_settings_summary">Android-meldingsinstellingen voor U Tube</string>
     <string name="settings_state_on">Aan</string>
     <string name="settings_state_off">Uit</string>
     <string name="subscription_visit_channel">Bezoek kanaal</string>

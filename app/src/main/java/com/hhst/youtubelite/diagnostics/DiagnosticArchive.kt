@@ -101,7 +101,7 @@ internal object DiagnosticArchive {
             }.sortedWith(comparator)
         val failures = timeline.withIndex().filter { it.value.level >= DiagnosticLevel.ERROR }
         val summary = buildString {
-            appendLine("# Litube diagnostic report")
+            appendLine("# U Tube diagnostic report")
             appendLine()
             appendLine("Events: " + timeline.size + "; incidents: " + incidents.size + "; invalid rows: " + invalid)
             appendLine("Unknown/uncollected values are not evidence of success. Legacy identities were not verified at capture time.")

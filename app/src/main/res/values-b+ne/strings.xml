@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">पृष्ठभूमिमा सुन्नुहोस्</string>
     <string name="back_again_to_exit">बाहिर निस्कनको लागि फेरि थिच्नुहोस्</string>
     <string name="navigate_back">फिर्ता</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">इतिहास सेटिङहरू</string>
     <string name="a11y_send_message">सन्देश पठाउनुहोस्</string>
     <string name="a11y_explore">अन्वेषण गर्नुहोस्</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube घर</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube घर</string>
     <string name="a11y_loading">लोड हुँदैछ</string>
     <string name="a11y_add_comment">टिप्पणी थप्नुहोस्</string>
     <string name="a11y_sort_comments">टिप्पणीहरू क्रमबद्ध गर्नुहोस्</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">प्रणाली सूचना पहुँच</string>
     <string name="settings_advanced">उन्नत</string>
     <string name="settings_advanced_summary">प्लेयर, इशाराहरू, SponsorBlock र ब्याकअप</string>
-    <string name="settings_about_title">Litube को बारेमा</string>
+    <string name="settings_about_title">U Tube को बारेमा</string>
     <string name="settings_about_summary">संस्करण, अद्यावधिक र निदान</string>
     <string name="settings_group_appearance">उपस्थिति</string>
     <string name="settings_group_feed">फिड</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">मा</string>
     <string name="settings_notifications_state_off">बन्द</string>
     <string name="settings_open_system_settings">प्रणाली सेटिङहरू खोल्नुहोस्</string>
-    <string name="settings_open_system_settings_summary">Litube का लागि एन्ड्रोइड अधिसूचना सेटिङहरू</string>
+    <string name="settings_open_system_settings_summary">U Tube का लागि एन्ड्रोइड अधिसूचना सेटिङहरू</string>
     <string name="settings_state_on">मा</string>
     <string name="settings_state_off">बन्द</string>
     <string name="subscriptions_title">सदस्यताहरू</string>

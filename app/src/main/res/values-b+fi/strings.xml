@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Kuuntele taustalla</string>
     <string name="back_again_to_exit">Poistu painamalla takaisin</string>
     <string name="navigate_back">Takaisin</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Katseluhistorian asetukset</string>
     <string name="a11y_send_message">Lähetä viesti</string>
     <string name="a11y_explore">Tutki</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Etusivu</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Etusivu</string>
     <string name="a11y_loading">Ladataan</string>
     <string name="a11y_add_comment">Lisää kommentti</string>
     <string name="a11y_sort_comments">Järjestä kommentit</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Pääsy järjestelmän ilmoituksiin</string>
     <string name="settings_advanced">Edistynyt</string>
     <string name="settings_advanced_summary">Soitin, eleet, SponsorBlock ja varmuuskopio</string>
-    <string name="settings_about_title">Tietoja Litube:stä</string>
+    <string name="settings_about_title">Tietoja U Tube:stä</string>
     <string name="settings_about_summary">Versio, päivitykset ja diagnoosi</string>
     <string name="settings_group_appearance">Ulkonäkö</string>
     <string name="settings_group_feed">Syöttö</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Päällä</string>
     <string name="settings_notifications_state_off">Pois päältä</string>
     <string name="settings_open_system_settings">Avaa järjestelmäasetukset</string>
-    <string name="settings_open_system_settings_summary">Android-ilmoitusasetukset Litube:lle</string>
+    <string name="settings_open_system_settings_summary">Android-ilmoitusasetukset U Tube:lle</string>
     <string name="settings_state_on">Päällä</string>
     <string name="settings_state_off">Pois</string>
     <string name="subscription_visit_channel">Vieraile kanavalla</string>

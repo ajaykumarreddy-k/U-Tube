@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Dhageyso gadaal</string>
     <string name="back_again_to_exit">Dib u riix markale si aad uga baxdo</string>
     <string name="navigate_back">Dib u noqo</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Dejinta taariikhda</string>
     <string name="a11y_send_message">Dir fariin</string>
     <string name="a11y_explore">Baadh</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Guriga</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Guriga</string>
     <string name="a11y_loading">Soodejinaya</string>
     <string name="a11y_add_comment">ku dar faallo</string>
     <string name="a11y_sort_comments">Kala sooc faallooyinka</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Gelitaanka nidaamka ogeysiinta</string>
     <string name="settings_advanced">Sare</string>
     <string name="settings_advanced_summary">Ciyaartoyga, dhaqdhaqaaqyada, SponsorBlock iyo gurmad</string>
-    <string name="settings_about_title">Ku saabsan Litube</string>
+    <string name="settings_about_title">Ku saabsan U Tube</string>
     <string name="settings_about_summary">Nooca, cusbooneysiinta iyo ogaanshaha</string>
     <string name="settings_group_appearance">Muuqashada</string>
     <string name="settings_group_feed">Quudinta</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Daaran</string>
     <string name="settings_notifications_state_off">Demsan</string>
     <string name="settings_open_system_settings">Furaha habaynta nidaamka</string>
-    <string name="settings_open_system_settings_summary">Dejinta ogeysiinta Android ee Litube</string>
+    <string name="settings_open_system_settings_summary">Dejinta ogeysiinta Android ee U Tube</string>
     <string name="settings_state_on">Daaran</string>
     <string name="settings_state_off">Demin</string>
     <string name="subscriptions_title">Isdiiwaangelinta</string>

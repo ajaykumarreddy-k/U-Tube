@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Rungokake ing latar mburi</string>
     <string name="back_again_to_exit">Pencet bali maneh kanggo metu</string>
     <string name="navigate_back">Mbalik</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Setelan riwayat</string>
     <string name="a11y_send_message">Kirim pesen</string>
     <string name="a11y_explore">Jelajahi</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Ngarep</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Ngarep</string>
     <string name="a11y_loading">Loading</string>
     <string name="a11y_add_comment">Tambah komentar</string>
     <string name="a11y_sort_comments">Urut komentar</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Akses notifikasi sistem</string>
     <string name="settings_advanced">Majeng</string>
     <string name="settings_advanced_summary">Pamuter, sadurunge nyeret, SponsorBlock lan serep</string>
-    <string name="settings_about_title">Babagan Litube</string>
+    <string name="settings_about_title">Babagan U Tube</string>
     <string name="settings_about_summary">Versi, nganyari lan diagnostik</string>
     <string name="settings_group_appearance">Penampilan</string>
     <string name="settings_group_feed">Pakan</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Ing</string>
     <string name="settings_notifications_state_off">Mati</string>
     <string name="settings_open_system_settings">Bukak setelan sistem</string>
-    <string name="settings_open_system_settings_summary">Setelan kabar Android kanggo Litube</string>
+    <string name="settings_open_system_settings_summary">Setelan kabar Android kanggo U Tube</string>
     <string name="settings_state_on">Ing</string>
     <string name="settings_state_off">Mati</string>
     <string name="subscriptions_title">Langganan</string>

@@ -12,7 +12,7 @@ data class CastFailureReport(val id: String, val text: String) {
             val id = UUID.randomUUID().toString()
             val request = generateSequence(error) { it.cause }.take(10).filterIsInstance<DlnaRequestException>().firstOrNull()
             return CastFailureReport(id, buildString {
-                appendLine("Litube cast report")
+                appendLine("U Tube cast report")
                 appendLine("Report: $id")
                 appendLine("Time: ${Instant.now()}")
                 appendLine("App: ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")

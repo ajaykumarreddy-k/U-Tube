@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">পটভূমিতে শুনুন</string>
     <string name="back_again_to_exit">প্রস্থান করতে আবার টিপুন</string>
     <string name="navigate_back">ফিরে</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">ইতিহাস সেটিংস দেখুন</string>
     <string name="a11y_send_message">বার্তা পাঠান</string>
     <string name="a11y_explore">অন্বেষণ</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube হোম</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube হোম</string>
     <string name="a11y_loading">লোড হচ্ছে</string>
     <string name="a11y_add_comment">একটি মন্তব্য যোগ করুন</string>
     <string name="a11y_sort_comments">মন্তব্য সাজান</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">সিস্টেম বিজ্ঞপ্তি অ্যাক্সেস</string>
     <string name="settings_advanced">উন্নত</string>
     <string name="settings_advanced_summary">প্লেয়ার, অঙ্গভঙ্গি, SponsorBlock এবং ব্যাকআপ</string>
-    <string name="settings_about_title">Litube সম্পর্কে</string>
+    <string name="settings_about_title">U Tube সম্পর্কে</string>
     <string name="settings_about_summary">সংস্করণ, আপডেট এবং ডায়াগনস্টিকস</string>
     <string name="settings_group_appearance">চেহারা</string>
     <string name="settings_group_feed">ফিড</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">চালু</string>
     <string name="settings_notifications_state_off">বন্ধ</string>
     <string name="settings_open_system_settings">সিস্টেম সেটিংস খুলুন</string>
-    <string name="settings_open_system_settings_summary">Litube এর জন্য Android বিজ্ঞপ্তি সেটিংস</string>
+    <string name="settings_open_system_settings_summary">U Tube এর জন্য Android বিজ্ঞপ্তি সেটিংস</string>
     <string name="settings_state_on">চালু</string>
     <string name="settings_state_off">বন্ধ</string>
     <string name="subscription_visit_channel">চ্যানেলে যান</string>

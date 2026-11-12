@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Слушајте у позадини</string>
     <string name="back_again_to_exit">Притисните поново да изађете</string>
     <string name="navigate_back">Назад</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Подешавања историје</string>
     <string name="a11y_send_message">Пошаљи поруку</string>
     <string name="a11y_explore">Истражите</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Почетна</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Почетна</string>
     <string name="a11y_loading">Учитавање</string>
     <string name="a11y_add_comment">Додајте коментар</string>
     <string name="a11y_sort_comments">Сортирајте коментаре</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Приступ системским обавештењима</string>
     <string name="settings_advanced">Напредно</string>
     <string name="settings_advanced_summary">Играч, покрети, SponsorBlock и резервна копија</string>
-    <string name="settings_about_title">О Litube</string>
+    <string name="settings_about_title">О U Tube</string>
     <string name="settings_about_summary">Верзија, ажурирања и дијагностика</string>
     <string name="settings_group_appearance">Изглед</string>
     <string name="settings_group_feed">Феед</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Он</string>
     <string name="settings_notifications_state_off">Искључено</string>
     <string name="settings_open_system_settings">Отворите системска подешавања</string>
-    <string name="settings_open_system_settings_summary">Подешавања Андроид обавештења за Litube</string>
+    <string name="settings_open_system_settings_summary">Подешавања Андроид обавештења за U Tube</string>
     <string name="settings_state_on">Он</string>
     <string name="settings_state_off">Искључено</string>
     <string name="subscription_visit_channel">Посети канал</string>

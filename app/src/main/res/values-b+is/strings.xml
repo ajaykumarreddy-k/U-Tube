@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Hlustaðu í bakgrunni</string>
     <string name="back_again_to_exit">Ýttu aftur til baka til að hætta</string>
     <string name="navigate_back">Til baka</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Stillingar sögu</string>
     <string name="a11y_send_message">Sendu skilaboð</string>
     <string name="a11y_explore">Kanna</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Heim</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Heim</string>
     <string name="a11y_loading">Hleðsla</string>
     <string name="a11y_add_comment">Bættu við athugasemd</string>
     <string name="a11y_sort_comments">Raða athugasemdum</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Kerfistilkynningaraðgangur</string>
     <string name="settings_advanced">Háþróaður</string>
     <string name="settings_advanced_summary">Spilari, bendingar, SponsorBlock og öryggisafrit</string>
-    <string name="settings_about_title">Um Litube</string>
+    <string name="settings_about_title">Um U Tube</string>
     <string name="settings_about_summary">Útgáfa, uppfærslur og greiningar</string>
     <string name="settings_group_appearance">Útlit</string>
     <string name="settings_group_feed">Fóður</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Á</string>
     <string name="settings_notifications_state_off">Slökkt</string>
     <string name="settings_open_system_settings">Opnaðu kerfisstillingar</string>
-    <string name="settings_open_system_settings_summary">Android tilkynningastillingar fyrir Litube</string>
+    <string name="settings_open_system_settings_summary">Android tilkynningastillingar fyrir U Tube</string>
     <string name="settings_state_on">Á</string>
     <string name="settings_state_off">Slökkt</string>
     <string name="subscriptions_title">Áskriftir</string>

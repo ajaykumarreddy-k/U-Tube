@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">گوش دادن در پس‌زمینه</string>
     <string name="back_again_to_exit">برای خروج دوباره به عقب فشار دهید</string>
     <string name="navigate_back">برگشت</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">تنظیمات سابقه تماشا</string>
     <string name="a11y_send_message">ارسال پیام</string>
     <string name="a11y_explore">کاوش</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">خانه Litube</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">خانه U Tube</string>
     <string name="a11y_loading">در حال بارگذاری</string>
     <string name="a11y_add_comment">یک نظر اضافه کنید</string>
     <string name="a11y_sort_comments">مرتب سازی نظرات</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">دسترسی به اعلان سیستم</string>
     <string name="settings_advanced">پیشرفته</string>
     <string name="settings_advanced_summary">پخش کننده، حرکات، SponsorBlock و نسخه پشتیبان</string>
-    <string name="settings_about_title">درباره Litube</string>
+    <string name="settings_about_title">درباره U Tube</string>
     <string name="settings_about_summary">نسخه، به روز رسانی و تشخیص</string>
     <string name="settings_group_appearance">ظاهر</string>
     <string name="settings_group_feed">خوراک</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">روشن</string>
     <string name="settings_notifications_state_off">خاموش</string>
     <string name="settings_open_system_settings">تنظیمات سیستم را باز کنید</string>
-    <string name="settings_open_system_settings_summary">تنظیمات اعلان اندروید برای Litube</string>
+    <string name="settings_open_system_settings_summary">تنظیمات اعلان اندروید برای U Tube</string>
     <string name="settings_state_on">روشن</string>
     <string name="settings_state_off">خاموش</string>
     <string name="subscription_visit_channel">از کانال دیدن کنید</string>

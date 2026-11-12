@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Sikiliza chinichini</string>
     <string name="back_again_to_exit">Bonyeza nyuma tena ili kuondoka</string>
     <string name="navigate_back">Nyuma</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Mipangilio ya historia</string>
     <string name="a11y_send_message">Tuma ujumbe</string>
     <string name="a11y_explore">Chunguza</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Nyumbani kwa Litube</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">Nyumbani kwa U Tube</string>
     <string name="a11y_loading">Inapakia</string>
     <string name="a11y_add_comment">Ongeza maoni</string>
     <string name="a11y_sort_comments">Panga maoni</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Ufikiaji wa arifa za mfumo</string>
     <string name="settings_advanced">Advanced</string>
     <string name="settings_advanced_summary">Mchezaji, ishara, SponsorBlock na chelezo</string>
-    <string name="settings_about_title">Kuhusu Litube</string>
+    <string name="settings_about_title">Kuhusu U Tube</string>
     <string name="settings_about_summary">Toleo, masasisho na uchunguzi</string>
     <string name="settings_group_appearance">Muonekano</string>
     <string name="settings_group_feed">Mlisho</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Imewashwa</string>
     <string name="settings_notifications_state_off">Imezimwa</string>
     <string name="settings_open_system_settings">Fungua mipangilio ya mfumo</string>
-    <string name="settings_open_system_settings_summary">Mipangilio ya arifa za Android za Litube</string>
+    <string name="settings_open_system_settings_summary">Mipangilio ya arifa za Android za U Tube</string>
     <string name="settings_state_on">Imewashwa</string>
     <string name="settings_state_off">Imezimwa</string>
     <string name="subscriptions_title">Usajili</string>

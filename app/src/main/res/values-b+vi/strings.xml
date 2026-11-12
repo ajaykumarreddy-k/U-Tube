@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Nghe ở chế độ nền</string>
     <string name="back_again_to_exit">Nhấn lại lần nữa để thoát</string>
     <string name="navigate_back">Trở lại</string>
@@ -412,8 +412,8 @@
     <string name="a11y_history_settings">Cài đặt lịch sử</string>
     <string name="a11y_send_message">Gửi tin nhắn</string>
     <string name="a11y_explore">Khám phá</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Trang chủ</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Trang chủ</string>
     <string name="a11y_loading">Đang tải</string>
     <string name="a11y_add_comment">Thêm bình luận</string>
     <string name="a11y_sort_comments">Sắp xếp bình luận</string>
@@ -435,7 +435,7 @@
     <string name="settings_notifications_summary">Truy cập thông báo hệ thống</string>
     <string name="settings_advanced">Nâng cao</string>
     <string name="settings_advanced_summary">Trình phát, cử chỉ, SponsorBlock và bản sao lưu</string>
-    <string name="settings_about_title">Giới thiệu về Litube</string>
+    <string name="settings_about_title">Giới thiệu về U Tube</string>
     <string name="settings_about_summary">Phiên bản, cập nhật và chẩn đoán</string>
     <string name="settings_group_appearance">Ngoại hình</string>
     <string name="settings_group_feed">Nguồn cấp dữ liệu</string>
@@ -462,7 +462,7 @@
     <string name="settings_notifications_state_on">Bật</string>
     <string name="settings_notifications_state_off">Tắt</string>
     <string name="settings_open_system_settings">Mở cài đặt hệ thống</string>
-    <string name="settings_open_system_settings_summary">Cài đặt thông báo Android cho Litube</string>
+    <string name="settings_open_system_settings_summary">Cài đặt thông báo Android cho U Tube</string>
     <string name="settings_state_on">Bật</string>
     <string name="settings_state_off">Tắt</string>
     <string name="subscription_visit_channel">Ghé thăm kênh</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Escolta en segon pla</string>
     <string name="back_again_to_exit">Premeu enrere de nou per sortir</string>
     <string name="navigate_back">Enrere</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Configuració de l\'historial de visualitzacions</string>
     <string name="a11y_send_message">Envia missatge</string>
     <string name="a11y_explore">Explora</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Inici</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Inici</string>
     <string name="a11y_loading">Carregant</string>
     <string name="a11y_add_comment">Afegeix un comentari</string>
     <string name="a11y_sort_comments">Ordena els comentaris</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Accés a la notificació del sistema</string>
     <string name="settings_advanced">Avançat</string>
     <string name="settings_advanced_summary">Reproductor, gestos, SponsorBlock i còpia de seguretat</string>
-    <string name="settings_about_title">Sobre Litube</string>
+    <string name="settings_about_title">Sobre U Tube</string>
     <string name="settings_about_summary">Versió, actualitzacions i diagnòstics</string>
     <string name="settings_group_appearance">Aparença</string>
     <string name="settings_group_feed">Alimentació</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Activat</string>
     <string name="settings_notifications_state_off">Apagat</string>
     <string name="settings_open_system_settings">Obre la configuració del sistema</string>
-    <string name="settings_open_system_settings_summary">Configuració de notificació d\'Android per a Litube</string>
+    <string name="settings_open_system_settings_summary">Configuració de notificació d\'Android per a U Tube</string>
     <string name="settings_state_on">Activat</string>
     <string name="settings_state_off">Apagat</string>
     <string name="subscriptions_title">Subscripcions</string>

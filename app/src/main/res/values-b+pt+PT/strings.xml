@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Ouvir em segundo plano</string>
     <string name="back_again_to_exit">Toque em Voltar novamente para sair</string>
     <string name="navigate_back">Voltar</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Definições de histórico</string>
     <string name="a11y_send_message">Enviar mensagem</string>
     <string name="a11y_explore">Explorar</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Página inicial Litube</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">Página inicial U Tube</string>
     <string name="a11y_loading">Carregamento</string>
     <string name="a11y_add_comment">Adicionar um comentário</string>
     <string name="a11y_sort_comments">Classificar comentários</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Acesso à notificação do sistema</string>
     <string name="settings_advanced">Avançado</string>
     <string name="settings_advanced_summary">Player, gestos, SponsorBlock e backup</string>
-    <string name="settings_about_title">Sobre Litube</string>
+    <string name="settings_about_title">Sobre U Tube</string>
     <string name="settings_about_summary">Versão, atualizações e diagnósticos</string>
     <string name="settings_group_appearance">Aparência</string>
     <string name="settings_group_feed">Alimentação</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Ligado</string>
     <string name="settings_notifications_state_off">Desligado</string>
     <string name="settings_open_system_settings">Abrir definições do sistema</string>
-    <string name="settings_open_system_settings_summary">Definições de notificação Android para Litube</string>
+    <string name="settings_open_system_settings_summary">Definições de notificação Android para U Tube</string>
     <string name="settings_state_on">Ligado</string>
     <string name="settings_state_off">Desligado</string>
     <string name="subscriptions_title">Assinaturas</string>

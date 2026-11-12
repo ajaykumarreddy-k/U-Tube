@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">الاستماع في الخلفية</string>
     <string name="back_again_to_exit">اضغط على رجوع مرة أخرى للخروج</string>
     <string name="navigate_back">رجوع</string>
@@ -331,7 +331,7 @@
 <string name="settings_notifications_summary">الوصول إلى إشعارات النظام</string>
 <string name="settings_advanced">خيارات متقدمة</string>
 <string name="settings_advanced_summary">المشغّل والإيماءات وSponsorBlock والنسخ الاحتياطي</string>
-<string name="settings_about_title">حول Litube</string>
+<string name="settings_about_title">حول U Tube</string>
 <string name="settings_about_summary">الإصدار والتحديثات والتشخيص</string>
 <string name="settings_group_appearance">المظهر</string>
 <string name="settings_group_feed">الخلاصة</string>
@@ -358,7 +358,7 @@
 <string name="settings_notifications_state_on">مفعّل</string>
 <string name="settings_notifications_state_off">غير مفعّل</string>
 <string name="settings_open_system_settings">فتح إعدادات النظام</string>
-<string name="settings_open_system_settings_summary">إعدادات إشعارات Android لتطبيق Litube</string>
+<string name="settings_open_system_settings_summary">إعدادات إشعارات Android لتطبيق U Tube</string>
 <string name="settings_state_on">مفعّل</string>
 <string name="settings_state_off">غير مفعّل</string>
     <string name="cast_searching">جارٍ البحث…</string>
@@ -453,8 +453,8 @@
     <string name="a11y_history_settings">إعدادات سجل المشاهدة</string>
     <string name="a11y_send_message">أرسل الرسالة</string>
     <string name="a11y_explore">اكتشف</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube الصفحة الرئيسية</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube الصفحة الرئيسية</string>
     <string name="a11y_loading">التحميل</string>
     <string name="a11y_add_comment">أضف تعليقا</string>
     <string name="a11y_sort_comments">فرز التعليقات</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Litube</string>
+    <string name="app_name">U Tube</string>
     <string name="player_audio_only">Luister in agtergrond</string>
     <string name="back_again_to_exit">Druk weer terug om uit te gaan</string>
     <string name="navigate_back">Terug</string>
@@ -409,8 +409,8 @@
     <string name="a11y_history_settings">Kykgeskiedenis-instellings</string>
     <string name="a11y_send_message">Stuur boodskap</string>
     <string name="a11y_explore">Verken</string>
-    <string name="a11y_litube">Litube</string>
-    <string name="a11y_litube_home">Litube Tuis</string>
+    <string name="a11y_litube">U Tube</string>
+    <string name="a11y_litube_home">U Tube Tuis</string>
     <string name="a11y_loading">Laai</string>
     <string name="a11y_add_comment">Voeg \'n opmerking by</string>
     <string name="a11y_sort_comments">Sorteer kommentaar</string>
@@ -432,7 +432,7 @@
     <string name="settings_notifications_summary">Toegang tot stelselkennisgewing</string>
     <string name="settings_advanced">Gevorderd</string>
     <string name="settings_advanced_summary">Speler, gebare, SponsorBlock en rugsteun</string>
-    <string name="settings_about_title">Oor Litube</string>
+    <string name="settings_about_title">Oor U Tube</string>
     <string name="settings_about_summary">Weergawe, opdaterings en diagnostiek</string>
     <string name="settings_group_appearance">Voorkoms</string>
     <string name="settings_group_feed">Voer</string>
@@ -459,7 +459,7 @@
     <string name="settings_notifications_state_on">Aan</string>
     <string name="settings_notifications_state_off">Af</string>
     <string name="settings_open_system_settings">Maak stelselinstellings oop</string>
-    <string name="settings_open_system_settings_summary">Android-kennisgewinginstellings vir Litube</string>
+    <string name="settings_open_system_settings_summary">Android-kennisgewinginstellings vir U Tube</string>
     <string name="settings_state_on">Aan</string>
     <string name="settings_state_off">Af</string>
     <string name="subscriptions_title">Intekeninge</string>
