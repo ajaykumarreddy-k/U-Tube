@@ -74,10 +74,32 @@ class HomeActivity : com.hhst.youtubelite.ui.ContentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (shouldLaunchOnboarding(intent)) {
+            startActivity(Intent(this, com.hhst.youtubelite.onboarding.OnboardingActivity::class.java))
+            finish()
+            return
+        }
         if (!com.hhst.youtubelite.data.media.ContentRepositories.fixtures(intent)) {
             postCards.bind()
             observeAccountChanges {
                 if (::homeViewModel.isInitialized) refreshHomeSession()
+            }
+            if (savedInstanceState == null) {
+                lifecycleScope.launch {
+                    val koin = org.koin.java.KoinJavaComponent.getKoin()
+                    val release = com.hhst.youtubelite.ui.about.AppUpdateChecker.checkAndNotifyIfNeeded(
+                        context = applicationContext,
+                        client = koin.get(),
+                        store = koin.get(),
+                    )
+                    if (release != null) {
+                        android.widget.Toast.makeText(
+                            this@HomeActivity,
+                            getString(com.hhst.youtubelite.R.string.about_update_available, release.tagName),
+                            android.widget.Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                }
             }
         }
         deferUntilReturn = savedInstanceState == null && intent.getBooleanExtra(EXTRA_DEFER_HOME, false)
@@ -268,9 +290,21 @@ class HomeActivity : com.hhst.youtubelite.ui.ContentActivity() {
         homeViewModel.onAction(HomeAction.Navigate(HomeNavigationRequest.OpenLink(link)))
     }
 
+    private fun shouldLaunchOnboarding(intent: Intent): Boolean {
+        if (intent.getBooleanExtra(EXTRA_SKIP_ONBOARDING, false)) return false
+        if (BuildConfig.DEBUG && intent.getBooleanExtra(EXTRA_FORCE_ONBOARDING, false)) return true
+        if (com.hhst.youtubelite.data.media.ContentRepositories.fixtures(intent)) return false
+        if (intent.getBooleanExtra(EXTRA_DEFER_HOME, false)) return false
+        if (intent.action != null && intent.action != Intent.ACTION_MAIN) return false
+        val onboardingPrefs = org.koin.java.KoinJavaComponent.getKoin().get<com.hhst.youtubelite.onboarding.OnboardingPreferences>()
+        return !onboardingPrefs.isCompleted()
+    }
+
     companion object {
         const val EXTRA_SCENARIO = "home_scenario"
         const val EXTRA_SIGNED_IN = "signed_in_preview"
         const val EXTRA_DEFER_HOME = "defer_home_until_visible"
+        const val EXTRA_SKIP_ONBOARDING = "skip_onboarding"
+        const val EXTRA_FORCE_ONBOARDING = "force_onboarding"
     }
 }

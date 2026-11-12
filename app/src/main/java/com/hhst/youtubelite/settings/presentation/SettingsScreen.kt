@@ -42,6 +42,10 @@ import com.hhst.youtubelite.ui.design.DesignTokens
 import com.hhst.youtubelite.ui.glass.LiquidGlassIconButton
 import com.hhst.youtubelite.ui.glass.LiquidGlassTier
 import com.hhst.youtubelite.ui.theme.AppAppearance
+import android.os.Build
+import com.hhst.youtubelite.player.PlaybackDefaults
+import com.hhst.youtubelite.ui.theme.AppAccent
+import com.hhst.youtubelite.ui.theme.LiquidGlassStyle
 import com.hhst.youtubelite.ui.theme.ThemeMode
 
 @Composable
@@ -55,8 +59,15 @@ fun SettingsScreen(
     onOpenNotificationSettings: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    defaultQuality: String? = null,
+    defaultSpeed: Float = 1f,
     onAdvanced: (() -> Unit)? = null,
     onSelectTheme: (ThemeMode) -> Unit = {},
+    onSelectAccent: (AppAccent) -> Unit = {},
+    onSelectGlassStyle: (LiquidGlassStyle) -> Unit = {},
+    onSelectDefaultQuality: (String?) -> Unit = {},
+    onSelectDefaultSpeed: (Float) -> Unit = {},
+    onReplayOnboarding: (() -> Unit)? = null,
     onSelectLanguage: (String) -> Unit = {},
 ) {
     Column(modifier.fillMaxSize().background(DesignTokens.Background).testTag("settings-screen")) {
@@ -70,9 +81,9 @@ fun SettingsScreen(
             Column(Modifier.align(Alignment.TopCenter).widthIn(max = 720.dp).fillMaxWidth().fillMaxHeight()
                 .verticalScroll(rememberScrollState()).testTag("settings-page-${page.argument}")) {
                 when (page) {
-                    SettingsPage.Home -> SettingsHome(onNavigate, onAbout, onAdvanced)
-                    SettingsPage.General -> GeneralSettings(preferences, onToggle, onSelectTheme, onSelectLanguage)
-                    SettingsPage.Playback -> PlaybackSettings(preferences, onToggle)
+                    SettingsPage.Home -> SettingsHome(onNavigate, onAbout, onAdvanced, onReplayOnboarding)
+                    SettingsPage.General -> GeneralSettings(preferences, onToggle, onSelectTheme, onSelectAccent, onSelectGlassStyle, onSelectLanguage)
+                    SettingsPage.Playback -> PlaybackSettings(preferences, defaultQuality, defaultSpeed, onSelectDefaultQuality, onSelectDefaultSpeed, onToggle)
                     SettingsPage.Notifications -> NotificationSettings(notificationsEnabled, onOpenNotificationSettings)
                 }
                 Spacer(Modifier.height(24.dp))
@@ -101,7 +112,12 @@ private fun SettingsTopBar(title: String, onBack: () -> Unit) {
 }
 
 @Composable
-private fun SettingsHome(onNavigate: (SettingsPage) -> Unit, onAbout: () -> Unit, onAdvanced: (() -> Unit)?) {
+private fun SettingsHome(
+    onNavigate: (SettingsPage) -> Unit,
+    onAbout: () -> Unit,
+    onAdvanced: (() -> Unit)?,
+    onReplayOnboarding: (() -> Unit)? = null,
+) {
     SettingsGroup(stringResource(R.string.settings_group_preferences))
     SettingsRow(stringResource(R.string.settings_general), stringResource(R.string.settings_general_summary), tag = "settings-row-general") {
         onNavigate(SettingsPage.General)
@@ -114,6 +130,12 @@ private fun SettingsHome(onNavigate: (SettingsPage) -> Unit, onAbout: () -> Unit
     }
     if (onAdvanced != null) SettingsRow(stringResource(R.string.settings_advanced),
         stringResource(R.string.settings_advanced_summary), tag = "settings-row-advanced", onClick = onAdvanced)
+    if (onReplayOnboarding != null) SettingsRow(
+        stringResource(R.string.settings_replay_onboarding),
+        stringResource(R.string.settings_replay_onboarding_summary),
+        tag = "settings-row-onboarding",
+        onClick = onReplayOnboarding,
+    )
     SettingsGroup(stringResource(R.string.settings_group_about))
     SettingsRow(stringResource(R.string.settings_about_title), stringResource(R.string.settings_about_summary),
         tag = "settings-row-about", onClick = onAbout)
@@ -124,10 +146,14 @@ private fun GeneralSettings(
     preferences: Map<String, Boolean>,
     onToggle: (String, Boolean) -> Unit,
     onSelectTheme: (ThemeMode) -> Unit,
+    onSelectAccent: (AppAccent) -> Unit,
+    onSelectGlassStyle: (LiquidGlassStyle) -> Unit,
     onSelectLanguage: (String) -> Unit,
 ) {
     SettingsGroup(stringResource(R.string.settings_group_appearance))
     var themeDialog by remember { mutableStateOf(false) }
+    var accentDialog by remember { mutableStateOf(false) }
+    var glassDialog by remember { mutableStateOf(false) }
     var languageDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
     SettingsRow(stringResource(R.string.settings_theme),
@@ -136,6 +162,19 @@ private fun GeneralSettings(
             ThemeMode.Light -> R.string.settings_theme_light
             ThemeMode.Dark -> R.string.settings_theme_dark
         }), tag = "settings-row-theme", onClick = { themeDialog = true })
+    SettingsRow(stringResource(R.string.settings_accent_color),
+        value = AppAppearance.accent.label,
+        tag = "settings-row-accent", onClick = { accentDialog = true })
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        SettingsToggle(
+            stringResource(R.string.settings_dynamic_colors),
+            stringResource(R.string.settings_dynamic_colors_summary),
+            PreferenceKeys.DYNAMIC_COLORS, preferences, onToggle,
+        )
+    }
+    SettingsRow(stringResource(R.string.settings_glass_style),
+        value = AppAppearance.glassStyle.label,
+        tag = "settings-row-glass", onClick = { glassDialog = true })
     SettingsRow(stringResource(R.string.settings_language),
         value = AppLocale.OPTIONS.firstOrNull { it.first == AppLocale.tag(context) }?.second
             ?: java.util.Locale.forLanguageTag(AppLocale.tag(context)).displayName,
@@ -160,6 +199,18 @@ private fun GeneralSettings(
         tag = "theme-dialog",
         onSelect = { index -> onSelectTheme(ThemeMode.entries[index]); themeDialog = false },
         onDismiss = { themeDialog = false })
+    if (accentDialog) RadioDialog(
+        title = stringResource(R.string.settings_accent_color),
+        options = AppAccent.entries.map { it.label to (it == AppAppearance.accent) },
+        tag = "accent-dialog",
+        onSelect = { index -> onSelectAccent(AppAccent.entries[index]); accentDialog = false },
+        onDismiss = { accentDialog = false })
+    if (glassDialog) RadioDialog(
+        title = stringResource(R.string.settings_glass_style),
+        options = LiquidGlassStyle.entries.map { it.label to (it == AppAppearance.glassStyle) },
+        tag = "glass-dialog",
+        onSelect = { index -> onSelectGlassStyle(LiquidGlassStyle.entries[index]); glassDialog = false },
+        onDismiss = { glassDialog = false })
     if (languageDialog) RadioDialog(
         title = stringResource(R.string.settings_language),
         options = AppLocale.OPTIONS.map { (tag, label) ->
@@ -171,14 +222,45 @@ private fun GeneralSettings(
 }
 
 @Composable
-private fun PlaybackSettings(preferences: Map<String, Boolean>, onToggle: (String, Boolean) -> Unit) {
+private fun PlaybackSettings(
+    preferences: Map<String, Boolean>,
+    defaultQuality: String?,
+    defaultSpeed: Float,
+    onSelectDefaultQuality: (String?) -> Unit,
+    onSelectDefaultSpeed: (Float) -> Unit,
+    onToggle: (String, Boolean) -> Unit,
+) {
     SettingsGroup(stringResource(R.string.settings_playback))
+    var qualityDialog by remember { mutableStateOf(false) }
+    var speedDialog by remember { mutableStateOf(false) }
+    SettingsRow(stringResource(R.string.settings_default_quality),
+        value = defaultQuality ?: stringResource(R.string.settings_quality_auto),
+        tag = "settings-row-default-quality", onClick = { qualityDialog = true })
+    SettingsRow(stringResource(R.string.settings_default_speed),
+        value = "${if (defaultSpeed % 1f == 0f) defaultSpeed.toInt().toString() else defaultSpeed.toString()}x",
+        tag = "settings-row-default-speed", onClick = { speedDialog = true })
     SettingsToggle(stringResource(R.string.settings_background_play), stringResource(R.string.settings_background_play_summary),
         PreferenceKeys.ENABLE_BACKGROUND_PLAY, preferences, onToggle)
     SettingsToggle(stringResource(R.string.settings_pip), stringResource(R.string.settings_pip_summary),
         PreferenceKeys.ENABLE_PIP, preferences, onToggle)
     SettingsToggle(stringResource(R.string.settings_remember_position), stringResource(R.string.settings_remember_position_summary),
         PreferenceKeys.REMEMBER_LAST_POSITION, preferences, onToggle)
+    if (qualityDialog) RadioDialog(
+        title = stringResource(R.string.settings_default_quality),
+        options = PlaybackDefaults.QUALITY_OPTIONS.map { opt ->
+            (opt ?: stringResource(R.string.settings_quality_auto)) to (opt == defaultQuality)
+        },
+        tag = "quality-dialog",
+        onSelect = { index -> onSelectDefaultQuality(PlaybackDefaults.QUALITY_OPTIONS[index]); qualityDialog = false },
+        onDismiss = { qualityDialog = false })
+    if (speedDialog) RadioDialog(
+        title = stringResource(R.string.settings_default_speed),
+        options = PlaybackDefaults.SPEED_OPTIONS.map { speed ->
+            "${if (speed % 1f == 0f) speed.toInt().toString() else speed.toString()}x" to (kotlin.math.abs(speed - defaultSpeed) < 0.01f)
+        },
+        tag = "speed-dialog",
+        onSelect = { index -> onSelectDefaultSpeed(PlaybackDefaults.SPEED_OPTIONS[index]); speedDialog = false },
+        onDismiss = { speedDialog = false })
 }
 
 @Composable

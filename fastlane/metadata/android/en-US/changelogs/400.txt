@@ -1,4 +1,5 @@
-- Replace web-based browsing with native Android screens.
-- Switch to MediaServiceCore as the media engine.
-- Improve playback, live chat, casting and downloads.
-- Sign in again using a sign-in code. Settings from previous versions will not be retained.
+- Rebranded U Tube with iOS-inspired Liquid Glass UI and SF Pro Display typography.
+- Interactive 6-step onboarding with Obsidian & Pearl sheet layout, Guest mode, live previews, and upgrade safety.
+- Unified Dark/Light/System themes, accent colors, Material You dynamic color, and Liquid Glass surfaces.
+- GitHub release update checks & notifications from ajaykumarreddy-k/U-Tube.
+- Search crash & input fixes plus Media3 player polish.

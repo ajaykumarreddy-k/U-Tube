@@ -48,6 +48,7 @@ class App : Application(), Configuration.Provider {
             get<com.hhst.youtubelite.extension.ExtensionManager>()
                 .isEnabled(com.hhst.youtubelite.extension.PreferenceKeys.PRIVATE_BROWSING)
         }
+        com.hhst.youtubelite.onboarding.OnboardingPreferences.create(this).resolveUpgradeStateBeforeSeeding()
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@App)
@@ -58,7 +59,12 @@ class App : Application(), Configuration.Provider {
         registerActivityLifecycleCallbacks(com.hhst.youtubelite.player.PlaybackLifecycle())
         // Publish the persisted appearance before the first activity composes.
         get<com.hhst.youtubelite.extension.ExtensionManager>().let { prefs ->
-            com.hhst.youtubelite.ui.theme.AppAppearance.update(prefs.themeMode())
+            com.hhst.youtubelite.ui.theme.AppAppearance.update(
+                value = prefs.themeMode(),
+                accent = prefs.accentColor(),
+                dynamicColor = prefs.dynamicColors(),
+                glassStyle = prefs.glassStyle(),
+            )
         }
     }
 

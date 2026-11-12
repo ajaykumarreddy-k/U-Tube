@@ -2445,8 +2445,8 @@ class PlaybackEngine(
         private const val TICK_MS = 250L
         private const val CAST_MAX_HEIGHT = 1080
         private val PROGRESS_TTL_MS = TimeUnit.DAYS.toMillis(3)
-        private const val KEY_SPEED = "player:speed"
-        private const val KEY_QUALITY = "player:quality"
+        internal const val KEY_SPEED = com.hhst.youtubelite.player.PlaybackDefaults.KEY_SPEED
+        internal const val KEY_QUALITY = com.hhst.youtubelite.player.PlaybackDefaults.KEY_QUALITY
         private const val KEY_LOOP_MODE = "player:loop_mode"
         private const val KEY_SHORTS_LOOP_MODE = "player:shorts_loop_mode"
         private const val KEY_SUBTITLE = "player:subtitle_language"

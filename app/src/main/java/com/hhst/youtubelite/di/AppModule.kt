@@ -254,6 +254,8 @@ val appModule = module {
             engine.notificationController = get()
         }
     }
+    single { com.hhst.youtubelite.onboarding.OnboardingPreferences.create(androidContext()) }
+    single { com.hhst.youtubelite.player.PlaybackDefaults(get(), get()) }
     single { MiniPlayerStore(get()) }
     single { CastController(androidContext(), get(), get()) }
     single { DlnaController(androidContext()) }

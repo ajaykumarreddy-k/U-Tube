@@ -58,7 +58,29 @@ internal fun SearchPanel(
     var field by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(query, TextRange(query.length)))
     }
-    if (field.text != query) field = TextFieldValue(query, TextRange(query.length))
+    var observedQuery by remember { mutableStateOf(query) }
+    var lastDispatched by remember { mutableStateOf(query) }
+    val pendingEchoes = remember { ArrayDeque<String>() }
+    if (query != observedQuery) {
+        observedQuery = query
+        val matched = pendingEchoes.indexOf(query)
+        if (matched >= 0) {
+            repeat(matched + 1) { pendingEchoes.removeFirst() }
+        } else {
+            pendingEchoes.clear()
+            lastDispatched = query
+            if (field.text != query) field = TextFieldValue(query, TextRange(query.length))
+        }
+    }
+    val dispatchQuery: (String, Boolean) -> Unit = { nextText, syncField ->
+        if (syncField) field = TextFieldValue(nextText, TextRange(nextText.length))
+        if (nextText != lastDispatched) {
+            if (pendingEchoes.size >= 16) pendingEchoes.removeFirst()
+            pendingEchoes.addLast(nextText)
+            lastDispatched = nextText
+            onQueryChanged(nextText)
+        }
+    }
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     val fieldHeight = maxOf(32.dp, with(LocalDensity.current) { 22.sp.toDp() })
@@ -124,20 +146,23 @@ internal fun SearchPanel(
                     Modifier.fillMaxSize().padding(start = 14.dp, end = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    BasicTextField(field, { field = it; onQueryChanged(it.text) },
+                    BasicTextField(field, { next ->
+                        field = next
+                        dispatchQuery(next.text, false)
+                    },
                         Modifier.weight(1f).focusRequester(focus).testTag("search-input").appDescription(R.string.a11y_search_youtube),
                         textStyle = DesignTokens.text(15, 22).copy(color = glassPalette.contentPrimary),
                         singleLine = true,
                         cursorBrush = SolidColor(glassPalette.accent),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                        keyboardActions = KeyboardActions(onSearch = { keyboard?.hide(); onSubmit(query) }),
-                        decorationBox = { inner -> Box { if (query.isEmpty()) AppText(stringResource(R.string.a11y_search_youtube), size = 15, line = 22, color = glassPalette.contentSecondary); inner() } })
-                    if (query.isNotEmpty()) Box(Modifier.size(32.dp).clip(CircleShape).clickable(role = Role.Button) {
-                        onQueryChanged(""); focus.requestFocus(); keyboard?.show()
+                        keyboardActions = KeyboardActions(onSearch = { val submitted = field.text; keyboard?.hide(); onSubmit(submitted) }),
+                        decorationBox = { inner -> Box { if (field.text.isEmpty()) AppText(stringResource(R.string.a11y_search_youtube), size = 15, line = 22, color = glassPalette.contentSecondary); inner() } })
+                    if (field.text.isNotEmpty()) Box(Modifier.size(32.dp).clip(CircleShape).clickable(role = Role.Button) {
+                        dispatchQuery("", true); focus.requestFocus(); keyboard?.show()
                     }.appDescription(R.string.a11y_clear_search), contentAlignment = Alignment.Center) {
                         AppIcon(AppIcon.Close, Modifier.size(16.dp), color = glassPalette.contentSecondary)
                     }
-                    Box(Modifier.size(34.dp).clip(CircleShape).clickable(role = Role.Button) { keyboard?.hide(); onSubmit(query) }
+                    Box(Modifier.size(34.dp).clip(CircleShape).clickable(role = Role.Button) { val submitted = field.text; keyboard?.hide(); onSubmit(submitted) }
                         .appDescription(R.string.a11y_search), contentAlignment = Alignment.Center) {
                         AppIcon(AppIcon.Search, Modifier.size(20.dp), color = glassPalette.contentPrimary)
                     }
@@ -186,7 +211,7 @@ internal fun SearchPanel(
                             }
                             BasicText(text, Modifier.weight(1f).padding(horizontal = 10.dp), style = DesignTokens.text(14, 18).copy(color = glassPalette.contentPrimary), maxLines = 2, overflow = TextOverflow.Ellipsis)
                             Box(Modifier.size(37.dp).clip(CircleShape).clickable(role = Role.Button) {
-                                onQueryChanged(suggestion); focus.requestFocus(); keyboard?.show()
+                                dispatchQuery(suggestion, true); focus.requestFocus(); keyboard?.show()
                             }.appDescription(R.string.a11y_use_suggestion, suggestion), contentAlignment = Alignment.Center) {
                                 AppIcon(AppIcon.ArrowUpLeft, color = glassPalette.contentSecondary)
                             }

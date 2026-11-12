@@ -732,4 +732,113 @@
     <string name="signin_error_connection">No connection. Check the network and try again.</string>
     <string name="signin_error_refused">YouTube refused the sign-in. Try again.</string>
     <string name="signin_error_failed">Sign-in failed. Try again.</string>
+
+    <!-- Appearance & Onboarding -->
+    <string translatable="false" name="settings_accent_color">Accent color</string>
+    <string translatable="false" name="settings_dynamic_colors">Dynamic colors</string>
+    <string translatable="false" name="settings_dynamic_colors_summary">Adapt accent colors from your wallpaper (Android 12+)</string>
+    <string translatable="false" name="settings_glass_style">Liquid Glass surface</string>
+    <string translatable="false" name="settings_default_quality">Default video quality</string>
+    <string translatable="false" name="settings_default_speed">Default playback speed</string>
+    <string translatable="false" name="settings_quality_auto">Auto</string>
+    <string translatable="false" name="settings_replay_onboarding">Welcome setup guide</string>
+    <string translatable="false" name="settings_replay_onboarding_summary">Revisit appearance, playback, and privacy setup</string>
+
+    <string translatable="false" name="onboarding_step_of">Step %1$d of %2$d</string>
+    <string translatable="false" name="onboarding_skip">Skip</string>
+    <string translatable="false" name="onboarding_skip_setup">Skip Setup</string>
+    <string translatable="false" name="onboarding_continue">Continue</string>
+    <string translatable="false" name="onboarding_edit">Edit</string>
+    <string translatable="false" name="onboarding_done">Done</string>
+
+    <string translatable="false" name="onboarding_welcome_headline">Your videos. Your experience.</string>
+    <string translatable="false" name="onboarding_welcome_subtitle">A better way to discover, watch and enjoy.</string>
+    <string translatable="false" name="onboarding_welcome_note">Liquid Glass craftsmanship, privacy-first defaults, and background play built right in.</string>
+    <string translatable="false" name="onboarding_welcome_cta">Get Started</string>
+    <string translatable="false" name="onboarding_welcome_pill_glass">Liquid Glass UI</string>
+    <string translatable="false" name="onboarding_welcome_pill_sponsor">SponsorBlock</string>
+    <string translatable="false" name="onboarding_welcome_pill_background">Background Play</string>
+
+    <string translatable="false" name="onboarding_account_title">Choose how you browse</string>
+    <string translatable="false" name="onboarding_account_subtitle">Connect your YouTube account or start immediately in full-featured Guest mode.</string>
+    <string translatable="false" name="onboarding_account_sign_in">Sign in to YouTube</string>
+    <string translatable="false" name="onboarding_account_sign_in_summary">Sync subscriptions, playlists, watch history, and Likes securely via device sign-in.</string>
+    <string translatable="false" name="onboarding_account_create">Create a Google account</string>
+    <string translatable="false" name="onboarding_account_create_summary">Opens Google account signup in your browser, then return here to sign in.</string>
+    <string translatable="false" name="onboarding_account_create_browser_error">No browser app found to open signup.</string>
+    <string translatable="false" name="onboarding_account_guest">Continue without an account</string>
+    <string translatable="false" name="onboarding_account_guest_summary">First-class Guest mode. Full playback, local library, downloads, and search with zero sign-in prompts.</string>
+    <string translatable="false" name="onboarding_account_connected">Connected account</string>
+    <string translatable="false" name="onboarding_account_switch">Switch account</string>
+    <string translatable="false" name="onboarding_account_continue_as">Continue as %1$s</string>
+    <string translatable="false" name="onboarding_account_add_another">Sign in another account</string>
+
+    <string translatable="false" name="onboarding_playback_title">Tune your player</string>
+    <string translatable="false" name="onboarding_playback_subtitle">Customize video quality, playback speed, and background behavior. All applied live to Media3.</string>
+    <string translatable="false" name="onboarding_playback_preview_label">LIVE PLAYER PREVIEW</string>
+    <string translatable="false" name="onboarding_playback_preview_title">Atmospheric Liquid Glass Session</string>
+    <string translatable="false" name="onboarding_playback_quality">Default video quality</string>
+    <string translatable="false" name="onboarding_playback_quality_summary">Preferred resolution when starting playback</string>
+    <string translatable="false" name="onboarding_playback_speed">Default playback speed</string>
+    <string translatable="false" name="onboarding_playback_speed_summary">Remembers your preferred pace across videos</string>
+    <string translatable="false" name="onboarding_playback_background">Background playback</string>
+    <string translatable="false" name="onboarding_playback_background_summary">Keep audio playing when switching apps or locking screen</string>
+    <string translatable="false" name="onboarding_playback_autoplay">Autoplay next video</string>
+    <string translatable="false" name="onboarding_playback_autoplay_summary">Automatically queue and play the next video</string>
+    <string translatable="false" name="onboarding_playback_pip">Picture-in-Picture</string>
+    <string translatable="false" name="onboarding_playback_pip_summary">Shrink player into a floating window on Home</string>
+    <string translatable="false" name="onboarding_playback_mini_player">In-app mini-player</string>
+    <string translatable="false" name="onboarding_playback_mini_player_summary">Keep browsing while watching in a floating glass bar</string>
+    <string translatable="false" name="onboarding_playback_data_saver">Data saver</string>
+    <string translatable="false" name="onboarding_playback_data_saver_summary">Reduce prefetching and bandwidth usage on metered networks</string>
+    <string translatable="false" name="onboarding_playback_remember_position">Remember playback position</string>
+    <string translatable="false" name="onboarding_playback_remember_position_summary">Resume videos right where you left off</string>
+    <string translatable="false" name="onboarding_playback_remember_resize">Remember zoom &amp; fit mode</string>
+    <string translatable="false" name="onboarding_playback_remember_resize_summary">Preserve fit, fill, or zoomed aspect choice</string>
+    <string translatable="false" name="onboarding_playback_gestures">Player touch gestures</string>
+    <string translatable="false" name="onboarding_playback_gestures_summary">Double-tap seek, hold 2x speed, swipe brightness &amp; volume</string>
+
+    <string translatable="false" name="onboarding_appearance_title">Make it yours</string>
+    <string translatable="false" name="onboarding_appearance_subtitle">Preview light or dark surfaces, accent colors, and Liquid Glass depth in real time.</string>
+    <string translatable="false" name="onboarding_appearance_preview_caption">Interactive theme preview</string>
+    <string translatable="false" name="onboarding_appearance_theme">Theme</string>
+    <string translatable="false" name="onboarding_appearance_accent">Accent color</string>
+    <string translatable="false" name="onboarding_appearance_dynamic">Material You Dynamic Colors</string>
+    <string translatable="false" name="onboarding_appearance_dynamic_summary">Pull accent tones from your Android wallpaper</string>
+    <string translatable="false" name="onboarding_appearance_dynamic_unsupported">Requires Android 12 or newer</string>
+    <string translatable="false" name="onboarding_appearance_glass">Liquid Glass surface</string>
+
+    <string translatable="false" name="onboarding_prefs_title">Optional extras</string>
+    <string translatable="false" name="onboarding_prefs_subtitle">Fine-tune language, SponsorBlock, DeArrow, downloads, and haptics — or skip cleanly.</string>
+    <string translatable="false" name="onboarding_prefs_language">Application language</string>
+    <string translatable="false" name="onboarding_prefs_sponsorblock">SponsorBlock</string>
+    <string translatable="false" name="onboarding_prefs_sponsorblock_summary">Automatically skip sponsors, intros, and promos</string>
+    <string translatable="false" name="onboarding_prefs_dearrow">DeArrow titles &amp; thumbnails</string>
+    <string translatable="false" name="onboarding_prefs_dearrow_summary">Prefer community-cleaned titles and non-clickbait thumbnails</string>
+    <string translatable="false" name="onboarding_prefs_hide_shorts">Hide Shorts</string>
+    <string translatable="false" name="onboarding_prefs_hide_shorts_summary">Remove Shorts shelves and tab from your feed</string>
+    <string translatable="false" name="onboarding_prefs_dislikes">Show dislike counts</string>
+    <string translatable="false" name="onboarding_prefs_dislikes_summary">Display community-estimated dislikes on watch pages</string>
+    <string translatable="false" name="onboarding_prefs_download_wifi">Download over Wi-Fi only</string>
+    <string translatable="false" name="onboarding_prefs_download_wifi_summary">Pause queued offline downloads on mobile data</string>
+    <string translatable="false" name="onboarding_prefs_download_quality">Default download quality</string>
+    <string translatable="false" name="onboarding_prefs_haptics">Haptic feedback</string>
+    <string translatable="false" name="onboarding_prefs_haptics_off">Off</string>
+    <string translatable="false" name="onboarding_prefs_haptics_subtle">Subtle</string>
+    <string translatable="false" name="onboarding_prefs_haptics_crisp">Crisp</string>
+
+    <string translatable="false" name="onboarding_review_title">Review your setup</string>
+    <string translatable="false" name="onboarding_review_subtitle">Everything is saved and ready. Tap any section to fine-tune before launching.</string>
+    <string translatable="false" name="onboarding_review_account">Account</string>
+    <string translatable="false" name="onboarding_review_guest">Guest (No account)</string>
+    <string translatable="false" name="onboarding_review_signed_in">Signed in</string>
+    <string translatable="false" name="onboarding_review_playback">Playback</string>
+    <string translatable="false" name="onboarding_review_appearance">Appearance &amp; Liquid Glass</string>
+    <string translatable="false" name="onboarding_review_extras">Language &amp; Extras</string>
+    <string translatable="false" name="onboarding_start_watching">Start Watching</string>
+
+    <string translatable="false" name="update_channel_name">App updates</string>
+    <string translatable="false" name="update_channel_desc">Notifications when a new U Tube release is available</string>
+    <string translatable="false" name="update_notification_title">U Tube update available</string>
+    <string translatable="false" name="update_notification_body">Version %1$s is available on GitHub Releases.</string>
 </resources>

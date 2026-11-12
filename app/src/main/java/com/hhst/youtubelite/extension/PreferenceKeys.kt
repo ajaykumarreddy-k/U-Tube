@@ -4,6 +4,9 @@ package com.hhst.youtubelite.extension
 object PreferenceKeys {
     const val HAPTIC_STRENGTH = "haptic_strength"
     const val THEME_MODE = "theme_mode"
+    const val ACCENT_COLOR = "accent_color"
+    const val DYNAMIC_COLORS = "dynamic_colors"
+    const val GLASS_STYLE = "glass_style"
     const val APP_LANGUAGE = "app_language"
     const val ENABLE_DISPLAY_DISLIKES = "enable_display_dislikes"
     const val ENABLE_HIDE_SHORTS = "enable_hide_shorts"
@@ -95,6 +98,7 @@ object PreferenceKeys {
         ENABLE_PIP to true,
         ENABLE_IN_APP_MINI_PLAYER to true,
         DATA_SAVER to false,
+        DYNAMIC_COLORS to false,
         REMEMBER_RESIZE_MODE to false,
         REMEMBER_PLAYBACK_SPEED to false,
         USE_ORIGINAL_TITLE to false,

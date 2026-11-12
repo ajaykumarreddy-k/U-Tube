@@ -7,7 +7,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/ajaykumarreddy-k/U-Tube/releases"><img src="https://img.shields.io/badge/version-v4.0.0--debug-C71C3A?style=flat-square" alt="U Tube v4.0.0-debug"></a>
+    <a href="https://github.com/ajaykumarreddy-k/U-Tube/releases"><img src="https://img.shields.io/badge/version-v4.0.0-C71C3A?style=flat-square" alt="U Tube v4.0.0"></a>
     <img src="https://img.shields.io/badge/Android-7.0%2B-3DDC84?style=flat-square" alt="Android 7.0 or later">
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-596273?style=flat-square" alt="GPL v3 license"></a>
   </p>
@@ -15,33 +15,41 @@
 
 Browse videos and Shorts, follow your favorite channels, and organize your playlists in an Android interface built with Jetpack Compose, **SF Pro Display** typography, and translucent **Liquid Glass** surfaces. Watch ad-free videos, listen in the background, use picture-in-picture, or save favorites for offline playback.
 
-## Reference Repositories
+> **Open Source Personal Project:** **U Tube** is a personal project rebranded and customized to tailored everyday needs. The entire source code is open source under the [**GNU GPL v3.0**](LICENSE) license — anyone is free to use, fork, modify, and redistribute it under the same license.
 
-U Tube builds on and draws directly from these two reference repositories:
+## Base Codebase & Reference Repositories
 
-1. [**LiTube**](https://github.com/HydeYYHH/litube) (`https://github.com/HydeYYHH/litube`) — **Codebase reference** providing the core Android Kotlin/Compose architecture, `MediaServiceCore` integration, Media3 playback engine, offline downloader, Cast/DLNA support, and upstream foundation (`upstream` remote).
-2. [**Wavelet**](https://github.com/ajaykumarreddy-k/Wavelet) (`https://github.com/ajaykumarreddy-k/Wavelet`) — **Design & Liquid Glass reference** inspiring the translucent glass chrome, specular hairline highlights, floating navigation capsules, and optical surface hierarchy.
+U Tube builds on and draws directly from these two repositories:
+
+1. [**LiTube**](https://github.com/HydeYYHH/litube) by [**HydeYYHH**](https://github.com/HydeYYHH) (`https://github.com/HydeYYHH/litube`) — **Base codebase** providing the core Android Kotlin/Compose architecture, `MediaServiceCore` integration, Media3 playback engine, offline downloader, Cast/DLNA support, and upstream foundation (`upstream` remote).
+2. [**Wavelet**](https://github.com/ajaykumarreddy-k/Wavelet) by [**ajaykumarreddy-k**](https://github.com/ajaykumarreddy-k) (`https://github.com/ajaykumarreddy-k/Wavelet`) — **Design & Liquid Glass reference** inspiring the translucent glass chrome, specular hairline highlights, floating navigation capsules, and optical surface hierarchy.
 
 ## Author
 
-- [**ajaykumarreddy-k**](https://github.com/ajaykumarreddy-k) — Author of **U Tube** and [**Wavelet**](https://github.com/ajaykumarreddy-k/Wavelet).
-- **Upstream Codebase:** [**HydeYYHH/litube**](https://github.com/HydeYYHH/litube) and [**HydeYYHH/MediaServiceCore**](https://github.com/HydeYYHH/MediaServiceCore).
+- [**ajaykumarreddy-k**](https://github.com/ajaykumarreddy-k) — Author & maintainer of **U Tube** and [**Wavelet**](https://github.com/ajaykumarreddy-k/Wavelet).
+- **Base Codebase Author:** [**HydeYYHH**](https://github.com/HydeYYHH) ([**LiTube**](https://github.com/HydeYYHH/litube) and [**MediaServiceCore**](https://github.com/HydeYYHH/MediaServiceCore)).
 
 ## Previews
 
 <p align="center">
+  <a href=".github/assets/screenshots/v4-onboarding.png"><img src=".github/assets/screenshots/v4-onboarding.png" alt="Onboarding Welcome" title="Onboarding Welcome" height="420"></a>
+  &nbsp;
+  <a href=".github/assets/screenshots/v4-onboarding-style.png"><img src=".github/assets/screenshots/v4-onboarding-style.png" alt="Onboarding Theme &amp; Liquid Glass" title="Onboarding Theme &amp; Liquid Glass" height="420"></a>
+  &nbsp;
   <a href=".github/assets/screenshots/v4-home.png"><img src=".github/assets/screenshots/v4-home.png" alt="Home" title="Home" height="420"></a>
   &nbsp;
   <a href=".github/assets/screenshots/v4-search.png"><img src=".github/assets/screenshots/v4-search.png" alt="Search" title="Search" height="420"></a>
   &nbsp;
   <a href=".github/assets/screenshots/v4-playback.png"><img src=".github/assets/screenshots/v4-playback.png" alt="Playback" title="Playback" height="420"></a>
   &nbsp;
-  <a href=".github/assets/screenshots/v4-subscriptions.png"><img src=".github/assets/screenshots/v4-subscriptions.png" alt="You & Subscriptions" title="You & Subscriptions" height="420"></a>
+  <a href=".github/assets/screenshots/v4-you.png"><img src=".github/assets/screenshots/v4-you.png" alt="You & Library" title="You & Library" height="420"></a>
 </p>
 
 ## Features
 
-- **Liquid Glass iOS Experience.** Floating frosted glass bottom bar across `Home`, `Shorts`, and `You` alongside a detached glass `Search` orb, paired with **SF Pro Display** typography and smooth spring transitions.
+- **Interactive First-Launch Onboarding.** Guided 6-step setup featuring an editorial obsidian & frosted pearl-sheet layout with live Media3 playback tuning, real-time Dark/Light/Accent/Liquid Glass previews, first-class Guest mode, and safe skip/upgrade handling.
+- **Liquid Glass iOS Experience.** Floating frosted glass bottom bar across `Home`, `Shorts`, and `You` alongside a detached glass `Search` orb, paired with **SF Pro Display** typography, custom accent colors, Material You dynamic color, and smooth spring transitions.
+- **Release Update Notifications.** Checks [U Tube GitHub Releases](https://github.com/ajaykumarreddy-k/U-Tube/releases) and notifies you when a newer version is published.
 - **Browse YouTube.** Swipe or tap smoothly between Home, Shorts, and You, search videos and channels, and explore playlists and watch history.
 - **Play Your Way.** Enjoy ad-free Media3 playback with clean player controls, gesture seek/brightness/volume, video quality, speed, subtitles, audio tracks, background audio playback, picture-in-picture, and DLNA/Chromecast casting.
 - **Download for Later.** Save videos, audio, subtitles, or entire playlists with selectable quality and pause/resume controls.

@@ -121,6 +121,38 @@ class ExtensionManager(private val store: PrefStore) {
         notifyChanged(PreferenceKeys.THEME_MODE)
     }
 
+    fun accentColor(): com.hhst.youtubelite.ui.theme.AppAccent =
+        com.hhst.youtubelite.ui.theme.AppAccent.fromStorage(store.getString(prefKey(PreferenceKeys.ACCENT_COLOR), ""))
+
+    fun setAccentColor(accent: com.hhst.youtubelite.ui.theme.AppAccent) {
+        if (accent == accentColor()) return
+        val previous = accentColor()
+        store.putString(prefKey(PreferenceKeys.ACCENT_COLOR), accent.storageKey)
+        AppLog.event(AppLog.Category.EXTENSION, "preference_changed",
+            mapOf("key" to PreferenceKeys.ACCENT_COLOR, "before" to previous.storageKey, "after" to accent.storageKey))
+        bumpVersion()
+        notifyChanged(PreferenceKeys.ACCENT_COLOR)
+    }
+
+    fun dynamicColors(): Boolean = isEnabled(PreferenceKeys.DYNAMIC_COLORS)
+
+    fun setDynamicColors(enabled: Boolean) {
+        setEnabled(PreferenceKeys.DYNAMIC_COLORS, enabled)
+    }
+
+    fun glassStyle(): com.hhst.youtubelite.ui.theme.LiquidGlassStyle =
+        com.hhst.youtubelite.ui.theme.LiquidGlassStyle.fromStorage(store.getString(prefKey(PreferenceKeys.GLASS_STYLE), ""))
+
+    fun setGlassStyle(style: com.hhst.youtubelite.ui.theme.LiquidGlassStyle) {
+        if (style == glassStyle()) return
+        val previous = glassStyle()
+        store.putString(prefKey(PreferenceKeys.GLASS_STYLE), style.storageKey)
+        AppLog.event(AppLog.Category.EXTENSION, "preference_changed",
+            mapOf("key" to PreferenceKeys.GLASS_STYLE, "before" to previous.storageKey, "after" to style.storageKey))
+        bumpVersion()
+        notifyChanged(PreferenceKeys.GLASS_STYLE)
+    }
+
     /** Persisted app language as a BCP-47 tag; empty means "follow the system". */
     fun appLanguage(): String = store.getString(prefKey(PreferenceKeys.APP_LANGUAGE), "")
 

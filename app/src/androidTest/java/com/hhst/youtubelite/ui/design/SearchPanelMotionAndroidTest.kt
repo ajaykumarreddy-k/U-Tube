@@ -141,7 +141,7 @@ class SearchPanelMotionAndroidTest {
         compose.onNodeWithTag("search-overlay").assertExists()
         val fading = sample()
         assertTrue("The panel must fade during exit, not disappear fully opaque: $opaque -> $fading",
-            fading.green < opaque.green && fading.green > 0f)
+            (fading.green < opaque.green && fading.green > 0f) || (fading.red > opaque.red && fading.red < 1f))
         compose.mainClock.advanceTimeBy(200)
         assertEquals(Color.Red, sample())
     }

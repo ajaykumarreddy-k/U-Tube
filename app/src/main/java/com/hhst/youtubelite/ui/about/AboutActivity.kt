@@ -31,7 +31,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.koin.java.KoinJavaComponent.get
 
 class AboutActivity : ComponentActivity() {
@@ -81,24 +80,10 @@ class AboutActivity : ComponentActivity() {
                 }
             }
             AboutScreen(applicationInfo.loadLabel(packageManager).toString(), version, { finish() }, busy, status,
-                onSource = { openUrl(SOURCE) },
+                onSource = { openUrl(AppUpdateChecker.REPO_URL) },
                 onUpdate = { action("check_update") {
                     val latest = withContext(Dispatchers.IO) {
-                        val request = Request.Builder().url("https://api.github.com/repos/ajaykumarreddy-k/U-Tube/releases/latest")
-                            .header("Accept", "application/vnd.github+json").build()
-                        get<OkHttpClient>(OkHttpClient::class.java).newCall(request).execute().use { response ->
-                            check(response.isSuccessful) { "HTTP ${response.code}" }
-                            val body = response.body?.string() ?: error("Empty release response")
-                            val json = kotlinx.serialization.json.Json.parseToJsonElement(body)
-                                as kotlinx.serialization.json.JsonObject
-                            fun flag(key: String): Boolean = (json[key] as? kotlinx.serialization.json.JsonPrimitive)
-                                ?.takeUnless { it is kotlinx.serialization.json.JsonNull }?.content?.toBoolean() == true
-                            fun text(key: String): String = (json[key] as? kotlinx.serialization.json.JsonPrimitive)
-                                ?.takeUnless { it is kotlinx.serialization.json.JsonNull }?.content
-                                ?: error("update_check_payload")
-                            check(!flag("prerelease") && !flag("draft"))
-                            text("tag_name")
-                        }
+                        AppUpdateChecker.fetchLatestStableRelease(get<OkHttpClient>(OkHttpClient::class.java)).tagName
                     }
                     when {
                         StableVersion.isDevelopment(version) -> getString(R.string.about_development_version, latest)
@@ -106,7 +91,7 @@ class AboutActivity : ComponentActivity() {
                         else -> getString(R.string.about_up_to_date, latest)
                     }
                 } },
-                onRelease = { openUrl("$SOURCE/releases/latest") },
+                onRelease = { openUrl(AppUpdateChecker.LATEST_RELEASE_PAGE_URL) },
                 onClear = { action("clear_cache") {
                     // clearCache removes HTTP cache only; cookies and WebStorage keep the account.
                     WebView(this@AboutActivity).let { it.clearCache(true); it.destroy() }
@@ -172,5 +157,4 @@ class AboutActivity : ComponentActivity() {
         runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
             .onFailure { Toast.makeText(this, R.string.application_not_found, Toast.LENGTH_SHORT).show() }
     }
-    companion object { private const val SOURCE = "https://github.com/ajaykumarreddy-k/U-Tube" }
 }

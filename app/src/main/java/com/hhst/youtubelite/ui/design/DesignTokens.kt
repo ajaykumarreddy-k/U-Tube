@@ -91,6 +91,10 @@ object DesignTokens {
 @Composable
 fun AppTheme(content: @Composable () -> Unit) {
     val darkTheme = com.hhst.youtubelite.ui.theme.AppAppearance.dark ?: androidx.compose.foundation.isSystemInDarkTheme()
+    val accentChoice = com.hhst.youtubelite.ui.theme.AppAppearance.accent
+    val dynamicEnabled = com.hhst.youtubelite.ui.theme.AppAppearance.dynamicColor &&
+        android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S
+    val glassStyle = com.hhst.youtubelite.ui.theme.AppAppearance.glassStyle
     val context = LocalContext.current
     // Re-read on every resume: the system animator scale may change while the process lives.
     val motion = remember { mutableStateOf(readMotionScale(context.contentResolver)) }
@@ -98,15 +102,41 @@ fun AppTheme(content: @Composable () -> Unit) {
         motion.value = readMotionScale(context.contentResolver)
         onPauseOrDispose { }
     }
+    val baseAppColors = if (darkTheme) DarkAppPalette else LightAppPalette
+    val resolvedAccent = if (dynamicEnabled) {
+        val scheme = if (darkTheme) androidx.compose.material3.dynamicDarkColorScheme(context)
+        else androidx.compose.material3.dynamicLightColorScheme(context)
+        scheme.primary
+    } else {
+        if (darkTheme) accentChoice.darkColor else accentChoice.lightColor
+    }
+    val resolvedAppColors = if (resolvedAccent == baseAppColors.red) baseAppColors else baseAppColors.copy(red = resolvedAccent)
+
+    val baseGlass = if (darkTheme) com.hhst.youtubelite.ui.glass.DarkLiquidGlassPalette
+    else com.hhst.youtubelite.ui.glass.LightLiquidGlassPalette
+    val fillScale = when (glassStyle) {
+        com.hhst.youtubelite.ui.theme.LiquidGlassStyle.Clear -> 0.72f
+        com.hhst.youtubelite.ui.theme.LiquidGlassStyle.Standard -> 1.0f
+        com.hhst.youtubelite.ui.theme.LiquidGlassStyle.Frosted -> 1.24f
+    }
+    val resolvedGlass = if (resolvedAccent == baseGlass.accent && fillScale == 1.0f) {
+        baseGlass
+    } else {
+        baseGlass.copy(
+            accent = resolvedAccent,
+            frostFill = baseGlass.frostFill.copy(alpha = (baseGlass.frostFill.alpha * fillScale).coerceIn(0.08f, 0.94f)),
+            elevatedFill = baseGlass.elevatedFill.copy(alpha = (baseGlass.elevatedFill.alpha * fillScale).coerceIn(0.12f, 0.96f)),
+            recessedFill = baseGlass.recessedFill.copy(alpha = (baseGlass.recessedFill.alpha * fillScale).coerceIn(0.06f, 0.90f)),
+        )
+    }
+
     CompositionLocalProvider(
-        LocalAppColors provides if (darkTheme) DarkAppPalette else LightAppPalette,
-        com.hhst.youtubelite.ui.glass.LocalLiquidGlassPalette provides
-            if (darkTheme) com.hhst.youtubelite.ui.glass.DarkLiquidGlassPalette
-            else com.hhst.youtubelite.ui.glass.LightLiquidGlassPalette,
+        LocalAppColors provides resolvedAppColors,
+        com.hhst.youtubelite.ui.glass.LocalLiquidGlassPalette provides resolvedGlass,
         LocalMotionScale provides motion.value,
         LocalHideShorts provides rememberHideShorts(),
     ) {
-        com.hhst.youtubelite.ui.theme.AppTheme(darkTheme = darkTheme) { content() }
+        com.hhst.youtubelite.ui.theme.AppTheme(darkTheme = darkTheme, dynamicColor = dynamicEnabled) { content() }
     }
 }
 

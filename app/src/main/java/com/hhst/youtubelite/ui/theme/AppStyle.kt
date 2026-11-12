@@ -14,11 +14,47 @@ import androidx.compose.ui.unit.dp
 
 enum class ThemeMode(val label: String) { System("System"), Light("Light"), Dark("Dark") }
 
+enum class AppAccent(
+    val label: String,
+    val storageKey: String,
+    val lightColor: Color,
+    val darkColor: Color,
+) {
+    Crimson("Crimson", "crimson", Color(0xFFD9304F), Color(0xFFD9304F)),
+    Cobalt("Cobalt", "cobalt", Color(0xFF0A84FF), Color(0xFF3A9BFF)),
+    Indigo("Indigo", "indigo", Color(0xFF5856D6), Color(0xFF7D7AFF)),
+    Teal("Teal", "teal", Color(0xFF00897B), Color(0xFF2DD4BF)),
+    Amber("Amber", "amber", Color(0xFFD97706), Color(0xFFFFB340)),
+    Emerald("Emerald", "emerald", Color(0xFF059669), Color(0xFF34D399));
+
+    companion object {
+        fun fromStorage(raw: String?): AppAccent =
+            entries.firstOrNull { it.storageKey == raw } ?: Crimson
+    }
+}
+
+enum class LiquidGlassStyle(val label: String, val storageKey: String) {
+    Standard("Standard", "standard"),
+    Clear("Clear", "clear"),
+    Frosted("Frosted", "frosted");
+
+    companion object {
+        fun fromStorage(raw: String?): LiquidGlassStyle =
+            entries.firstOrNull { it.storageKey == raw } ?: Standard
+    }
+}
+
 object AppAppearance {
     /** Resolved darkness for the Compose theme; null means "follow the system". */
     var dark by mutableStateOf<Boolean?>(null)
         private set
     var mode by mutableStateOf(ThemeMode.System)
+        private set
+    var accent by mutableStateOf(AppAccent.Crimson)
+        private set
+    var dynamicColor by mutableStateOf(false)
+        private set
+    var glassStyle by mutableStateOf(LiquidGlassStyle.Standard)
         private set
     private val listeners = mutableListOf<() -> Unit>()
 
@@ -29,6 +65,37 @@ object AppAppearance {
             ThemeMode.Light -> false
             ThemeMode.System -> null
         }
+        notifyListeners()
+    }
+
+    fun update(
+        value: ThemeMode,
+        accent: AppAccent = this.accent,
+        dynamicColor: Boolean = this.dynamicColor,
+        glassStyle: LiquidGlassStyle = this.glassStyle,
+    ) {
+        this.accent = accent
+        this.dynamicColor = dynamicColor
+        this.glassStyle = glassStyle
+        update(value)
+    }
+
+    fun updateAccent(value: AppAccent) {
+        accent = value
+        notifyListeners()
+    }
+
+    fun updateDynamicColor(enabled: Boolean) {
+        dynamicColor = enabled
+        notifyListeners()
+    }
+
+    fun updateGlassStyle(style: LiquidGlassStyle) {
+        glassStyle = style
+        notifyListeners()
+    }
+
+    private fun notifyListeners() {
         synchronized(listeners) { listeners.toList() }.forEach { it() }
     }
 

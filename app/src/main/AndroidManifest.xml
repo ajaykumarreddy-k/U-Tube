@@ -95,16 +95,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".playlist.PlaylistActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
-        <activity android:name=".library.YouActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
-        <activity android:name=".library.HistoryActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
-        <activity android:name=".library.PlaylistsActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
+        <activity android:name=".playlist.PlaylistActivity" android:exported="false" android:theme="@style/Theme.App.Home" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".library.YouActivity" android:exported="false" android:theme="@style/Theme.App.Home" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".library.HistoryActivity" android:exported="false" android:theme="@style/Theme.App.Home" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".library.PlaylistsActivity" android:exported="false" android:theme="@style/Theme.App.Home" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".settings.SettingsActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
+        <activity
+            android:name=".onboarding.OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.App.Home"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".settings.AdvancedActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
         <activity android:name=".account.SignInActivity" android:exported="false" android:theme="@style/Theme.App.Home" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".account.ChatWebSignInActivity" android:exported="false" android:theme="@style/Theme.App.Home" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".core.TrafficVerificationActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
-        <activity android:name=".subscriptions.SubscriptionsActivity" android:exported="false" android:theme="@style/Theme.App.Home" />
+        <activity android:name=".subscriptions.SubscriptionsActivity" android:exported="false" android:theme="@style/Theme.App.Home" android:windowSoftInputMode="adjustResize" />
 
         <!-- Standalone shorts browse host; playback reuses the shared player ViewModel hooks. -->
         <activity android:name=".shorts.ShortsActivity" android:exported="false" android:theme="@style/Theme.App.Shorts" android:windowSoftInputMode="adjustResize" />
@@ -114,7 +119,8 @@
             android:name=".search.SearchResultsActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.App.Home" />
+            android:theme="@style/Theme.App.Home"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".watch.WatchActivity"
@@ -129,7 +135,8 @@
             android:name=".channel.ChannelActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.App.Home" />
+            android:theme="@style/Theme.App.Home"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Shared post detail host used by both the Home post card and channel Posts. -->
         <activity

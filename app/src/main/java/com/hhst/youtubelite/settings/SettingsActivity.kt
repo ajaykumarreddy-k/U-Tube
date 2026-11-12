@@ -41,9 +41,13 @@ class SettingsActivity : com.hhst.youtubelite.ui.NativeActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(SystemBarStyle.light(Color.WHITE, Color.WHITE), SystemBarStyle.light(Color.WHITE, Color.WHITE))
         val initial = SettingsPage.parse(intent.getStringExtra(EXTRA_PAGE))
+        val onboardingPrefs = org.koin.java.KoinJavaComponent.getKoin().get<com.hhst.youtubelite.onboarding.OnboardingPreferences>()
+        val playbackDefaults = org.koin.java.KoinJavaComponent.getKoin().get<com.hhst.youtubelite.player.PlaybackDefaults>()
         setAppContent {
             var page by rememberSaveable { mutableStateOf(initial.argument) }
             var preferences by remember { mutableStateOf(extensionManager.allPreferences()) }
+            var defaultQuality by remember { mutableStateOf(playbackDefaults.defaultQuality()) }
+            var defaultSpeed by remember { mutableStateOf(playbackDefaults.defaultSpeed()) }
             val context = LocalContext.current
             var notifications by remember { mutableStateOf(NotificationManagerCompat.from(context).areNotificationsEnabled()) }
             val lifecycleOwner = LocalLifecycleOwner.current
@@ -51,6 +55,8 @@ class SettingsActivity : com.hhst.youtubelite.ui.NativeActivity() {
                 val observer = LifecycleEventObserver { _, event ->
                     if (event == Lifecycle.Event.ON_RESUME) {
                         notifications = NotificationManagerCompat.from(context).areNotificationsEnabled()
+                        defaultQuality = playbackDefaults.defaultQuality()
+                        defaultSpeed = playbackDefaults.defaultSpeed()
                     }
                 }
                 // The Advanced host and backup imports write through the same manager; follow it.
@@ -68,16 +74,43 @@ class SettingsActivity : com.hhst.youtubelite.ui.NativeActivity() {
                 page = current,
                 preferences = preferences,
                 notificationsEnabled = notifications,
+                defaultQuality = defaultQuality,
+                defaultSpeed = defaultSpeed,
                 onNavigate = { page = it.argument },
                 onToggle = { key, enabled ->
                     // The change listener above refreshes the map; this writes, never mirrors.
                     extensionManager.setEnabled(key, enabled)
+                    if (key == com.hhst.youtubelite.extension.PreferenceKeys.DYNAMIC_COLORS) {
+                        com.hhst.youtubelite.ui.theme.AppAppearance.updateDynamicColor(enabled)
+                    }
                 },
                 onAbout = { startActivity(Intent(this@SettingsActivity, AboutActivity::class.java)) },
                 onAdvanced = { startActivity(Intent(this@SettingsActivity, AdvancedActivity::class.java)) },
                 onSelectTheme = { mode ->
                     extensionManager.setThemeMode(mode)
                     com.hhst.youtubelite.ui.theme.AppAppearance.update(mode)
+                },
+                onSelectAccent = { accent ->
+                    extensionManager.setAccentColor(accent)
+                    extensionManager.setDynamicColors(false)
+                    com.hhst.youtubelite.ui.theme.AppAppearance.updateDynamicColor(false)
+                    com.hhst.youtubelite.ui.theme.AppAppearance.updateAccent(accent)
+                },
+                onSelectGlassStyle = { style ->
+                    extensionManager.setGlassStyle(style)
+                    com.hhst.youtubelite.ui.theme.AppAppearance.updateGlassStyle(style)
+                },
+                onSelectDefaultQuality = { quality ->
+                    playbackDefaults.setDefaultQuality(quality)
+                    defaultQuality = quality
+                },
+                onSelectDefaultSpeed = { speed ->
+                    playbackDefaults.setDefaultSpeed(speed)
+                    defaultSpeed = speed
+                },
+                onReplayOnboarding = {
+                    onboardingPrefs.resetForReplay()
+                    startActivity(com.hhst.youtubelite.onboarding.OnboardingActivity.intent(this@SettingsActivity, fromSettings = true))
                 },
                 onSelectLanguage = { tag ->
                     val handledBySystem = com.hhst.youtubelite.core.AppLocale.apply(this@SettingsActivity, tag)

@@ -315,7 +315,7 @@ private fun SearchTopBar(query: String, onAction: (SearchAction) -> Unit, onBack
             modifier = Modifier.weight(1f).height(fieldHeight).testTag("search-field"),
             shape = CircleShape,
             cornerRadius = fieldHeight / 2,
-            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Optical,
+            tier = com.hhst.youtubelite.ui.glass.LiquidGlassTier.Translucent,
             contentAlignment = Alignment.CenterStart,
         ) {
             Row(Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
@@ -369,6 +369,7 @@ private fun SearchNavigationBar(signedIn: Boolean, onAction: (SearchAction) -> U
                     )
                 }
             },
+            onSearch = { onAction(SearchAction.OpenSearch) },
             onSelect = { index -> onAction(SearchAction.SelectDestination(destinations[index])) },
         )
     }

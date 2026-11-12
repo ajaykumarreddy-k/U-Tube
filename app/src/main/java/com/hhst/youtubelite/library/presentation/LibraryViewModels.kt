@@ -125,10 +125,12 @@ class YouViewModel(
                 _uiState.update { it.copy(query = action.query) }
             }
             is LibraryAction.SubmitSearch -> {
-                savedState[QUERY_KEY] = action.query
+                val query = action.query.trim()
+                if (query.isEmpty()) return
+                savedState[QUERY_KEY] = query
                 showOverlay(LibraryOverlay.None)
-                _uiState.update { it.copy(query = action.query) }
-                navigation.trySend(LibraryNavigationRequest.Search(action.query))
+                _uiState.update { it.copy(query = query) }
+                navigation.trySend(LibraryNavigationRequest.Search(query))
             }
             LibraryAction.SignIn -> navigation.trySend(LibraryNavigationRequest.SignIn)
             LibraryAction.OpenAccountMenu -> showOverlay(LibraryOverlay.Account)
@@ -437,10 +439,12 @@ class HistoryViewModel(
                 _uiState.update { it.copy(query = action.query) }
             }
             is LibraryAction.SubmitSearch -> {
-                savedState[QUERY_KEY] = action.query
+                val query = action.query.trim()
+                if (query.isEmpty()) return
+                savedState[QUERY_KEY] = query
                 showOverlay(LibraryOverlay.None)
-                _uiState.update { it.copy(query = action.query) }
-                navigation.trySend(LibraryNavigationRequest.Search(action.query))
+                _uiState.update { it.copy(query = query) }
+                navigation.trySend(LibraryNavigationRequest.Search(query))
             }
             LibraryAction.SignIn -> navigation.trySend(LibraryNavigationRequest.SignIn)
             is LibraryAction.OpenVideo -> {
@@ -771,10 +775,12 @@ class CollectionViewModel(
                 _uiState.update { it.copy(query = action.query) }
             }
             is LibraryAction.SubmitSearch -> {
-                savedState[QUERY_KEY] = action.query
+                val query = action.query.trim()
+                if (query.isEmpty()) return
+                savedState[QUERY_KEY] = query
                 showOverlay(LibraryOverlay.None)
-                _uiState.update { it.copy(query = action.query) }
-                navigation.trySend(LibraryNavigationRequest.Search(action.query))
+                _uiState.update { it.copy(query = query) }
+                navigation.trySend(LibraryNavigationRequest.Search(query))
             }
             LibraryAction.SignIn -> navigation.trySend(LibraryNavigationRequest.SignIn)
             is LibraryAction.OpenPlaylist -> navigation.trySend(LibraryNavigationRequest.Playlist(action.playlistId))
